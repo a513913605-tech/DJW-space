@@ -332,6 +332,7 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="assets/music-control.css" />
   </head>
   <body>
     <div class="frame"></div>
@@ -345,6 +346,18 @@
         <a class="is-active" href="contact.html">Contact</a>
       </div>
     </header>
+    <div class="music-control" data-music-control>
+      <button class="music-control__toggle" type="button" aria-pressed="false" aria-label="Play background music">
+        <span class="music-control__icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="music-control__label">Music</span>
+      </button>
+      <div class="music-control__volume">
+        <div class="music-control__volume-inner">
+          <input class="music-control__range" type="range" min="0" max="100" value="28" aria-label="Music volume" />
+          <span class="music-control__value">28%</span>
+        </div>
+      </div>
+    </div>
 
     <main class="page">
       <section class="contact-screen contact-screen--hero">
@@ -376,5 +389,6 @@
         </div>
       </section>
     </main>
+    <script src="assets/music-control.js"></script>
   </body>
 </html>

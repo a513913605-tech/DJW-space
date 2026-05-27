@@ -1924,11 +1924,24 @@
 
       }
     </style>
+    <link rel="stylesheet" href="assets/music-control.css" />
   </head>
   <body>
     <div class="frame"></div>
     <canvas class="particle-canvas" id="particleCanvas" aria-hidden="true"></canvas>
     <div class="site-signature">Designer DJW</div>
+    <div class="music-control" data-music-control>
+      <button class="music-control__toggle" type="button" aria-pressed="false" aria-label="Play background music">
+        <span class="music-control__icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="music-control__label">Music</span>
+      </button>
+      <div class="music-control__volume">
+        <div class="music-control__volume-inner">
+          <input class="music-control__range" type="range" min="0" max="100" value="28" aria-label="Music volume" />
+          <span class="music-control__value">28%</span>
+        </div>
+      </div>
+    </div>
 
     <header class="nav">
       <div class="nav__brand"></div>
@@ -2253,6 +2266,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="assets/music-control.js"></script>
     <script>
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const hasGSAP = Boolean(window.gsap);

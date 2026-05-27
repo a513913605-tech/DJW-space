@@ -776,6 +776,7 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="assets/music-control.css" />
   </head>
   <body>
     <div class="frame"></div>
@@ -789,6 +790,18 @@
         <a href="contact.html">Contact</a>
       </div>
     </header>
+    <div class="music-control" data-music-control>
+      <button class="music-control__toggle" type="button" aria-pressed="false" aria-label="Play background music">
+        <span class="music-control__icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="music-control__label">Music</span>
+      </button>
+      <div class="music-control__volume">
+        <div class="music-control__volume-inner">
+          <input class="music-control__range" type="range" min="0" max="100" value="28" aria-label="Music volume" />
+          <span class="music-control__value">28%</span>
+        </div>
+      </div>
+    </div>
 
     <main class="page">
       <section class="works-hero">
@@ -990,6 +1003,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="assets/music-control.js"></script>
     <script>
       const chips = Array.from(document.querySelectorAll(".chip"));
       const cards = Array.from(document.querySelectorAll(".work-card"));
