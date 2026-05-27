@@ -3,17 +3,30 @@
   if (!controls.length) return;
 
   const storageKey = "djwPortfolioMusic";
+  const storageVersion = 2;
   const defaultState = {
-    enabled: false,
-    volume: 0.28
+    enabled: true,
+    volume: 0.9,
+    version: storageVersion
   };
 
   function readState() {
     try {
-      const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+      const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+      if (!saved || typeof saved !== "object") {
+        return { ...defaultState };
+      }
+      if (saved.version !== storageVersion) {
+        return {
+          enabled: typeof saved.enabled === "boolean" ? saved.enabled : defaultState.enabled,
+          volume: defaultState.volume,
+          version: storageVersion
+        };
+      }
       return {
-        enabled: Boolean(saved.enabled),
-        volume: Number.isFinite(saved.volume) ? saved.volume : defaultState.volume
+        enabled: typeof saved.enabled === "boolean" ? saved.enabled : defaultState.enabled,
+        volume: Number.isFinite(saved.volume) ? saved.volume : defaultState.volume,
+        version: storageVersion
       };
     } catch (error) {
       return { ...defaultState };
@@ -30,6 +43,7 @@
 
   const state = readState();
   state.volume = Math.min(1, Math.max(0, state.volume));
+  state.version = storageVersion;
 
   const audio = new Audio("背景音效.mp3");
   audio.loop = true;
@@ -38,13 +52,14 @@
 
   let isPlaying = false;
   let pendingResume = state.enabled;
+  let playRequest = null;
 
   function updateControl(control) {
     const toggle = control.querySelector(".music-control__toggle");
     const range = control.querySelector(".music-control__range");
     const value = control.querySelector(".music-control__value");
     control.classList.toggle("is-playing", isPlaying);
-    control.classList.toggle("is-open", state.enabled || isPlaying);
+    control.classList.toggle("is-open", isPlaying);
     if (toggle) {
       toggle.setAttribute("aria-pressed", String(isPlaying));
       toggle.setAttribute("aria-label", isPlaying ? "Pause background music" : "Play background music");
@@ -58,18 +73,26 @@
     controls.forEach(updateControl);
   }
 
-  async function playAudio() {
+  async function playAudio(options = {}) {
+    if (playRequest) return playRequest;
     state.enabled = true;
     pendingResume = false;
-    saveState(state);
-    try {
-      await audio.play();
-      isPlaying = true;
-    } catch (error) {
-      isPlaying = false;
-      pendingResume = true;
-    }
+    if (options.save !== false) saveState(state);
+    playRequest = audio.play()
+      .then(() => {
+        isPlaying = true;
+        pendingResume = false;
+      })
+      .catch(() => {
+        isPlaying = false;
+        pendingResume = true;
+      })
+      .finally(() => {
+        playRequest = null;
+        updateAllControls();
+      });
     updateAllControls();
+    return playRequest;
   }
 
   function pauseAudio() {
@@ -104,7 +127,8 @@
     }
   });
 
-  const resumeOnInteraction = () => {
+  const resumeOnInteraction = (event) => {
+    if (event?.target?.closest?.("[data-music-control]")) return;
     if (pendingResume && state.enabled && !isPlaying) {
       playAudio();
     }
@@ -114,4 +138,7 @@
   window.addEventListener("keydown", resumeOnInteraction);
 
   updateAllControls();
+  if (state.enabled) {
+    playAudio({ save: false });
+  }
 })();

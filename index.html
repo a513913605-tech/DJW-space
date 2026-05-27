@@ -74,6 +74,18 @@
         }
       }
 
+      @keyframes hudDataFlow {
+        from { transform: translateX(-42%); opacity: 0.12; }
+        50% { opacity: 0.34; }
+        to { transform: translateX(142%); opacity: 0.08; }
+      }
+
+      @keyframes hudBlink {
+        0%,
+        100% { opacity: 0.18; }
+        50% { opacity: 0.42; }
+      }
+
       body {
         position: relative;
         isolation: isolate;
@@ -482,6 +494,233 @@
       .side-label--right {
         right: 34px;
         top: 24%;
+      }
+
+      .hero-hud {
+        --hud-left-x: 0px;
+        --hud-left-y: 0px;
+        --hud-right-x: 0px;
+        --hud-right-y: 0px;
+        --hud-activity: 0;
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        color: rgba(70, 70, 70, 0.42);
+        font-family: inherit;
+      }
+
+      .hero-hud__panel {
+        position: absolute;
+        width: clamp(118px, 8.4vw, 164px);
+        min-height: clamp(360px, 56vh, 560px);
+        opacity: calc(0.58 + var(--hud-activity) * 0.16);
+        transition: transform 320ms ease;
+      }
+
+      .hero-hud__left {
+        left: clamp(56px, 3.6vw, 78px);
+        top: clamp(172px, 23vh, 220px);
+        transform: translate3d(var(--hud-left-x), var(--hud-left-y), 0);
+      }
+
+      .hero-hud__right {
+        right: clamp(58px, 3.8vw, 82px);
+        top: clamp(168px, 22vh, 214px);
+        width: clamp(118px, 8vw, 158px);
+        transform: translate3d(var(--hud-right-x), var(--hud-right-y), 0);
+      }
+
+      .hero-hud__bracket {
+        position: absolute;
+        inset: -18px -10px;
+        border-left: 1px solid rgba(70, 70, 70, 0.18);
+        border-top: 1px solid rgba(70, 70, 70, 0.12);
+        border-bottom: 1px solid rgba(70, 70, 70, 0.12);
+      }
+
+      .hero-hud__bracket::before,
+      .hero-hud__bracket::after {
+        content: "";
+        position: absolute;
+        left: -1px;
+        width: 16px;
+        height: 1px;
+        background: rgba(70, 70, 70, 0.24);
+      }
+
+      .hero-hud__bracket::before { top: -1px; }
+      .hero-hud__bracket::after { bottom: -1px; }
+
+      .hero-hud__title {
+        margin: 0 0 22px;
+        color: rgba(58, 58, 58, 0.48);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .hero-hud__rows {
+        display: grid;
+        gap: clamp(15px, 2vh, 22px);
+      }
+
+      .hero-hud__row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 8px;
+        font-size: 8px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .hero-hud__row span:first-child {
+        color: rgba(58, 58, 58, 0.34);
+      }
+
+      .hero-hud__value {
+        color: rgba(58, 58, 58, 0.5);
+        font-variant-numeric: tabular-nums;
+        transition: opacity 160ms ease;
+      }
+
+      .hero-hud__track {
+        position: relative;
+        grid-column: 1 / -1;
+        height: 1px;
+        overflow: hidden;
+        background: rgba(70, 70, 70, 0.1);
+      }
+
+      .hero-hud__track::before,
+      .hero-hud__track::after {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: var(--value, 64%);
+        background: rgba(70, 70, 70, 0.24);
+      }
+
+      .hero-hud__track::after {
+        width: 32%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+        animation: hudDataFlow 5.4s ease-in-out infinite;
+      }
+
+      .hero-hud__matrix {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(8px, 1.2vh, 12px);
+        margin: 20px 0 24px;
+      }
+
+      .hero-hud__cell {
+        aspect-ratio: 1;
+        border: 1px solid rgba(70, 70, 70, 0.14);
+        background: rgba(70, 70, 70, 0.035);
+        transition: background-color 140ms ease, border-color 140ms ease, opacity 140ms ease;
+      }
+
+      .hero-hud__cell:nth-child(3n + 1) {
+        background: rgba(70, 70, 70, 0.09);
+      }
+
+      .hero-hud__cell:nth-child(4n) {
+        animation: hudBlink 4.8s ease-in-out infinite;
+      }
+
+      .hero-hud__cell.is-active {
+        border-color: rgba(70, 70, 70, 0.24);
+        background: rgba(70, 70, 70, 0.14);
+        opacity: 0.86;
+      }
+
+      .hero-hud__cell.is-soft {
+        background: rgba(70, 70, 70, 0.07);
+        opacity: 0.62;
+      }
+
+      .hero-hud__status {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        align-items: end;
+        padding-top: 18px;
+        border-top: 1px solid rgba(70, 70, 70, 0.12);
+      }
+
+      .hero-hud__percent {
+        color: rgba(58, 58, 58, 0.48);
+        font-size: clamp(24px, 2vw, 34px);
+        line-height: 0.92;
+        letter-spacing: -0.03em;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .hero-hud__caption {
+        color: rgba(58, 58, 58, 0.3);
+        font-size: 8px;
+        line-height: 1.45;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .hero-hud__ticks {
+        position: absolute;
+        inset: 0;
+      }
+
+      .hero-hud__tick {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border: 1px solid rgba(70, 70, 70, 0.16);
+        transform: rotate(45deg);
+        animation: hudBlink 6.4s ease-in-out infinite;
+      }
+
+      .hero-hud__tick:nth-child(1) { left: 18%; top: 22%; }
+      .hero-hud__tick:nth-child(2) { right: 16%; top: 62%; animation-delay: 1.2s; }
+      .hero-hud__tick:nth-child(3) { left: 11%; bottom: 18%; animation-delay: 2.1s; }
+
+      .hero-hud__cross {
+        position: absolute;
+        width: 38px;
+        height: 38px;
+        opacity: 0.34;
+      }
+
+      .hero-hud__cross::before,
+      .hero-hud__cross::after {
+        content: "";
+        position: absolute;
+        background: rgba(70, 70, 70, 0.18);
+      }
+
+      .hero-hud__cross::before {
+        left: 50%;
+        top: 0;
+        width: 1px;
+        height: 100%;
+      }
+
+      .hero-hud__cross::after {
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 1px;
+      }
+
+      .hero-hud__cross--left {
+        left: clamp(78px, 8vw, 138px);
+        bottom: 18%;
+      }
+
+      .hero-hud__cross--right {
+        right: clamp(86px, 8vw, 148px);
+        top: 22%;
       }
 
       .eyebrow {
@@ -1710,6 +1949,10 @@
           margin-top: 28vh;
         }
 
+        .hero-hud {
+          display: none;
+        }
+
         .intro {
           margin: 0;
           align-self: center;
@@ -1937,8 +2180,8 @@
       </button>
       <div class="music-control__volume">
         <div class="music-control__volume-inner">
-          <input class="music-control__range" type="range" min="0" max="100" value="28" aria-label="Music volume" />
-          <span class="music-control__value">28%</span>
+          <input class="music-control__range" type="range" min="0" max="100" value="90" aria-label="Music volume" />
+          <span class="music-control__value">90%</span>
         </div>
       </div>
     </div>
@@ -1957,6 +2200,66 @@
       <section class="section" id="hero">
         <div class="side-label side-label--left">Designer</div>
         <div class="side-label side-label--right">Design Manual</div>
+        <div class="hero-hud" aria-hidden="true">
+          <div class="hero-hud__panel hero-hud__left">
+            <div class="hero-hud__bracket"></div>
+            <div class="hero-hud__title">Visual System</div>
+            <div class="hero-hud__rows">
+              <div class="hero-hud__row">
+                <span>Motion</span>
+                <span class="hero-hud__value">82</span>
+                <i class="hero-hud__track" style="--value: 82%"></i>
+              </div>
+              <div class="hero-hud__row">
+                <span>Composition</span>
+                <span class="hero-hud__value">76</span>
+                <i class="hero-hud__track" style="--value: 76%"></i>
+              </div>
+              <div class="hero-hud__row">
+                <span>Detail</span>
+                <span class="hero-hud__value">91</span>
+                <i class="hero-hud__track" style="--value: 91%"></i>
+              </div>
+              <div class="hero-hud__row">
+                <span>Output</span>
+                <span class="hero-hud__value">88</span>
+                <i class="hero-hud__track" style="--value: 88%"></i>
+              </div>
+              <div class="hero-hud__row">
+                <span>Rhythm</span>
+                <span class="hero-hud__value">74</span>
+                <i class="hero-hud__track" style="--value: 74%"></i>
+              </div>
+              <div class="hero-hud__row">
+                <span>Focus</span>
+                <span class="hero-hud__value">93</span>
+                <i class="hero-hud__track" style="--value: 93%"></i>
+              </div>
+            </div>
+          </div>
+          <div class="hero-hud__panel hero-hud__right">
+            <div class="hero-hud__title">Status Matrix</div>
+            <div class="hero-hud__matrix">
+              <i class="hero-hud__cell"></i><i class="hero-hud__cell"></i><i class="hero-hud__cell"></i>
+              <i class="hero-hud__cell"></i><i class="hero-hud__cell"></i><i class="hero-hud__cell"></i>
+              <i class="hero-hud__cell"></i><i class="hero-hud__cell"></i><i class="hero-hud__cell"></i>
+              <i class="hero-hud__cell"></i><i class="hero-hud__cell"></i><i class="hero-hud__cell"></i>
+              <i class="hero-hud__cell"></i><i class="hero-hud__cell"></i><i class="hero-hud__cell"></i>
+              <i class="hero-hud__cell"></i><i class="hero-hud__cell"></i><i class="hero-hud__cell"></i>
+            </div>
+            <div class="hero-hud__status">
+              <span class="hero-hud__percent">87%</span>
+              <span class="hero-hud__caption">Ready<br />Design Field</span>
+            </div>
+          </div>
+          <div class="hero-hud__ticks">
+            <i class="hero-hud__tick"></i>
+            <i class="hero-hud__tick"></i>
+            <i class="hero-hud__tick"></i>
+          </div>
+          <i class="hero-hud__cross hero-hud__cross--left"></i>
+          <i class="hero-hud__cross hero-hud__cross--right"></i>
+        </div>
         <div class="center-stage">
           <div class="shape shape--planet"></div>
         </div>
@@ -2283,6 +2586,137 @@
         if (window.ScrollTrigger) {
           gsap.registerPlugin(ScrollTrigger);
         }
+      }
+
+      function initHeroHudMotion() {
+        const hud = document.querySelector(".hero-hud");
+        if (!hud || reduceMotion) return;
+        const rows = Array.from(hud.querySelectorAll(".hero-hud__row")).map((row) => {
+          const value = row.querySelector(".hero-hud__value");
+          const track = row.querySelector(".hero-hud__track");
+          const base = Number.parseInt(value?.textContent || "0", 10) || 0;
+          return { value, track, base, current: base };
+        });
+        const cells = Array.from(hud.querySelectorAll(".hero-hud__cell"));
+        const percent = hud.querySelector(".hero-hud__percent");
+        const percentBase = Number.parseInt(percent?.textContent || "87", 10) || 87;
+
+        let hudFrame = null;
+        let scrollFrame = null;
+        let nextX = 0;
+        let nextY = 0;
+        let lastScrollY = window.scrollY || window.pageYOffset || 0;
+        let scrollEnergy = 0;
+        let tick = 0;
+        let scrollVelocity = 0;
+        let inertiaLeft = 0;
+        let inertiaRight = 0;
+        let velocityLeft = 0;
+        let velocityRight = 0;
+        let lastDataRefresh = 0;
+
+        function renderHudMotion() {
+          hudFrame = null;
+          hud.style.setProperty("--hud-left-x", `${nextX * -0.46}px`);
+          hud.style.setProperty("--hud-left-y", `${nextY * -0.34 + inertiaLeft}px`);
+          hud.style.setProperty("--hud-right-x", `${nextX * 0.4}px`);
+          hud.style.setProperty("--hud-right-y", `${nextY * -0.28 + inertiaRight}px`);
+        }
+
+        window.addEventListener("pointermove", (event) => {
+          if (window.innerWidth <= 900) return;
+          nextX = (event.clientX / Math.max(window.innerWidth, 1) - 0.5) * 10;
+          nextY = (event.clientY / Math.max(window.innerHeight, 1) - 0.5) * 8;
+          if (!hudFrame) hudFrame = requestAnimationFrame(renderHudMotion);
+        }, { passive: true });
+
+        function updateHudData() {
+          scrollFrame = null;
+          tick += 1;
+          scrollEnergy *= 0.84;
+          velocityLeft += (-inertiaLeft) * 0.105;
+          velocityRight += (-inertiaRight) * 0.135;
+          velocityLeft *= 0.76;
+          velocityRight *= 0.72;
+          inertiaLeft += velocityLeft;
+          inertiaRight += velocityRight;
+          const activity = Math.min(1, scrollEnergy);
+          hud.style.setProperty("--hud-activity", activity.toFixed(3));
+          renderHudMotion();
+
+          const now = performance.now();
+          const shouldRefreshData = activity > 0.04 && now - lastDataRefresh > 96;
+          if (shouldRefreshData) {
+            lastDataRefresh = now;
+            rows.forEach((row, index) => {
+              const wave = Math.sin(tick * 0.23 + index * 1.8) * 18 * activity;
+              const jitter = (Math.random() - 0.5) * 70 * activity;
+              row.target = Math.max(1, Math.min(99, row.base + wave + jitter));
+            });
+          }
+
+          rows.forEach((row) => {
+            const target = activity > 0.02 ? (Number.isFinite(row.target) ? row.target : row.base) : row.base;
+            row.current += (target - row.current) * (0.2 + activity * 0.24);
+            const displayValue = Math.max(18, Math.min(98, Math.round(row.current)));
+            if (row.value) row.value.textContent = String(displayValue).padStart(2, "0");
+            if (row.track) row.track.style.setProperty("--value", `${displayValue}%`);
+          });
+
+          if (percent) {
+            if (shouldRefreshData) {
+              percent.dataset.target = String(Math.max(1, Math.min(999, Math.round(1 + Math.random() * 998))));
+            }
+            const targetPercent = activity > 0.04 ? Number(percent.dataset.target || percentBase) : percentBase;
+            const currentPercent = Number(percent.dataset.current || percentBase);
+            const nextPercent = currentPercent + (targetPercent - currentPercent) * (0.38 + activity * 0.24);
+            percent.dataset.current = String(nextPercent);
+            percent.textContent = `${Math.max(1, Math.min(999, Math.round(nextPercent)))}%`;
+          }
+
+          if (activity > 0.04) {
+            cells.forEach((cell, index) => {
+              const noise = Math.sin(tick * 0.31 + index * 2.21) + Math.random() * 0.9;
+              cell.classList.toggle("is-active", noise > 1.1 - activity * 0.35);
+              cell.classList.toggle("is-soft", noise > 0.42 && noise <= 1.1);
+            });
+          } else {
+            cells.forEach((cell) => {
+              cell.classList.remove("is-active", "is-soft");
+            });
+          }
+
+          if (scrollEnergy > 0.015 || Math.abs(inertiaLeft) > 0.25 || Math.abs(inertiaRight) > 0.25) {
+            scrollFrame = requestAnimationFrame(updateHudData);
+          } else {
+            hud.style.setProperty("--hud-activity", "0");
+            inertiaLeft = 0;
+            inertiaRight = 0;
+            velocityLeft = 0;
+            velocityRight = 0;
+            renderHudMotion();
+            rows.forEach((row) => {
+              row.current += (row.base - row.current) * 0.22;
+              const displayValue = Math.round(row.current);
+              if (row.value) row.value.textContent = String(displayValue).padStart(2, "0");
+              if (row.track) row.track.style.setProperty("--value", `${displayValue}%`);
+            });
+            if (percent) percent.textContent = `${percentBase}%`;
+          }
+        }
+
+        window.addEventListener("scroll", () => {
+          if (window.innerWidth <= 900) return;
+          const currentScrollY = window.scrollY || window.pageYOffset || 0;
+          const signedDelta = currentScrollY - lastScrollY;
+          const delta = Math.abs(signedDelta);
+          lastScrollY = currentScrollY;
+          scrollVelocity = Math.max(-24, Math.min(24, signedDelta * 0.18));
+          velocityLeft += scrollVelocity * 0.18;
+          velocityRight += scrollVelocity * 0.24;
+          scrollEnergy = Math.min(1, scrollEnergy + delta / 260);
+          if (!scrollFrame) scrollFrame = requestAnimationFrame(updateHudData);
+        }, { passive: true });
       }
 
       function initParticleField() {
@@ -3731,6 +4165,7 @@
       }
 
       initParticleField();
+      initHeroHudMotion();
       initGSAPMotion();
 
       const modal = document.querySelector("#workModal");
