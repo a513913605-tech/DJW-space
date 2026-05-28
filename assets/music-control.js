@@ -73,6 +73,13 @@
     controls.forEach(updateControl);
   }
 
+  function updateMobileCompactState() {
+    const shouldCompact = window.innerWidth <= 720 && (window.scrollY || window.pageYOffset || 0) > 24;
+    controls.forEach((control) => {
+      control.classList.toggle("is-compact", shouldCompact);
+    });
+  }
+
   async function playAudio(options = {}) {
     if (playRequest) return playRequest;
     state.enabled = true;
@@ -136,8 +143,11 @@
 
   window.addEventListener("pointerdown", resumeOnInteraction, { passive: true });
   window.addEventListener("keydown", resumeOnInteraction);
+  window.addEventListener("scroll", updateMobileCompactState, { passive: true });
+  window.addEventListener("resize", updateMobileCompactState);
 
   updateAllControls();
+  updateMobileCompactState();
   if (state.enabled) {
     playAudio({ save: false });
   }

@@ -1,0 +1,89 @@
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.92), transparent 34%),
+    linear-gradient(180deg, #fbfaf7 0%, #f1f0ea 100%);
+  color: rgba(23, 23, 23, 0.86);
+  transition: opacity 620ms ease, visibility 620ms ease;
+}
+
+.page-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.page-loader__inner {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+}
+
+.page-loader__word {
+  display: inline-flex;
+  gap: 0.02em;
+  font-size: clamp(42px, 8vw, 96px);
+  line-height: 0.9;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.page-loader__word span {
+  display: inline-block;
+  animation: loaderLetter 1.12s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  transform-origin: 50% 56%;
+}
+
+.page-loader__word span:nth-child(2) { animation-delay: 70ms; }
+.page-loader__word span:nth-child(3) { animation-delay: 140ms; }
+.page-loader__word span:nth-child(4) { animation-delay: 210ms; }
+.page-loader__word span:nth-child(5) { animation-delay: 280ms; }
+.page-loader__word span:nth-child(6) { animation-delay: 350ms; }
+.page-loader__word span:nth-child(7) { animation-delay: 420ms; }
+.page-loader__word span:nth-child(8) { animation-delay: 490ms; }
+.page-loader__word span:nth-child(9) { animation-delay: 560ms; }
+
+.page-loader__meta {
+  color: rgba(23, 23, 23, 0.38);
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+}
+
+@keyframes loaderLetter {
+  0%, 100% {
+    opacity: 0.42;
+    transform: translateY(0) rotate(0deg) scale(0.94);
+  }
+  42% {
+    opacity: 1;
+    transform: translateY(-8px) rotate(12deg) scale(1);
+  }
+  72% {
+    opacity: 0.72;
+    transform: translateY(2px) rotate(-5deg) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__word span {
+    animation: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .page-loader__word {
+    font-size: clamp(42px, 16vw, 72px);
+  }
+
+  .page-loader__meta {
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-indent: 0.28em;
+  }
+}

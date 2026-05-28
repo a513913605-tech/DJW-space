@@ -458,18 +458,46 @@
         }
 
         .nav {
-          padding: 16px;
-          align-items: stretch;
-          gap: 10px;
-          flex-direction: column;
+          top: calc(env(safe-area-inset-top, 0px) + 58px);
+          right: 16px;
+          left: 16px;
+          padding: 0;
+          align-items: center;
+          justify-content: center;
+          gap: 0;
+        }
+
+        .site-signature {
+          position: fixed;
+          top: calc(env(safe-area-inset-top, 0px) + 16px);
+          left: 16px;
+          z-index: 63;
+          max-width: calc(100vw - 32px);
+          padding: 9px 11px;
+          font-size: 12px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .nav__links {
+          width: 100%;
           justify-content: space-between;
+          box-sizing: border-box;
+          gap: 2px;
+          padding: 6px;
+          font-size: 12px;
+        }
+
+        .nav__links a {
+          flex: 1;
+          padding: 9px 6px;
+          text-align: center;
+          white-space: nowrap;
         }
 
         .page {
-          padding: 138px 20px 62px;
+          padding: calc(env(safe-area-inset-top, 0px) + 152px) 20px 62px;
         }
 
         .section {
@@ -487,9 +515,18 @@
       }
     </style>
     <link rel="stylesheet" href="assets/music-control.css" />
+    <link rel="stylesheet" href="assets/page-loader.css" />
   </head>
   <body>
     <div class="frame"></div>
+    <div class="page-loader" role="status" aria-label="Portfolio loading">
+      <div class="page-loader__inner">
+        <div class="page-loader__word" aria-hidden="true">
+          <span>P</span><span>o</span><span>r</span><span>t</span><span>f</span><span>o</span><span>l</span><span>i</span><span>o</span>
+        </div>
+        <div class="page-loader__meta">Loading Design Field</div>
+      </div>
+    </div>
 
     <header class="nav">
       <div class="site-signature">Designer DJW</div>
@@ -624,5 +661,6 @@
       </section>
     </main>
     <script src="assets/music-control.js"></script>
+    <script src="assets/page-loader.js"></script>
   </body>
 </html>
