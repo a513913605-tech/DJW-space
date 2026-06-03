@@ -2187,6 +2187,15 @@
       }
     </style>
     <link rel="stylesheet" href="assets/music-control.css" />
+    <script>
+      (function () {
+        try {
+          if (sessionStorage.getItem("portfolioHomeLoaderPlayed") === "true") {
+            document.documentElement.classList.add("loader-skip");
+          }
+        } catch (error) {}
+      })();
+    </script>
     <link rel="stylesheet" href="assets/page-loader.css" />
   </head>
   <body>
@@ -2194,7 +2203,7 @@
     <div class="page-loader" role="status" aria-label="Portfolio loading">
       <div class="page-loader__inner">
         <div class="page-loader__word" aria-hidden="true">
-          <span>P</span><span>o</span><span>r</span><span>t</span><span>f</span><span>o</span><span>l</span><span>i</span><span>o</span>
+          <span>P</span><span>O</span><span>R</span><span>T</span><span>F</span><span>O</span><span>L</span><span>I</span><span>O</span>
         </div>
         <div class="page-loader__meta">Loading Design Field</div>
       </div>
@@ -2417,64 +2426,64 @@
           <div class="works-slider">
             <button class="slider-btn slider-btn--prev" type="button" aria-label="查看上一项作品">‹</button>
             <div class="works__grid" id="worksSlider">
-              <button class="card" type="button" data-title="DADA梦工厂宣发海报" data-desc="以“时光机”为核心概念，完成玩具品牌宣发海报与产品视觉包装，强化故事感和系列化识别。" data-tags="tinytoys / 创意合成 / 宣发海报" data-image="assets/selected/banners/banner-01-dada.jpg">
+              <button class="card" type="button" data-title="DADA梦工厂宣发海报" data-desc="以“时光机”为核心概念，完成玩具品牌宣发海报与产品视觉包装，强化故事感和系列化识别。" data-tags="tinytoys / 创意合成 / 宣发海报" data-image="作品集/精选作品封面/DaDa梦工厂宣发海报.jpg">
                 <span class="card__index">01</span>
                 <span class="card__body">
                   <span>DADA梦工厂宣发海报</span>
                   <small>把产品故事转译成可传播的时光机视觉，突出概念、包装与系列化识别。</small>
                   <em class="card__meta">tinytoys · 创意合成 / 插画 / 3D</em>
                 </span>
-                <span class="card__visual"><img src="assets/selected/banners/banner-01-dada.jpg" alt="DADA梦工厂宣发海报" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/DaDa梦工厂宣发海报.jpg" alt="DADA梦工厂宣发海报" /></span>
                 <span class="card__arrow">→</span>
               </button>
-              <button class="card" type="button" data-title="欢乐斗地主王炸节" data-desc="围绕节日活动建立强冲击的主视觉与多端传播物料，让玩法记忆点和活动利益点更直接。" data-tags="腾讯游戏 / 活动主视觉 / 宣发海报" data-image="assets/selected/banners/banner-02-doudizhu.jpg">
+              <button class="card" type="button" data-title="欢乐斗地主王炸节" data-desc="围绕节日活动建立强冲击的主视觉与多端传播物料，让玩法记忆点和活动利益点更直接。" data-tags="腾讯游戏 / 活动主视觉 / 宣发海报" data-image="作品集/精选作品封面/欢乐斗地主.jpg">
                 <span class="card__index">02</span>
                 <span class="card__body">
                   <span>欢乐斗地主王炸节</span>
                   <small>用高饱和角色和扑克牌语义建立节日冲击力，让活动利益点一眼可读。</small>
                   <em class="card__meta">腾讯游戏 · 创意合成 / 插画</em>
                 </span>
-                <span class="card__visual"><img src="assets/selected/banners/banner-02-doudizhu.jpg" alt="欢乐斗地主王炸节" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/欢乐斗地主.jpg" alt="欢乐斗地主王炸节" /></span>
                 <span class="card__arrow">→</span>
               </button>
-              <button class="card" type="button" data-title="快手游戏春节传播活动" data-desc="以春节游园会为主题，构建热闹、轻松、有游戏感的活动视觉系统和多渠道延展。" data-tags="快手游戏 / 春节活动 / 宣发海报" data-image="assets/selected/banners/banner-03-kuaishou.jpg">
+              <button class="card" type="button" data-title="快手游戏春节传播活动" data-desc="以春节游园会为主题，构建热闹、轻松、有游戏感的活动视觉系统和多渠道延展。" data-tags="快手游戏 / 春节活动 / 宣发海报" data-image="作品集/精选作品封面/快手游戏春节传播活动.jpg">
                 <span class="card__index">03</span>
                 <span class="card__body">
                   <span>快手游戏春节传播活动</span>
                   <small>把春节游园会与游戏福利结合，形成明快、热闹、易延展的活动视觉。</small>
                   <em class="card__meta">快手 · 创意合成 / 插画</em>
                 </span>
-                <span class="card__visual"><img src="assets/selected/banners/banner-03-kuaishou.jpg" alt="快手游戏春节传播活动" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/快手游戏春节传播活动.jpg" alt="快手游戏春节传播活动" /></span>
                 <span class="card__arrow">→</span>
               </button>
-              <button class="card" type="button" data-title="招商银行官方微博运营" data-desc="以固定栏目和轻量插画建立更亲和的金融内容表达，提升信息可读性和品牌温度。" data-tags="招商银行 / 官方微博 / 运营设计" data-image="assets/selected/banners/banner-04-cmb.jpg">
+              <button class="card" type="button" data-title="招商银行官方微博运营" data-desc="以固定栏目和轻量插画建立更亲和的金融内容表达，提升信息可读性和品牌温度。" data-tags="招商银行 / 官方微博 / 运营设计" data-image="作品集/精选作品封面/招商银行微博运营.jpg">
                 <span class="card__index">04</span>
                 <span class="card__body">
                   <span>招商银行官方微博运营</span>
                   <small>用轻插画和栏目化系统降低金融内容门槛，让官方运营更亲和、更稳定。</small>
                   <em class="card__meta">招商银行 · 官方微博运营</em>
                 </span>
-                <span class="card__visual"><img src="assets/selected/banners/banner-04-cmb.jpg" alt="招商银行官方微博运营" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/招商银行微博运营.jpg" alt="招商银行官方微博运营" /></span>
                 <span class="card__arrow">→</span>
               </button>
-              <button class="card" type="button" data-title="《金铲铲之战》灵魂莲华场景原画" data-desc="围绕新品上线宣传片需求，完成具有能量流动和幻想氛围的场景原画与关键视觉。" data-tags="腾讯游戏 / 场景原画 / 宣传片视觉" data-image="assets/selected/banners/banner-05-jcc.jpg">
+              <button class="card" type="button" data-title="《金铲铲之战》灵魂莲华场景原画" data-desc="围绕新品上线宣传片需求，完成具有能量流动和幻想氛围的场景原画与关键视觉。" data-tags="腾讯游戏 / 场景原画 / 宣传片视觉" data-image="作品集/精选作品封面/灵魂莲华场景概念设定.jpg">
                 <span class="card__index">05</span>
                 <span class="card__body">
                   <span>灵魂莲华场景原画</span>
                   <small>用流动能量、紫蓝光感和空间冲击力，服务新品宣传片的情绪记忆点。</small>
                   <em class="card__meta">腾讯游戏 · 场景原画</em>
                 </span>
-                <span class="card__visual"><img src="assets/selected/banners/banner-05-jcc.jpg" alt="金铲铲之战灵魂莲华场景原画" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/灵魂莲华场景概念设定.jpg" alt="金铲铲之战灵魂莲华场景原画" /></span>
                 <span class="card__arrow">→</span>
               </button>
-              <button class="card" type="button" data-title="QQ公仔联名IP设计" data-desc="将QQ公仔与游戏、潮流和展陈语境结合，完成具有联名识别度的IP造型与视觉包装。" data-tags="腾讯游戏 / IP设计 / 联名包装" data-image="assets/selected/banners/banner-06-qqip.jpg">
+              <button class="card" type="button" data-title="QQ公仔联名IP设计" data-desc="将QQ公仔与游戏、潮流和展陈语境结合，完成具有联名识别度的IP造型与视觉包装。" data-tags="腾讯游戏 / IP设计 / 联名包装" data-image="作品集/精选作品封面/QQ公仔联名IP设计.jpg">
                 <span class="card__index">06</span>
                 <span class="card__body">
                   <span>QQ公仔联名IP设计</span>
                   <small>把QQ公仔和游戏文化做联名转译，强化角色辨识度与展陈传播趣味。</small>
                   <em class="card__meta">腾讯游戏 · IP设计</em>
                 </span>
-                <span class="card__visual"><img src="assets/selected/banners/banner-06-qqip.jpg" alt="QQ公仔联名IP设计" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/QQ公仔联名IP设计.jpg" alt="QQ公仔联名IP设计" /></span>
                 <span class="card__arrow">→</span>
               </button>
             </div>
