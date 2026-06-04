@@ -766,6 +766,53 @@
         font-weight: 720;
       }
 
+      .material-title {
+        --title-x: 50%;
+        --title-y: 50%;
+        --title-shine: 0;
+        position: relative;
+        display: inline-block;
+        width: fit-content;
+        max-width: 100%;
+        margin-inline: auto;
+        color: rgba(23, 23, 23, 0.86);
+        text-align: center;
+        text-shadow: 0 12px 34px rgba(23, 23, 23, 0.035);
+        transition: filter 420ms ease, text-shadow 420ms ease;
+      }
+
+      .material-title::after {
+        content: attr(data-material-text);
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at var(--title-x) var(--title-y),
+            rgba(255, 255, 255, 0.96) 0%,
+            rgba(232, 226, 210, 0.62) 10%,
+            rgba(177, 181, 181, 0.16) 24%,
+            transparent 42%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        opacity: var(--title-shine);
+        mix-blend-mode: screen;
+        transition: opacity 360ms ease;
+      }
+
+      .material-title.is-lit {
+        filter: brightness(1.06) contrast(1.04);
+        text-shadow:
+          0 16px 36px rgba(23, 23, 23, 0.05),
+          0 0 18px rgba(242, 164, 58, 0.06);
+      }
+
+      @media (hover: none), (pointer: coarse) {
+        .material-title::after {
+          display: none;
+        }
+      }
+
       .identity {
         margin-top: 10px;
         font-size: clamp(18px, 2.2vw, 34px);
@@ -2187,6 +2234,7 @@
       }
     </style>
     <link rel="stylesheet" href="assets/music-control.css" />
+    <link rel="stylesheet" href="assets/geo-grid.css" />
     <script>
       (function () {
         try {
@@ -2313,7 +2361,7 @@
           <div class="shape shape--opening"></div>
         </div>
         <button class="intro-visual" type="button" aria-label="查看个人头像大图">
-          <img src="assets/avatar.jpg" alt="戴金旺个人头像" />
+          <img src="assets/avatar.jpg" alt="戴金旺个人头像" decoding="async" />
           <span class="intro-visual__fallback">Portrait</span>
         </button>
         <div class="content intro section-copy">
@@ -2607,6 +2655,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
     <script src="assets/music-control.js"></script>
+    <script src="assets/geo-grid.js"></script>
     <script src="assets/page-loader.js"></script>
     <script>
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -4202,9 +4251,70 @@
         }
       }
 
+      function initMaterialTitleInteraction() {
+        const titles = Array.from(document.querySelectorAll("#hero h1, #about h2, #ability h2, #selected h2, #contact h2"));
+        if (!titles.length) return;
+
+        titles.forEach((title) => {
+          title.classList.add("material-title");
+          title.dataset.materialText = title.textContent.trim();
+          title.style.setProperty("--title-x", "50%");
+          title.style.setProperty("--title-y", "50%");
+          title.style.setProperty("--title-shine", "0");
+        });
+
+        const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        if (!canHover || reduceMotion) return;
+
+        titles.forEach((title) => {
+          const moveLight = (event) => {
+            const rect = title.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / Math.max(rect.width, 1)) * 100;
+            const y = ((event.clientY - rect.top) / Math.max(rect.height, 1)) * 100;
+
+            if (hasGSAP) {
+              gsap.to(title, {
+                "--title-x": `${Math.max(0, Math.min(100, x))}%`,
+                "--title-y": `${Math.max(0, Math.min(100, y))}%`,
+                "--title-shine": 0.82,
+                duration: 0.28,
+                ease: "sine.out",
+                overwrite: true
+              });
+            } else {
+              title.style.setProperty("--title-x", `${Math.max(0, Math.min(100, x))}%`);
+              title.style.setProperty("--title-y", `${Math.max(0, Math.min(100, y))}%`);
+              title.style.setProperty("--title-shine", "0.82");
+            }
+          };
+
+          title.addEventListener("pointerenter", (event) => {
+            title.classList.add("is-lit");
+            moveLight(event);
+          });
+
+          title.addEventListener("pointermove", moveLight);
+
+          title.addEventListener("pointerleave", () => {
+            title.classList.remove("is-lit");
+            if (hasGSAP) {
+              gsap.to(title, {
+                "--title-shine": 0,
+                duration: 0.5,
+                ease: "sine.out",
+                overwrite: true
+              });
+            } else {
+              title.style.setProperty("--title-shine", "0");
+            }
+          });
+        });
+      }
+
       initParticleField();
       initHeroHudMotion();
       initGSAPMotion();
+      initMaterialTitleInteraction();
 
       const modal = document.querySelector("#workModal");
       const modalPanel = document.querySelector(".work-modal__panel");
@@ -4619,13 +4729,25 @@
         if (event.key === "Escape" && modal.classList.contains("is-open")) closeModal();
       });
 
-      avatarThumb.addEventListener("load", () => {
-        avatarButton.classList.add("has-image");
-      });
+      function syncAvatarImageState() {
+        const isReady = avatarThumb.complete && avatarThumb.naturalWidth > 0;
+        avatarButton.classList.toggle("has-image", isReady);
+        if (isReady && window.ScrollTrigger) {
+          requestAnimationFrame(() => ScrollTrigger.refresh());
+        }
+      }
+
+      avatarThumb.addEventListener("load", syncAvatarImageState);
 
       avatarThumb.addEventListener("error", () => {
         avatarButton.classList.remove("has-image");
       });
+
+      syncAvatarImageState();
+
+      if (avatarThumb.decode) {
+        avatarThumb.decode().then(syncAvatarImageState).catch(() => {});
+      }
 
       function getTransformFromElement(source, target) {
         const sourceRect = source.getBoundingClientRect();

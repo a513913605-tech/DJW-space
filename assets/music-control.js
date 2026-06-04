@@ -3,7 +3,7 @@
   if (!controls.length) return;
 
   const storageKey = "djwPortfolioMusic";
-  const storageVersion = 2;
+  const storageVersion = 3;
   const defaultState = {
     enabled: true,
     volume: 0.9,
@@ -18,7 +18,7 @@
       }
       if (saved.version !== storageVersion) {
         return {
-          enabled: typeof saved.enabled === "boolean" ? saved.enabled : defaultState.enabled,
+          enabled: defaultState.enabled,
           volume: defaultState.volume,
           version: storageVersion
         };

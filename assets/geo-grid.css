@@ -1,0 +1,78 @@
+.geo-grid {
+  --geo-rotate: 0deg;
+  --geo-drift: 0px;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+}
+
+.geo-grid::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255, 255, 255, 0.34), transparent 34%),
+    radial-gradient(circle at 50% 52%, rgba(96, 96, 96, 0.08), transparent 56%);
+}
+
+.geo-grid__sphere {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(118vw, 1120px);
+  height: min(118vw, 1120px);
+  transform:
+    translate3d(-50%, calc(-50% + var(--geo-drift)), 0)
+    rotate(var(--geo-rotate))
+    rotateX(58deg)
+    rotateZ(-10deg);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.geo-grid svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.geo-grid .geo-line {
+  fill: none;
+  stroke: rgba(82, 82, 82, 0.22);
+  stroke-width: 0.72;
+  vector-effect: non-scaling-stroke;
+}
+
+.geo-grid .geo-line--soft {
+  stroke: rgba(82, 82, 82, 0.13);
+}
+
+.geo-grid .geo-line--axis {
+  stroke: rgba(82, 82, 82, 0.16);
+  stroke-dasharray: 8 18;
+}
+
+@media (max-width: 760px) {
+  .geo-grid {
+    opacity: 0.16;
+  }
+
+  .geo-grid__sphere {
+    width: 145vw;
+    height: 145vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .geo-grid__sphere {
+    transform:
+      translate3d(-50%, calc(-50% + var(--geo-drift)), 0)
+      rotateX(58deg)
+      rotateZ(-10deg);
+  }
+}

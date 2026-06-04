@@ -337,13 +337,14 @@
 
       .timeline {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(6, minmax(0, 1fr));
         gap: 18px;
       }
 
       .timeline-item {
         position: relative;
         display: grid;
+        grid-column: span 2;
         gap: 18px;
         min-height: 420px;
         padding: 26px 22px 24px;
@@ -356,6 +357,13 @@
         box-shadow:
           0 18px 42px rgba(23, 23, 23, 0.035),
           inset 0 1px 0 rgba(255, 255, 255, 0.78);
+      }
+
+      .timeline-item--wide {
+        grid-column: 1 / -1;
+        min-height: auto;
+        gap: 24px;
+        padding: clamp(26px, 3vw, 36px);
       }
 
       .timeline-item::before {
@@ -407,6 +415,66 @@
         font-size: 12px;
       }
 
+      .incubation {
+        display: grid;
+        gap: 16px;
+        padding-top: 4px;
+      }
+
+      .incubation__heading {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 1px solid rgba(23, 23, 23, 0.08);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.56);
+        color: rgba(23, 23, 23, 0.58);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .incubation-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .incubation-card {
+        display: grid;
+        gap: 12px;
+        padding: 18px;
+        border: 1px solid rgba(23, 23, 23, 0.07);
+        border-radius: 20px;
+        background:
+          radial-gradient(circle at 86% 12%, rgba(242, 164, 58, 0.08), transparent 28%),
+          rgba(255, 255, 255, 0.54);
+      }
+
+      .incubation-card .year {
+        font-size: 12px;
+      }
+
+      .incubation-card h4 {
+        margin: 0;
+        font-size: clamp(22px, 2.4vw, 32px);
+        line-height: 1.12;
+      }
+
+      .incubation-card strong {
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .incubation-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.82;
+      }
+
       .contact {
         display: grid;
         justify-items: center;
@@ -416,6 +484,16 @@
 
       .contact h2 {
         max-width: 820px;
+      }
+
+      .contact-title {
+        display: grid;
+        gap: clamp(14px, 2vw, 24px);
+        line-height: 1.08;
+      }
+
+      .contact-title span {
+        display: block;
       }
 
       .mini-logo {
@@ -448,7 +526,16 @@
         }
 
         .timeline-item {
+          grid-column: auto;
           min-height: auto;
+        }
+
+        .timeline-item--wide {
+          grid-column: auto;
+        }
+
+        .incubation-grid {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -515,6 +602,7 @@
       }
     </style>
     <link rel="stylesheet" href="assets/music-control.css" />
+    <link rel="stylesheet" href="assets/geo-grid.css" />
   </head>
   <body>
     <div class="frame"></div>
@@ -547,7 +635,7 @@
           <div class="hero__title">
             <div class="eyebrow">About / Identity</div>
             <h1>金旺</h1>
-            <p class="identity">品牌视觉和插画创作者</p>
+            <p class="identity">营销视觉和插画设计</p>
           </div>
           <p class="lead">
             约 6 年商业视觉与插画设计经验，曾参与腾讯游戏、招商银行、快手、OPPO 等品牌项目。
@@ -583,7 +671,7 @@
         <div class="timeline-heading">
           <div class="eyebrow">Growth Timeline</div>
           <h2>成长时间轴</h2>
-          <p class="growth-line">基础建立 → 游戏视觉执行 → 场景原画训练 → 商业视觉与团队管理</p>
+          <p class="growth-line">基础建立 → 场景原画训练 → 游戏视觉执行 → 商业视觉、团队管理与内部孵化</p>
         </div>
 
         <div class="timeline" aria-label="成长经历时间轴">
@@ -602,21 +690,7 @@
           </article>
 
           <article class="timeline-item">
-            <div class="year">2018 - 2019</div>
-            <div class="role">
-              <h3>20 Percent</h3>
-              <strong>插画师</strong>
-            </div>
-            <p>参与腾讯游戏相关运营视觉与活动插画项目，负责游戏板块视觉物料产出。项目覆盖《王者荣耀》《穿越火线》《使命召唤 OL》等 IP，逐步建立对游戏角色调性、运营活动包装与多尺寸传播物料的理解。</p>
-            <div class="keywords">
-              <span class="keyword">游戏运营视觉</span>
-              <span class="keyword">活动插画</span>
-              <span class="keyword">IP 调性</span>
-            </div>
-          </article>
-
-          <article class="timeline-item">
-            <div class="year">2019</div>
+            <div class="year">2017</div>
             <div class="role">
               <h3>腾讯游戏 光子工作室</h3>
               <strong>场景原画实习</strong>
@@ -630,16 +704,58 @@
           </article>
 
           <article class="timeline-item">
-            <div class="year">2019 - 2025</div>
+            <div class="year">2018 - 2019</div>
+            <div class="role">
+              <h3>20 Percent</h3>
+              <strong>插画师</strong>
+            </div>
+            <p>参与腾讯游戏相关运营视觉与活动插画项目，负责游戏板块视觉物料产出。项目覆盖《王者荣耀》《穿越火线》《使命召唤 OL》等 IP，逐步建立对游戏角色调性、运营活动包装与多尺寸传播物料的理解。</p>
+            <div class="keywords">
+              <span class="keyword">游戏运营视觉</span>
+              <span class="keyword">活动插画</span>
+              <span class="keyword">IP 调性</span>
+            </div>
+          </article>
+
+          <article class="timeline-item timeline-item--wide">
+            <div class="year">2019 - 至今</div>
             <div class="role">
               <h3>TINY 小牌文化</h3>
-              <strong>插画主管 / 视觉设计主管</strong>
+              <strong>插画组长 / 项目负责人</strong>
             </div>
             <p>负责商业视觉、插画项目与团队管理，服务腾讯、招商银行、快手、OPPO 等客户。项目类型覆盖游戏宣发、品牌社媒运营、活动主视觉、IP 设计与产品开发，并负责 6 人创意 / 插画团队的项目排期、风格把控、质量审核与协作推进。</p>
             <div class="keywords">
               <span class="keyword">商业视觉</span>
               <span class="keyword">团队管理</span>
               <span class="keyword">项目落地</span>
+              <span class="keyword">内部孵化</span>
+            </div>
+            <div class="incubation" aria-label="小牌文化内部孵化项目">
+              <div class="incubation__heading">Internal Incubation</div>
+              <div class="incubation-grid">
+                <article class="incubation-card">
+                  <div class="year">2021 - 2022</div>
+                  <h4>TINYTOYS</h4>
+                  <strong>IP 设计 / 产品开发 / 策展推广</strong>
+                  <p>负责设计并开发潮玩 IP DADA BOY，参与角色设定、生产监修、产品落地、展陈活动与后期推广销售，将原创形象从概念推进到可展示、可传播的产品形态。</p>
+                  <div class="keywords">
+                    <span class="keyword">潮玩 IP</span>
+                    <span class="keyword">产品落地</span>
+                    <span class="keyword">策展推广</span>
+                  </div>
+                </article>
+                <article class="incubation-card">
+                  <div class="year">2026</div>
+                  <h4>小牌动漫</h4>
+                  <strong>AI 漫剧导演 / 美术设定 / 分镜 / 剪辑</strong>
+                  <p>参与 AI 漫剧从 0 到 1 开发，负责剧本创意讨论、AI 分镜脚本、动画生成、剪辑落地与上线流程，跑通 AI 内容生产链路。</p>
+                  <div class="keywords">
+                    <span class="keyword">AI 漫剧</span>
+                    <span class="keyword">分镜动画</span>
+                    <span class="keyword">内容生产流程</span>
+                  </div>
+                </article>
+              </div>
             </div>
           </article>
         </div>
@@ -647,10 +763,14 @@
 
       <section class="section contact" id="contact">
         <div class="eyebrow">Contact</div>
-        <h2>期待与你一起完成清晰、有质感、能落地的视觉项目。</h2>
+        <h2 class="contact-title">
+          <span>期待与你一起完成</span>
+          <span>清晰、有质感、能落地的视觉项目。</span>
+        </h2>
         <span class="mini-logo">Y</span>
       </section>
     </main>
     <script src="assets/music-control.js"></script>
+    <script src="assets/geo-grid.js"></script>
   </body>
 </html>

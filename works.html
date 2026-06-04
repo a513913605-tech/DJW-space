@@ -260,19 +260,54 @@
         transform: scaleX(1);
       }
 
-      .archive {
-        column-count: 3;
-        column-gap: clamp(14px, 1.4vw, 22px);
+      .work-section {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        gap: clamp(18px, 2.4vw, 30px);
+      }
+
+      .work-section + .work-section {
+        margin-top: clamp(54px, 6vw, 92px);
+      }
+
+      .work-section__header {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 28px;
+        padding-bottom: 2px;
+      }
+
+      .work-section__header h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 48px;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .work-section__header p {
+        max-width: 520px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+        letter-spacing: 0;
+      }
+
+      .work-archive {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: clamp(14px, 1.35vw, 20px);
+        align-items: stretch;
       }
 
       .work-card {
         position: relative;
-        display: inline-grid;
+        display: grid;
         align-content: end;
         width: 100%;
         min-height: auto;
-        margin: 0 0 clamp(14px, 1.4vw, 22px);
-        break-inside: avoid;
         aspect-ratio: 4 / 3;
         overflow: hidden;
         border: 1px solid rgba(23, 23, 23, 0.08);
@@ -368,16 +403,39 @@
         backdrop-filter: blur(10px);
       }
 
-      .span-3,
-      .span-4,
-      .span-5,
-      .span-6 {
-        grid-column: auto;
+      .archive-card {
+        aspect-ratio: 4 / 3;
+        border-radius: clamp(16px, 1.45vw, 22px);
+        box-shadow: 0 12px 26px rgba(23, 23, 23, 0.04);
       }
 
-      .h-1 { aspect-ratio: 1 / 1; }
-      .h-2 { aspect-ratio: 4 / 3; }
-      .h-3 { aspect-ratio: 3 / 4; }
+      .archive-card .work-card__content {
+        gap: 5px;
+        padding: clamp(14px, 1.35vw, 18px);
+      }
+
+      .archive-card .work-card__meta {
+        font-size: 10px;
+        letter-spacing: 0;
+      }
+
+      .archive-card .work-card__title {
+        font-size: 18px;
+        line-height: 1.18;
+        letter-spacing: 0;
+      }
+
+      .archive-card .work-card__desc {
+        display: none;
+      }
+
+      .archive-card .work-card__hint {
+        top: 12px;
+        right: 12px;
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+      }
 
       .work-card:nth-child(1) { animation-delay: 70ms; }
       .work-card:nth-child(2) { animation-delay: 120ms; }
@@ -737,8 +795,8 @@
       }
 
       @media (max-width: 1120px) {
-        .archive {
-          column-count: 2;
+        .work-archive {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
         .modal__panel {
@@ -830,8 +888,34 @@
           min-width: max-content;
         }
 
-        .archive {
-          column-count: 1;
+        .work-section__header {
+          display: grid;
+          gap: 10px;
+        }
+
+        .work-section__header p {
+          max-width: none;
+        }
+
+        .work-section__header h2 {
+          font-size: 34px;
+        }
+
+        .work-archive {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 12px;
+        }
+
+        .archive-card {
+          border-radius: 16px;
+        }
+
+        .archive-card .work-card__content {
+          padding: 12px;
+        }
+
+        .archive-card .work-card__title {
+          font-size: 15px;
         }
 
         .modal {
@@ -872,8 +956,15 @@
           grid-template-columns: 1fr;
         }
       }
+
+      @media (max-width: 520px) {
+        .work-archive {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
     <link rel="stylesheet" href="assets/music-control.css" />
+    <link rel="stylesheet" href="assets/geo-grid.css" />
   </head>
   <body>
     <div class="frame"></div>
@@ -904,7 +995,7 @@
       <section class="works-hero">
         <div class="hero-copy">
           <div class="eyebrow">Works / Visual Archive</div>
-          <h1>精选作品档案</h1>
+          <h1>作品档案</h1>
           <p class="lead">
             这里以高密度视觉档案库的方式呈现项目。先用作品图建立第一判断，再通过轻量信息了解项目方向、角色与视觉结果。
           </p>
@@ -923,106 +1014,12 @@
         </div>
       </section>
 
-      <section class="archive" aria-label="作品列表">
-        <article class="work-card span-6 h-3" data-category="marketing" data-title="DADA梦工厂宣发海报" data-type="品牌营销 / 宣发海报" data-desc="以“时光机”为核心概念，完成玩具品牌宣发海报与产品视觉包装，强化故事感和系列化识别。" data-tags="tinytoys / 创意合成 / 宣发海报" data-image="作品集/精选作品/dada梦工厂/时光机 海报.png">
-          <img src="assets/selected/banners/banner-01-dada.jpg" alt="DADA梦工厂宣发海报" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">Brand Campaign</div>
-            <div class="work-card__title">DADA梦工厂宣发海报</div>
-            <div class="work-card__desc">玩具品牌宣发视觉与故事化包装。</div>
-          </div>
-        </article>
-
-        <article class="work-card span-3 h-2" data-category="marketing" data-title="欢乐斗地主王炸节" data-type="品牌营销 / 活动主视觉" data-desc="围绕节日活动建立强冲击主视觉与多端传播物料，让玩法记忆点和活动利益点更直接。" data-tags="腾讯游戏 / 活动主视觉 / 多尺寸延展" data-image="作品集/精选作品/金旺作品集2025 2.0-13.jpg">
-          <img src="assets/selected/banners/banner-02-doudizhu.jpg" alt="欢乐斗地主王炸节" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">Game Marketing</div>
-            <div class="work-card__title">欢乐斗地主王炸节</div>
-            <div class="work-card__desc">游戏节日活动主视觉与传播物料。</div>
-          </div>
-        </article>
-
-        <article class="work-card span-3 h-2" data-category="marketing" data-title="快手游戏春节传播活动" data-type="品牌营销 / 春节活动" data-desc="以春节游园会为主题，构建热闹、轻松、有游戏感的活动视觉系统和多渠道延展。" data-tags="快手游戏 / 春节活动 / 运营传播" data-image="作品集/精选作品/金旺作品集2025 2.0-16.jpg">
-          <img src="assets/selected/banners/banner-03-kuaishou.jpg" alt="快手游戏春节传播活动" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">Festival Campaign</div>
-            <div class="work-card__title">快手游戏春节传播活动</div>
-            <div class="work-card__desc">春节活动视觉系统与渠道延展。</div>
-          </div>
-        </article>
-
-        <article class="work-card span-4 h-2" data-category="social" data-title="招商银行官方微博运营" data-type="社交媒体运营 / 栏目视觉" data-desc="以固定栏目和轻量插画建立更亲和的金融内容表达，提升信息可读性和品牌温度。" data-tags="招商银行 / 官方微博 / 运营设计" data-image="作品集/精选作品/金旺作品集2025 2.0-27.jpg">
-          <img src="assets/selected/banners/banner-04-cmb.jpg" alt="招商银行官方微博运营" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">Social Content</div>
-            <div class="work-card__title">招商银行官方微博运营</div>
-            <div class="work-card__desc">金融品牌社媒栏目视觉与插画表达。</div>
-          </div>
-        </article>
-
-        <article class="work-card span-4 h-3" data-category="concept" data-title="灵魂莲华场景原画" data-type="概念设计 / 场景原画" data-desc="围绕新品上线宣传片需求，完成具有能量流动和幻想氛围的场景原画与关键视觉。" data-tags="腾讯游戏 / 场景原画 / 宣传片视觉" data-image="作品集/精选作品/金旺作品集2025 2.0-32.jpg">
-          <img src="assets/selected/banners/banner-05-jcc.jpg" alt="金铲铲之战灵魂莲华场景原画" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">Concept Art</div>
-            <div class="work-card__title">灵魂莲华场景原画</div>
-            <div class="work-card__desc">幻想场景氛围、镜头构图与关键视觉。</div>
-          </div>
-        </article>
-
-        <article class="work-card span-4 h-2" data-category="product" data-title="QQ公仔联名IP设计" data-type="产品开发 / IP 联名" data-desc="将QQ公仔与游戏、潮流和展陈语境结合，完成具有联名识别度的IP造型与视觉包装。" data-tags="腾讯游戏 / IP设计 / 联名包装" data-image="作品集/精选作品/QQ联名鹅开发设计/金旺作品集2025 2.0-47.jpg">
-          <img src="assets/selected/banners/banner-06-qqip.jpg" alt="QQ公仔联名IP设计" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">IP Product</div>
-            <div class="work-card__title">QQ公仔联名IP设计</div>
-            <div class="work-card__desc">IP造型开发与联名视觉包装。</div>
-          </div>
-        </article>
-
-        <article class="work-card span-3 h-2" data-category="concept" data-title="王者男团CG概念场景" data-type="概念设计 / CG 场景" data-desc="围绕角色组合与活动氛围进行场景概念设计，强调舞台感、空间层次与视觉记忆点。" data-tags="王者荣耀 / CG概念 / 场景设计" data-image="作品集/精选作品/王者男团CG 概念场景设计/主KV-ck.psd@2x-80.jpg">
-          <img src="作品集/精选作品/王者男团CG 概念场景设计/主KV-ck.psd@2x-80.jpg" alt="王者男团CG概念场景" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">CG Concept</div>
-            <div class="work-card__title">王者男团CG概念场景</div>
-            <div class="work-card__desc">角色活动场景概念与舞台氛围。</div>
-          </div>
-        </article>
-
-        <article class="work-card span-3 h-1" data-category="product" data-title="Edgar Plans x NBA" data-type="产品开发 / 联名视觉" data-desc="围绕艺术家联名语境进行视觉包装和KV设计，平衡潮流艺术感与商业传播识别。" data-tags="联名视觉 / 潮流艺术 / KV设计" data-image="作品集/精选作品/edgar plans x NBA/kv最终版4.png">
-          <img src="作品集/精选作品/edgar plans x NBA/kv最终版4.png" alt="Edgar Plans x NBA 联名视觉" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">Collaboration</div>
-            <div class="work-card__title">Edgar Plans x NBA</div>
-            <div class="work-card__desc">潮流艺术联名视觉包装。</div>
-          </div>
-        </article>
-
-        <article class="work-card span-3 h-2" data-category="personal ai" data-title="个人账号视觉运营" data-type="个人创作 / AIGC 辅助" data-desc="围绕个人表达与内容传播建立视觉主题，探索插画风格、账号内容与AI辅助创意的结合。" data-tags="个人创作 / 账号运营 / AI辅助" data-image="作品集/精选作品/个人账号运营/资源 45@2x-80.jpg">
-          <img src="作品集/精选作品/个人账号运营/资源 45@2x-80.jpg" alt="个人账号视觉运营" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">Personal / AI</div>
-            <div class="work-card__title">个人账号视觉运营</div>
-            <div class="work-card__desc">个人内容主题与视觉风格探索。</div>
-          </div>
-        </article>
-
-        <article class="work-card span-3 h-1" data-category="product" data-title="DADA BOY潮玩公仔设计" data-type="产品开发 / 潮玩公仔" data-desc="从角色设定、造型语言到包装和衍生品表达，建立可延展的IP产品视觉系统。" data-tags="IP设定 / 潮玩设计 / 产品包装" data-image="作品集/精选作品/产品开发/资源 34@2x-80.jpg">
-          <img src="作品集/精选作品/产品开发/资源 34@2x-80.jpg" alt="DADA BOY潮玩公仔设计" />
-          <div class="work-card__hint">+</div>
-          <div class="work-card__content">
-            <div class="work-card__meta">Product Design</div>
-            <div class="work-card__title">DADA BOY潮玩公仔设计</div>
-            <div class="work-card__desc">角色、包装与产品化视觉系统。</div>
-          </div>
-        </article>
+      <section class="work-section work-section--archive" aria-labelledby="archiveWorksTitle">
+        <div class="work-section__header">
+          <h2 id="archiveWorksTitle">作品归档</h2>
+          <p>以统一四列网格展示更多作品，让招聘方和客户能快速扫读不同业务方向下的视觉产出。</p>
+        </div>
+        <div class="work-archive" aria-label="作品归档列表"></div>
       </section>
     </main>
 
@@ -1101,7 +1098,50 @@
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="assets/music-control.js"></script>
+    <script src="assets/geo-grid.js"></script>
     <script>
+      const roughWorkGroups = [
+        { folder: "营销设计", category: "marketing", label: "营销设计", meta: "Marketing Design", start: 7, end: 25 },
+        { folder: "运营设计", category: "social", label: "运营设计", meta: "Operation Design", start: 26, end: 30 },
+        { folder: "概念设计", category: "concept", label: "概念设计", meta: "Concept Design", start: 31, end: 45 },
+        { folder: "产品开发设计", category: "product", label: "产品开发设计", meta: "Product Design", start: 46, end: 54 },
+        { folder: "个人创作", category: "personal ai", label: "个人创作", meta: "Personal Work", start: 55, end: 60 }
+      ];
+
+      function renderRoughWorkCards() {
+        const archive = document.querySelector(".work-archive");
+        if (!archive) return;
+
+        roughWorkGroups.forEach((group) => {
+          for (let index = group.start; index <= group.end; index += 1) {
+            const page = String(index).padStart(2, "0");
+            const title = `${group.label} ${page}`;
+            const image = `作品集/works/${group.folder}/金旺作品集2025 2.0-${page}.jpg`;
+            const card = document.createElement("article");
+            card.className = "work-card archive-card";
+            card.dataset.category = group.category;
+            card.dataset.title = title;
+            card.dataset.type = `作品归档 / ${group.label}`;
+            card.dataset.desc = `${group.label}方向作品，当前先以单张作品卡片形式展示。`;
+            card.dataset.tags = `${group.label} / 作品归档 / 单图详情`;
+            card.dataset.image = image;
+            card.dataset.quickWork = "true";
+            card.innerHTML = `
+              <img src="${image}" alt="${title}" loading="lazy" />
+              <div class="work-card__hint">+</div>
+              <div class="work-card__content">
+                <div class="work-card__meta">${group.meta}</div>
+                <div class="work-card__title">${title}</div>
+                <div class="work-card__desc">点击查看单张作品详情。</div>
+              </div>
+            `;
+            archive.appendChild(card);
+          }
+        });
+      }
+
+      renderRoughWorkCards();
+
       const chips = Array.from(document.querySelectorAll(".chip"));
       const cards = Array.from(document.querySelectorAll(".work-card"));
       const modal = document.getElementById("previewModal");
@@ -1528,11 +1568,29 @@
         });
       }
 
+      function getQuickWorkDetail(card) {
+        if (card.dataset.quickWork !== "true") return {};
+
+        const image = card.dataset.image || "";
+        return {
+          hero: image,
+          gallery: [{ src: image, wide: true }],
+          position: card.dataset.type || "作品归档 / 单张作品",
+          background: "该作品来自完整作品归档，目前先以单张作品卡片形式展示，方便快速浏览和后续筛选整理。",
+          role: "负责对应画面的视觉设计与作品输出。",
+          businessGoal: "先完成作品页面的基础填充，让不同方向作品可以被独立浏览。",
+          designGoal: "保持单张作品展示清晰，后续可继续补充更完整的项目背景、职责和设计说明。",
+          capability: "视觉执行、画面表现、风格控制与作品归档整理。",
+          approach: "当前版本先按原作品页顺序粗排展示。",
+          outputs: ["单张作品展示", "作品归档图", "后续可补充项目说明"]
+        };
+      }
+
       function openModal(card) {
         if (isModalAnimating || modal.classList.contains("is-open")) return;
         isModalAnimating = true;
         activeCard = card;
-        const detail = projectDetails[card.dataset.title] || {};
+        const detail = projectDetails[card.dataset.title] || getQuickWorkDetail(card);
         modalImage.src = detail.hero || card.dataset.image || "";
         modalImage.alt = card.dataset.title || "";
         modalTitle.textContent = card.dataset.title || "";
