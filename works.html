@@ -296,10 +296,10 @@
       }
 
       .work-archive {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: clamp(14px, 1.35vw, 20px);
-        align-items: stretch;
+        position: relative;
+        display: block;
+        width: 100%;
+        min-height: 520px;
       }
 
       .work-card {
@@ -318,6 +318,15 @@
         opacity: 0;
         animation: fadeRise 720ms ease-out forwards;
         transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease, filter 240ms ease;
+      }
+
+      .work-archive.is-masonry .work-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        aspect-ratio: auto;
+        animation: none;
+        will-change: transform, width, height, opacity, filter;
       }
 
       .work-card[hidden] {
@@ -353,6 +362,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transform: translateZ(0);
       }
 
       .work-card__content {
@@ -404,9 +414,15 @@
       }
 
       .archive-card {
-        aspect-ratio: 4 / 3;
         border-radius: clamp(16px, 1.45vw, 22px);
         box-shadow: 0 12px 26px rgba(23, 23, 23, 0.04);
+        content-visibility: auto;
+        contain-intrinsic-size: 260px 195px;
+      }
+
+      .work-archive.is-masonry .archive-card {
+        content-visibility: visible;
+        contain-intrinsic-size: auto;
       }
 
       .archive-card .work-card__content {
@@ -795,10 +811,6 @@
       }
 
       @media (max-width: 1120px) {
-        .work-archive {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-
         .modal__panel {
           grid-template-columns: 1fr;
           overflow-y: auto;
@@ -901,11 +913,6 @@
           font-size: 34px;
         }
 
-        .work-archive {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 12px;
-        }
-
         .archive-card {
           border-radius: 16px;
         }
@@ -958,13 +965,12 @@
       }
 
       @media (max-width: 520px) {
-        .work-archive {
-          grid-template-columns: 1fr;
-        }
       }
     </style>
     <link rel="stylesheet" href="assets/music-control.css" />
     <link rel="stylesheet" href="assets/geo-grid.css" />
+    <link rel="stylesheet" href="assets/custom-cursor.css" />
+    <link rel="stylesheet" href="assets/tilted-cards.css" />
   </head>
   <body>
     <div class="frame"></div>
@@ -1027,7 +1033,7 @@
       <div class="modal__panel">
         <button class="ghost-btn close-btn" id="closeModal" type="button">Close</button>
         <div class="modal__visual">
-          <img id="modalImage" src="assets/selected/banners/banner-01-dada.jpg" alt="" />
+          <img id="modalImage" src="assets/selected/banners/banner-01-dada.jpg" alt="" decoding="async" />
         </div>
         <div class="modal__info">
           <div class="modal__copy">
@@ -1099,6 +1105,8 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="assets/music-control.js"></script>
     <script src="assets/geo-grid.js"></script>
+    <script src="assets/custom-cursor.js"></script>
+    <script src="assets/tilted-cards.js"></script>
     <script>
       const roughWorkGroups = [
         { folder: "营销设计", category: "marketing", label: "营销设计", meta: "Marketing Design", start: 7, end: 25 },
@@ -1112,22 +1120,27 @@
         const archive = document.querySelector(".work-archive");
         if (!archive) return;
 
+        let renderedCount = 0;
         roughWorkGroups.forEach((group) => {
           for (let index = group.start; index <= group.end; index += 1) {
             const page = String(index).padStart(2, "0");
             const title = `${group.label} ${page}`;
             const image = `作品集/works/${group.folder}/金旺作品集2025 2.0-${page}.jpg`;
+            const thumb = `assets/work-thumbs/${group.folder}/金旺作品集2025 2.0-${page}.jpg`;
+            const shouldPrime = renderedCount < 4;
             const card = document.createElement("article");
             card.className = "work-card archive-card";
+            card.dataset.masonryIndex = String(renderedCount);
             card.dataset.category = group.category;
             card.dataset.title = title;
             card.dataset.type = `作品归档 / ${group.label}`;
             card.dataset.desc = `${group.label}方向作品，当前先以单张作品卡片形式展示。`;
             card.dataset.tags = `${group.label} / 作品归档 / 单图详情`;
             card.dataset.image = image;
+            card.dataset.thumb = thumb;
             card.dataset.quickWork = "true";
             card.innerHTML = `
-              <img src="${image}" alt="${title}" loading="lazy" />
+              <img ${shouldPrime ? `src="${thumb}"` : `data-src="${thumb}"`} alt="${title}" loading="${shouldPrime ? "eager" : "lazy"}" decoding="async" ${renderedCount === 0 ? `fetchpriority="high"` : ""} />
               <div class="work-card__hint">+</div>
               <div class="work-card__content">
                 <div class="work-card__meta">${group.meta}</div>
@@ -1136,11 +1149,42 @@
               </div>
             `;
             archive.appendChild(card);
+            renderedCount += 1;
           }
         });
       }
 
       renderRoughWorkCards();
+
+      function hydrateArchiveImage(image) {
+        if (!image || image.hasAttribute("src") || !image.dataset.src) return;
+        image.src = image.dataset.src;
+        image.removeAttribute("data-src");
+      }
+
+      function initArchiveImageLoading() {
+        const deferredImages = Array.from(document.querySelectorAll(".archive-card img[data-src]"));
+        if (!deferredImages.length) return;
+
+        if (!("IntersectionObserver" in window)) {
+          deferredImages.forEach(hydrateArchiveImage);
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            hydrateArchiveImage(entry.target);
+            observer.unobserve(entry.target);
+          });
+        }, {
+          rootMargin: "900px 0px"
+        });
+
+        deferredImages.forEach((image) => observer.observe(image));
+      }
+
+      initArchiveImageLoading();
 
       const chips = Array.from(document.querySelectorAll(".chip"));
       const cards = Array.from(document.querySelectorAll(".work-card"));
@@ -1173,6 +1217,98 @@
           ease: "power3.out",
           overwrite: "auto"
         });
+      }
+
+      function getMasonryColumns(width) {
+        if (width >= 1500) return 5;
+        if (width >= 1000) return 4;
+        if (width >= 600) return 3;
+        if (width >= 420) return 2;
+        return 1;
+      }
+
+      function getMasonryRatio(card) {
+        const ratios = [1.36, 0.92, 1.18, 1.52, 1.04, 1.28, 0.84, 1.42, 1.1, 1.62, 0.98, 1.22];
+        const index = Number.parseInt(card.dataset.masonryIndex || "0", 10) || 0;
+        if (window.innerWidth < 520) return 0.86;
+        return ratios[index % ratios.length];
+      }
+
+      function layoutMasonry() {
+        const archive = document.querySelector(".work-archive");
+        if (!archive) return;
+
+        archive.classList.add("is-masonry");
+        const visibleCards = cards.filter((card) => !card.hidden);
+        const hiddenCards = cards.filter((card) => card.hidden);
+        const width = archive.clientWidth;
+        if (!width) return;
+
+        const columns = getMasonryColumns(width);
+        const gap = window.innerWidth <= 760 ? 12 : 18;
+        const columnWidth = (width - gap * (columns - 1)) / columns;
+        const columnHeights = new Array(columns).fill(0);
+        const firstLayout = !archive.dataset.masonryReady;
+
+        hiddenCards.forEach((card) => {
+          if (hasGSAP && !reduceMotion) {
+            gsap.to(card, {
+              autoAlpha: 0,
+              scale: 0.96,
+              filter: "blur(8px)",
+              duration: 0.22,
+              ease: "power2.out",
+              overwrite: true
+            });
+          } else {
+            card.style.opacity = "0";
+          }
+        });
+
+        visibleCards.forEach((card, index) => {
+          const column = columnHeights.indexOf(Math.min(...columnHeights));
+          const x = column * (columnWidth + gap);
+          const height = Math.max(180, Math.round(columnWidth * getMasonryRatio(card)));
+          const y = columnHeights[column];
+          columnHeights[column] += height + gap;
+          card.style.width = `${columnWidth}px`;
+          card.style.height = `${height}px`;
+          card.style.zIndex = String(visibleCards.length - index);
+
+          if (hasGSAP && !reduceMotion) {
+            if (firstLayout) {
+              gsap.set(card, {
+                x,
+                y: y + 120,
+                width: columnWidth,
+                height,
+                autoAlpha: 0,
+                scale: 0.98,
+                filter: "blur(10px)"
+              });
+            }
+            gsap.to(card, {
+              x,
+              y,
+              width: columnWidth,
+              height,
+              autoAlpha: 1,
+              scale: 1,
+              filter: "blur(0px)",
+              duration: firstLayout ? 0.82 : 0.58,
+              delay: firstLayout ? index * 0.035 : 0,
+              ease: "power3.out",
+              overwrite: true
+            });
+          } else {
+            card.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            card.style.opacity = "1";
+          }
+        });
+
+        const totalHeight = Math.max(...columnHeights, 0) - gap;
+        archive.style.height = `${Math.max(totalHeight, 420)}px`;
+        archive.dataset.masonryReady = "true";
       }
 
       const projectDetails = {
@@ -1379,6 +1515,7 @@
           const categories = (card.dataset.category || "").split(" ");
           card.hidden = filter !== "all" && !categories.includes(filter);
         });
+        layoutMasonry();
       }
 
       function setModalLock(locked) {
@@ -1590,6 +1727,7 @@
         if (isModalAnimating || modal.classList.contains("is-open")) return;
         isModalAnimating = true;
         activeCard = card;
+        hydrateArchiveImage(card.querySelector("img[data-src]"));
         const detail = projectDetails[card.dataset.title] || getQuickWorkDetail(card);
         modalImage.src = detail.hero || card.dataset.image || "";
         modalImage.alt = card.dataset.title || "";
@@ -1615,7 +1753,7 @@
           .filter((item) => item.src)
           .map((item) => `
             <figure class="${item.wide ? "is-wide" : ""}">
-              <img src="${item.src}" alt="${card.dataset.title || "项目图片"}" loading="lazy" />
+              <img src="${item.src}" alt="${card.dataset.title || "项目图片"}" loading="lazy" decoding="async" />
             </figure>
           `)
           .join("");
@@ -1629,7 +1767,36 @@
       }
 
       chips.forEach((chip) => chip.addEventListener("click", () => applyFilter(chip.dataset.filter)));
-      cards.forEach((card) => card.addEventListener("click", () => openModal(card)));
+      cards.forEach((card) => {
+        card.addEventListener("pointerenter", () => {
+          if (!hasGSAP || reduceMotion || card.hidden || card.classList.contains("is-transition-source")) return;
+          gsap.to(card, {
+            scale: 0.95,
+            duration: 0.3,
+            ease: "power2.out",
+            overwrite: "auto"
+          });
+        });
+        card.addEventListener("pointerleave", () => {
+          if (!hasGSAP || reduceMotion || card.hidden || card.classList.contains("is-transition-source")) return;
+          gsap.to(card, {
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out",
+            overwrite: "auto"
+          });
+        });
+        card.addEventListener("click", () => openModal(card));
+      });
+      layoutMasonry();
+      let masonryResizeFrame = null;
+      window.addEventListener("resize", () => {
+        if (masonryResizeFrame) return;
+        masonryResizeFrame = requestAnimationFrame(() => {
+          masonryResizeFrame = null;
+          layoutMasonry();
+        });
+      });
       closeModal.addEventListener("click", hideModal);
       modalBackTop.addEventListener("click", () => modalPanel.scrollTo({ top: 0, behavior: "smooth" }));
 

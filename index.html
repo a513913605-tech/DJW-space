@@ -758,6 +758,49 @@
         font-weight: 720;
       }
 
+      @font-face {
+        font-family: "Compressa VF";
+        src: url("https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      #hero .pressure-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: min(100%, 1220px);
+        min-height: clamp(108px, 15.2vw, 248px);
+        margin-inline: auto;
+        font-family: "Compressa VF", var(--font-display);
+        font-size: clamp(104px, 15.4vw, 248px);
+        line-height: 0.86;
+        letter-spacing: 0;
+        font-weight: 560;
+        text-align: center;
+        text-transform: none;
+        white-space: nowrap;
+        user-select: none;
+        color: rgba(35, 35, 35, 0.9);
+        font-variation-settings: "wght" 560, "wdth" 118, "ital" 0;
+      }
+
+      #hero .pressure-title span {
+        display: inline-block;
+        flex: 0 1 auto;
+        min-width: 0.32em;
+        color: inherit;
+        font: inherit;
+        font-variation-settings: "wght" 560, "wdth" 118, "ital" 0;
+        transform-origin: center 62%;
+        will-change: font-variation-settings, opacity, transform;
+      }
+
+      #hero .pressure-title.is-ready span {
+        transition: opacity 180ms ease;
+      }
+
       h2 {
         font-family: var(--font-display);
         font-size: clamp(34px, 4vw, 64px);
@@ -2235,6 +2278,8 @@
     </style>
     <link rel="stylesheet" href="assets/music-control.css" />
     <link rel="stylesheet" href="assets/geo-grid.css" />
+    <link rel="stylesheet" href="assets/custom-cursor.css" />
+    <link rel="stylesheet" href="assets/tilted-cards.css" />
     <script>
       (function () {
         try {
@@ -2350,7 +2395,7 @@
         </div>
         <div class="content content--hero">
           <div class="hero-kicker">Personal Design Manual</div>
-          <h1>Portfolio</h1>
+          <h1 class="pressure-title" data-pressure-title>Portfolio</h1>
           <div class="identity">金旺的个人使用手册 / Visual Designer's Field Guide</div>
         </div>
         <div class="scroll-hint">Scroll to Explore</div>
@@ -2657,6 +2702,8 @@
     <script src="assets/music-control.js"></script>
     <script src="assets/geo-grid.js"></script>
     <script src="assets/page-loader.js"></script>
+    <script src="assets/custom-cursor.js"></script>
+    <script src="assets/tilted-cards.js"></script>
     <script>
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const hasGSAP = Boolean(window.gsap);
@@ -2814,14 +2861,24 @@
         }
 
         const THREE = window.THREE;
+        const isCompactViewport = window.innerWidth < 760;
+        const isMidViewport = window.innerWidth < 1180;
+        const lowMemoryDevice = Number.isFinite(navigator.deviceMemory) && navigator.deviceMemory <= 4;
+        function getRenderPixelRatio() {
+          const dpr = window.devicePixelRatio || 1;
+          if (window.innerWidth < 760) return Math.min(dpr, 1.05);
+          if (lowMemoryDevice) return Math.min(dpr, 1.15);
+          return Math.min(dpr, 1.35);
+        }
+        const renderPixelRatio = getRenderPixelRatio();
         const renderer = new THREE.WebGLRenderer({
           canvas,
           alpha: true,
-          antialias: true,
+          antialias: !isCompactViewport,
           powerPreference: "high-performance"
         });
         renderer.setClearColor(0xffffff, 0);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.65));
+        renderer.setPixelRatio(renderPixelRatio);
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 1, 2600);
@@ -2834,7 +2891,7 @@
           ["selected", "scatter"],
           ["contact", "proton"]
         ];
-        const count = window.innerWidth < 760 ? 3400 : 9600;
+        const count = isCompactViewport ? 2200 : isMidViewport || lowMemoryDevice ? 6400 : 8200;
         const positions = new Float32Array(count * 3);
         const colors = new Float32Array(count * 3);
         const sizes = new Float32Array(count);
@@ -3156,7 +3213,7 @@
         scene.add(points);
 
         const linkPairs = [];
-        const linkPairCount = window.innerWidth < 760 ? 260 : 760;
+        const linkPairCount = isCompactViewport ? 140 : isMidViewport || lowMemoryDevice ? 460 : 620;
         const linkPositions = new Float32Array(linkPairCount * 2 * 3);
         const linkProgress = new Float32Array(linkPairCount * 2);
         const linkPhases = new Float32Array(linkPairCount * 2);
@@ -3209,7 +3266,7 @@
         const linkLines = new THREE.LineSegments(linkGeometry, linkMaterial);
         scene.add(linkLines);
 
-        const ringCount = window.innerWidth < 760 ? 2100 : 5400;
+        const ringCount = isCompactViewport ? 960 : isMidViewport || lowMemoryDevice ? 3000 : 4200;
         const ringPositions = new Float32Array(ringCount * 3);
         const ringSizes = new Float32Array(ringCount);
         const ringAlphas = new Float32Array(ringCount);
@@ -3223,7 +3280,7 @@
           depthTest: true,
           blending: THREE.NormalBlending,
           uniforms: {
-            uPixelRatio: { value: Math.min(window.devicePixelRatio || 1, 1.65) },
+            uPixelRatio: { value: renderPixelRatio },
             uTime: { value: 0 },
             uOpacity: { value: 1 }
           },
@@ -3270,7 +3327,7 @@
           const scale = Math.min(viewW, viewH) / 860;
           const heroOpacity = 1 - smoothstep((progress - 0.82) / 0.72);
           ringMaterial.uniforms.uOpacity.value = heroOpacity * 1.55;
-          ringMaterial.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio || 1, 1.65);
+          ringMaterial.uniforms.uPixelRatio.value = getRenderPixelRatio();
           const ringLayers = 3;
           const ringParticles = Math.ceil(ringCount / ringLayers);
           const screenSpan = Math.max(viewW, viewH);
@@ -3404,14 +3461,17 @@
 
         function resize() {
           updateViewSize();
-          material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio || 1, 1.65);
-          ringMaterial.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio || 1, 1.65);
+          const nextPixelRatio = getRenderPixelRatio();
+          renderer.setPixelRatio(nextPixelRatio);
+          material.uniforms.uPixelRatio.value = nextPixelRatio;
+          ringMaterial.uniforms.uPixelRatio.value = nextPixelRatio;
           refreshTargets();
           updateScroll();
           scrollProgress = scrollTargetProgress;
         }
 
         function animate() {
+          if (document.hidden || document.body.classList.contains("modal-lock")) return;
           breathe += 0.012;
           material.uniforms.uTime.value = breathe;
           linkMaterial.uniforms.uTime.value = breathe;
@@ -3537,11 +3597,25 @@
         refreshTargets();
         updateScroll();
         scrollProgress = scrollTargetProgress;
-        window.addEventListener("resize", resize);
+        let resizeFrame = null;
+        function requestResize() {
+          if (resizeFrame) return;
+          resizeFrame = requestAnimationFrame(() => {
+            resizeFrame = null;
+            resize();
+          });
+        }
+        window.addEventListener("resize", requestResize);
         window.addEventListener("scroll", requestScroll, { passive: true });
         window.addEventListener("pointermove", updatePointer, { passive: true });
         window.addEventListener("pointerleave", releasePointer);
         window.addEventListener("blur", releasePointer);
+        document.addEventListener("visibilitychange", () => {
+          if (!document.hidden) {
+            updateScroll();
+            requestResize();
+          }
+        });
 
         if (hasGSAP && !reduceMotion) {
           gsap.ticker.add(animate);
@@ -3561,7 +3635,8 @@
         const ctx = canvas?.getContext("2d");
         if (!canvas || !ctx) return;
 
-        const particleCount = window.innerWidth < 760 ? 640 : 1480;
+        const lowMemoryDevice = Number.isFinite(navigator.deviceMemory) && navigator.deviceMemory <= 4;
+        const particleCount = window.innerWidth < 760 ? 420 : lowMemoryDevice ? 980 : 1280;
         const particles = [];
         const pointer = { x: -9999, y: -9999, tx: -9999, ty: -9999, vx: 0, vy: 0, power: 0 };
         const stateOrder = [
@@ -3583,7 +3658,7 @@
         let lastScrollY = window.scrollY || 0;
 
         function resize() {
-          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 760 ? 1.15 : 1.45);
           width = window.innerWidth;
           height = window.innerHeight;
           canvas.width = Math.floor(width * dpr);
@@ -4035,6 +4110,10 @@
         }
 
         function render() {
+          if (document.hidden || document.body.classList.contains("modal-lock")) {
+            if (!reduceMotion && !hasGSAP) requestAnimationFrame(render);
+            return;
+          }
           breathe += 0.011;
           pointer.x += (pointer.tx - pointer.x) * 0.18;
           pointer.y += (pointer.ty - pointer.y) * 0.18;
@@ -4124,7 +4203,15 @@
 
         window.addEventListener("scroll", requestScrollMorph, { passive: true });
 
-        window.addEventListener("resize", resize);
+        let resizeFrame = null;
+        function requestResize() {
+          if (resizeFrame) return;
+          resizeFrame = requestAnimationFrame(() => {
+            resizeFrame = null;
+            resize();
+          });
+        }
+        window.addEventListener("resize", requestResize);
 
         resize();
         initParticles();
@@ -4183,6 +4270,24 @@
           revealGroups.forEach(({ trigger, items }) => {
             const targets = items.flatMap((selector) => gsap.utils.toArray(selector));
             gsap.set(targets, { autoAlpha: 0, y: 38, scale: 0.982 });
+            const restoreVisibleTargets = () => {
+              const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+              const hasVisibleTarget = targets.some((target) => {
+                const rect = target.getBoundingClientRect();
+                return rect.top < viewportHeight * 0.86 && rect.bottom > viewportHeight * 0.14;
+              });
+              if (hasVisibleTarget) {
+                gsap.to(targets, {
+                  autoAlpha: 1,
+                  y: 0,
+                  scale: 1,
+                  duration: 0.34,
+                  stagger: 0.01,
+                  ease: "sine.out",
+                  overwrite: true
+                });
+              }
+            };
             const timeline = gsap.timeline({
               paused: true,
               defaults: {
@@ -4218,14 +4323,44 @@
               },
               onLeave: () => {
                 if (!hasPlayed) return;
-                gsap.to(targets, { autoAlpha: 0.48, y: -14, scale: 0.994, duration: 0.56, stagger: 0.014, ease: "sine.out", overwrite: true });
+                gsap.to(targets, { autoAlpha: 0.88, y: -6, scale: 0.998, duration: 0.32, stagger: 0.008, ease: "sine.out", overwrite: true });
+                gsap.delayedCall(0.36, restoreVisibleTargets);
               },
               onLeaveBack: () => {
                 if (!hasPlayed) return;
-                gsap.to(targets, { autoAlpha: 0.48, y: 14, scale: 0.994, duration: 0.56, stagger: 0.014, ease: "sine.out", overwrite: true });
+                gsap.to(targets, { autoAlpha: 0.88, y: 6, scale: 0.998, duration: 0.32, stagger: 0.008, ease: "sine.out", overwrite: true });
+                gsap.delayedCall(0.36, restoreVisibleTargets);
               }
             });
           });
+
+          let revealRepairTimer = null;
+          const repairVisibleRevealState = () => {
+            clearTimeout(revealRepairTimer);
+            revealRepairTimer = setTimeout(() => {
+              revealGroups.forEach(({ trigger, items }) => {
+                const section = document.querySelector(trigger);
+                if (!section) return;
+                const rect = section.getBoundingClientRect();
+                const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+                const isCurrent =
+                  rect.top < viewportHeight * 0.58 &&
+                  rect.bottom > viewportHeight * 0.42;
+                if (!isCurrent) return;
+                const targets = items.flatMap((selector) => gsap.utils.toArray(selector));
+                gsap.to(targets, {
+                  autoAlpha: 1,
+                  y: 0,
+                  scale: 1,
+                  duration: 0.28,
+                  stagger: 0.006,
+                  ease: "sine.out",
+                  overwrite: true
+                });
+              });
+            }, 140);
+          };
+          window.addEventListener("scroll", repairVisibleRevealState, { passive: true });
 
           gsap.to(".shape--opening", {
             scale: 1.16,
@@ -4252,7 +4387,7 @@
       }
 
       function initMaterialTitleInteraction() {
-        const titles = Array.from(document.querySelectorAll("#hero h1, #about h2, #ability h2, #selected h2, #contact h2"));
+        const titles = Array.from(document.querySelectorAll("#about h2, #ability h2, #selected h2, #contact h2"));
         if (!titles.length) return;
 
         titles.forEach((title) => {
@@ -4311,9 +4446,114 @@
         });
       }
 
+      function initHeroTextPressure() {
+        const title = document.querySelector("[data-pressure-title]");
+        if (!title) return;
+
+        const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        const text = title.textContent.trim();
+        title.setAttribute("aria-label", text);
+        title.innerHTML = text
+          .split("")
+          .map((char) => `<span aria-hidden="true" data-char="${char}">${char}</span>`)
+          .join("");
+
+        const letters = Array.from(title.querySelectorAll("span"));
+        if (!letters.length) return;
+
+        if (!canHover || reduceMotion) {
+          title.classList.add("is-ready");
+          return;
+        }
+
+        const pointer = { x: 0, y: 0 };
+        const cursor = { x: 0, y: 0 };
+        let titleRect = title.getBoundingClientRect();
+        let maxDistance = Math.max(titleRect.width * 0.52, 1);
+        let frame = null;
+        let isInsideHero = false;
+
+        function clamp(value, min, max) {
+          return Math.min(max, Math.max(min, value));
+        }
+
+        function mapDistance(distance, minValue, maxValue) {
+          const influence = 1 - clamp(distance / maxDistance, 0, 1);
+          const eased = influence * influence * (3 - 2 * influence);
+          return minValue + (maxValue - minValue) * eased;
+        }
+
+        function refreshBounds() {
+          titleRect = title.getBoundingClientRect();
+          maxDistance = Math.max(titleRect.width * 0.52, 1);
+          if (!isInsideHero) {
+            pointer.x = titleRect.left + titleRect.width * 0.5;
+            pointer.y = titleRect.top + titleRect.height * 0.5;
+            cursor.x = pointer.x;
+            cursor.y = pointer.y;
+          }
+        }
+
+        function render() {
+          if (document.hidden) {
+            frame = requestAnimationFrame(render);
+            return;
+          }
+
+          cursor.x += (pointer.x - cursor.x) * 0.12;
+          cursor.y += (pointer.y - cursor.y) * 0.12;
+
+          letters.forEach((letter) => {
+            const rect = letter.getBoundingClientRect();
+            const centerX = rect.left + rect.width * 0.5;
+            const centerY = rect.top + rect.height * 0.5;
+            const distance = Math.hypot(cursor.x - centerX, cursor.y - centerY);
+            const width = Math.round(mapDistance(distance, 118, 220));
+            const weight = Math.round(mapDistance(distance, 560, 940));
+            const italic = mapDistance(distance, 0, 0.78).toFixed(2);
+            const lift = mapDistance(distance, 0, -8).toFixed(2);
+            const scaleX = mapDistance(distance, 0.98, 1.08).toFixed(3);
+            const scaleY = mapDistance(distance, 1, 1.06).toFixed(3);
+
+            letter.style.fontVariationSettings = `"wght" ${weight}, "wdth" ${width}, "ital" ${italic}`;
+            letter.style.transform = `translate3d(0, ${lift}px, 0) scale(${scaleX}, ${scaleY})`;
+          });
+
+          frame = requestAnimationFrame(render);
+        }
+
+        refreshBounds();
+        title.classList.add("is-ready");
+
+        window.addEventListener("pointermove", (event) => {
+          pointer.x = event.clientX;
+          pointer.y = event.clientY;
+          isInsideHero = Boolean(event.target.closest?.("#hero"));
+        }, { passive: true });
+
+        title.addEventListener("pointerleave", () => {
+          isInsideHero = false;
+          const rect = title.getBoundingClientRect();
+          pointer.x = rect.left + rect.width * 0.5;
+          pointer.y = rect.top + rect.height * 0.5;
+        });
+
+        let resizeFrame = null;
+        window.addEventListener("resize", () => {
+          if (resizeFrame) return;
+          resizeFrame = requestAnimationFrame(() => {
+            resizeFrame = null;
+            refreshBounds();
+          });
+        });
+
+        frame = requestAnimationFrame(render);
+      }
+
       initParticleField();
       initHeroHudMotion();
       initGSAPMotion();
+      initHeroTextPressure();
       initMaterialTitleInteraction();
 
       const modal = document.querySelector("#workModal");

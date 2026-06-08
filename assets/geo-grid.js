@@ -33,6 +33,7 @@
   let ticking = false;
 
   function updateTargets() {
+    if (document.hidden) return;
     const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     const progress = (window.scrollY || window.pageYOffset || 0) / maxScroll;
     targetRotation = progress * 34;
@@ -63,4 +64,7 @@
   updateTargets();
   window.addEventListener("scroll", updateTargets, { passive: true });
   window.addEventListener("resize", updateTargets);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) updateTargets();
+  });
 })();

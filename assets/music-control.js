@@ -3,7 +3,7 @@
   if (!controls.length) return;
 
   const storageKey = "djwPortfolioMusic";
-  const storageVersion = 3;
+  const storageVersion = 6;
   const defaultState = {
     enabled: true,
     volume: 0.9,
@@ -49,10 +49,13 @@
   audio.loop = true;
   audio.preload = "auto";
   audio.volume = state.volume;
+  audio.setAttribute("playsinline", "");
 
   let isPlaying = false;
   let pendingResume = state.enabled;
   let playRequest = null;
+  let mutedPrimeRequest = null;
+  let isMutedPrimed = false;
 
   function updateControl(control) {
     const toggle = control.querySelector(".music-control__toggle");
@@ -80,11 +83,53 @@
     });
   }
 
-  async function playAudio(options = {}) {
-    if (playRequest) return playRequest;
+  function tryMutedPrime() {
+    if (mutedPrimeRequest || isMutedPrimed || !state.enabled) return mutedPrimeRequest;
+    audio.muted = true;
+    mutedPrimeRequest = audio.play()
+      .then(() => {
+        isMutedPrimed = true;
+        isPlaying = false;
+        pendingResume = true;
+      })
+      .catch(() => {
+        isMutedPrimed = false;
+        audio.muted = false;
+      })
+      .finally(() => {
+        mutedPrimeRequest = null;
+        updateAllControls();
+      });
+    return mutedPrimeRequest;
+  }
+
+  function activatePrimedAudio() {
+    if (!isMutedPrimed) return false;
     state.enabled = true;
     pendingResume = false;
+    isPlaying = true;
+    isMutedPrimed = false;
+    audio.muted = false;
+    audio.volume = state.volume;
+    saveState(state);
+    updateAllControls();
+    audio.play().catch(() => {
+      isPlaying = false;
+      pendingResume = true;
+      tryMutedPrime();
+      updateAllControls();
+    });
+    return true;
+  }
+
+  function playAudio(options = {}) {
+    if (playRequest && !options.force) return playRequest;
+    state.enabled = true;
+    pendingResume = true;
+    isMutedPrimed = false;
+    audio.muted = false;
     if (options.save !== false) saveState(state);
+    audio.volume = state.volume;
     playRequest = audio.play()
       .then(() => {
         isPlaying = true;
@@ -93,6 +138,7 @@
       .catch(() => {
         isPlaying = false;
         pendingResume = true;
+        if (options.allowMutedPrime !== false) tryMutedPrime();
       })
       .finally(() => {
         playRequest = null;
@@ -104,7 +150,9 @@
 
   function pauseAudio() {
     audio.pause();
+    audio.muted = false;
     isPlaying = false;
+    isMutedPrimed = false;
     pendingResume = false;
     state.enabled = false;
     saveState(state);
@@ -135,16 +183,36 @@
   });
 
   const resumeOnInteraction = (event) => {
-    if (event?.target?.closest?.("[data-music-control]")) return;
     if (pendingResume && state.enabled && !isPlaying) {
-      playAudio();
+      const now = performance.now();
+      const isMoveEvent = event?.type === "mousemove" || event?.type === "pointermove";
+      const interval = isMoveEvent ? 700 : 220;
+      if (resumeOnInteraction.lastAttempt && now - resumeOnInteraction.lastAttempt < interval) return;
+      resumeOnInteraction.lastAttempt = now;
+      if (activatePrimedAudio()) return;
+      playAudio({ force: true });
     }
   };
 
-  window.addEventListener("pointerdown", resumeOnInteraction, { passive: true });
-  window.addEventListener("keydown", resumeOnInteraction);
-  window.addEventListener("scroll", updateMobileCompactState, { passive: true });
+  window.addEventListener("pointermove", resumeOnInteraction, { passive: true, capture: true });
+  window.addEventListener("mousemove", resumeOnInteraction, { passive: true, capture: true });
+  window.addEventListener("pointerdown", resumeOnInteraction, { passive: true, capture: true });
+  window.addEventListener("pointerup", resumeOnInteraction, { passive: true, capture: true });
+  window.addEventListener("touchstart", resumeOnInteraction, { passive: true, capture: true });
+  window.addEventListener("touchend", resumeOnInteraction, { passive: true, capture: true });
+  window.addEventListener("click", resumeOnInteraction, { capture: true });
+  window.addEventListener("keydown", resumeOnInteraction, { capture: true });
+  window.addEventListener("wheel", resumeOnInteraction, { passive: true, capture: true });
+  window.addEventListener("scroll", (event) => {
+    updateMobileCompactState();
+    resumeOnInteraction(event);
+  }, { passive: true });
   window.addEventListener("resize", updateMobileCompactState);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && pendingResume && state.enabled && !isPlaying) {
+      playAudio({ save: false });
+    }
+  });
 
   updateAllControls();
   updateMobileCompactState();

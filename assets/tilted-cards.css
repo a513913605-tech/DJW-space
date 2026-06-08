@@ -1,0 +1,64 @@
+.tilt-card {
+  --tilt-rx: 0deg;
+  --tilt-ry: 0deg;
+  --tilt-scale: 1;
+  --tilt-lift: 0px;
+  --tilt-glare-x: 50%;
+  --tilt-glare-y: 50%;
+  --tilt-glare-alpha: 0;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-card.is-transition-source {
+  transform: none;
+}
+
+.tilt-card__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--tilt-glare-alpha);
+  background:
+    radial-gradient(circle at var(--tilt-glare-x) var(--tilt-glare-y),
+      rgba(255, 255, 255, 0.32) 0%,
+      rgba(255, 255, 255, 0.14) 18%,
+      rgba(255, 255, 255, 0) 48%);
+  mix-blend-mode: screen;
+  transition: opacity 180ms ease;
+}
+
+.tilt-card.work-card .tilt-card__glare,
+.tilt-card.card .tilt-card__glare {
+  z-index: 4;
+}
+
+.tilt-card.qr-card .tilt-card__glare {
+  display: none;
+}
+
+.tilt-card.project-brief__item,
+.tilt-card.project-brief__wide,
+.tilt-card.project-brief__lead,
+.tilt-card.timeline-item,
+.tilt-card.incubation-card {
+  --tilt-perspective: 1100px;
+}
+
+.tilt-card.contact-link,
+.tilt-card.archive-link {
+  --tilt-perspective: 760px;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .tilt-card {
+    transform: none !important;
+  }
+
+  .tilt-card__glare {
+    display: none;
+  }
+}
