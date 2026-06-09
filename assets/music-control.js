@@ -3,7 +3,7 @@
   if (!controls.length) return;
 
   const storageKey = "djwPortfolioMusic";
-  const storageVersion = 6;
+  const storageVersion = 8;
   const defaultState = {
     enabled: true,
     volume: 0.9,
@@ -185,8 +185,8 @@
   const resumeOnInteraction = (event) => {
     if (pendingResume && state.enabled && !isPlaying) {
       const now = performance.now();
-      const isMoveEvent = event?.type === "mousemove" || event?.type === "pointermove";
-      const interval = isMoveEvent ? 700 : 220;
+      const isMoveEvent = event?.type === "mousemove" || event?.type === "pointermove" || event?.type === "mouseover" || event?.type === "pointerover";
+      const interval = isMoveEvent ? 420 : 160;
       if (resumeOnInteraction.lastAttempt && now - resumeOnInteraction.lastAttempt < interval) return;
       resumeOnInteraction.lastAttempt = now;
       if (activatePrimedAudio()) return;
@@ -194,15 +194,28 @@
     }
   };
 
-  window.addEventListener("pointermove", resumeOnInteraction, { passive: true, capture: true });
-  window.addEventListener("mousemove", resumeOnInteraction, { passive: true, capture: true });
-  window.addEventListener("pointerdown", resumeOnInteraction, { passive: true, capture: true });
-  window.addEventListener("pointerup", resumeOnInteraction, { passive: true, capture: true });
-  window.addEventListener("touchstart", resumeOnInteraction, { passive: true, capture: true });
-  window.addEventListener("touchend", resumeOnInteraction, { passive: true, capture: true });
-  window.addEventListener("click", resumeOnInteraction, { capture: true });
-  window.addEventListener("keydown", resumeOnInteraction, { capture: true });
-  window.addEventListener("wheel", resumeOnInteraction, { passive: true, capture: true });
+  const interactionTargets = [window, document, document.documentElement];
+  const interactionEvents = [
+    "pointerover",
+    "pointermove",
+    "pointerdown",
+    "pointerup",
+    "mouseover",
+    "mousemove",
+    "mousedown",
+    "mouseup",
+    "touchstart",
+    "touchmove",
+    "touchend",
+    "click",
+    "keydown",
+    "wheel"
+  ];
+  interactionTargets.forEach((target) => {
+    interactionEvents.forEach((eventName) => {
+      target.addEventListener(eventName, resumeOnInteraction, { passive: eventName !== "click" && eventName !== "keydown", capture: true });
+    });
+  });
   window.addEventListener("scroll", (event) => {
     updateMobileCompactState();
     resumeOnInteraction(event);
@@ -217,6 +230,12 @@
   updateAllControls();
   updateMobileCompactState();
   if (state.enabled) {
-    playAudio({ save: false });
+    const attemptImmediatePlayback = () => playAudio({ save: false, force: true });
+    attemptImmediatePlayback();
+    window.addEventListener("pageshow", attemptImmediatePlayback, { once: true });
+    window.addEventListener("load", attemptImmediatePlayback, { once: true });
+    document.addEventListener("DOMContentLoaded", attemptImmediatePlayback, { once: true });
+    window.setTimeout(attemptImmediatePlayback, 120);
+    window.setTimeout(attemptImmediatePlayback, 640);
   }
 })();

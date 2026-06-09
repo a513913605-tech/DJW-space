@@ -545,21 +545,23 @@
         }
 
         .nav {
-          top: calc(env(safe-area-inset-top, 0px) + 58px);
+          top: calc(env(safe-area-inset-top, 0px) + 16px);
           right: 16px;
           left: 16px;
           padding: 0;
-          align-items: center;
+          flex-direction: column;
+          align-items: stretch;
           justify-content: center;
-          gap: 0;
+          gap: 10px;
         }
 
         .site-signature {
-          position: fixed;
-          top: calc(env(safe-area-inset-top, 0px) + 16px);
-          left: 16px;
-          z-index: 63;
-          max-width: calc(100vw - 32px);
+          position: relative;
+          top: auto;
+          left: auto;
+          z-index: auto;
+          width: fit-content;
+          max-width: 100%;
           padding: 9px 11px;
           font-size: 12px;
           overflow: hidden;
@@ -584,7 +586,7 @@
         }
 
         .page {
-          padding: calc(env(safe-area-inset-top, 0px) + 152px) 20px 62px;
+          padding: calc(env(safe-area-inset-top, 0px) + 176px) 20px 62px;
         }
 
         .section {
@@ -601,7 +603,6 @@
         }
       }
     </style>
-    <link rel="stylesheet" href="assets/music-control.css" />
     <link rel="stylesheet" href="assets/geo-grid.css" />
     <link rel="stylesheet" href="assets/custom-cursor.css" />
     <link rel="stylesheet" href="assets/tilted-cards.css" />
@@ -618,19 +619,6 @@
         <a href="contact.html">Contact</a>
       </div>
     </header>
-    <div class="music-control" data-music-control>
-      <button class="music-control__toggle" type="button" aria-pressed="false" aria-label="Play background music">
-        <span class="music-control__icon" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span class="music-control__label">Music</span>
-      </button>
-      <div class="music-control__volume">
-        <div class="music-control__volume-inner">
-          <input class="music-control__range" type="range" min="0" max="100" value="90" aria-label="Music volume" />
-          <span class="music-control__value">90%</span>
-        </div>
-      </div>
-    </div>
-
     <main class="page">
       <section class="section hero" id="identity">
         <div class="hero__copy">
@@ -749,7 +737,7 @@
                 <article class="incubation-card">
                   <div class="year">2026</div>
                   <h4>小牌动漫</h4>
-                  <strong>AI 漫剧导演 / 美术设定 / 分镜 / 剪辑</strong>
+                  <strong>AI 漫剧项目负责 / 美术设定 / 分镜 / 剪辑</strong>
                   <p>参与 AI 漫剧从 0 到 1 开发，负责剧本创意讨论、AI 分镜脚本、动画生成、剪辑落地与上线流程，跑通 AI 内容生产链路。</p>
                   <div class="keywords">
                     <span class="keyword">AI 漫剧</span>
@@ -772,7 +760,6 @@
         <span class="mini-logo">Y</span>
       </section>
     </main>
-    <script src="assets/music-control.js"></script>
     <script src="assets/geo-grid.js"></script>
     <script src="assets/custom-cursor.js"></script>
     <script src="assets/tilted-cards.js"></script>
