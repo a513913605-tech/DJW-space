@@ -24,7 +24,8 @@
 
   document.body.prepend(grid);
 
-  if (reduceMotion) return;
+  const mobileGrid = window.matchMedia("(max-width: 760px), (hover: none), (pointer: coarse)").matches;
+  if (reduceMotion || mobileGrid) return;
 
   let targetRotation = 0;
   let currentRotation = 0;

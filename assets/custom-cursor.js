@@ -11,11 +11,7 @@
     <div class="custom-cursor__label">OPEN</div>
   `;
 
-  const core = document.createElement("div");
-  core.className = "custom-cursor__core";
-  core.setAttribute("aria-hidden", "true");
-
-  document.body.append(ring, core);
+  document.body.append(ring);
   document.documentElement.classList.add("has-custom-cursor");
 
   const interactiveSelector = [
@@ -43,8 +39,6 @@
   let targetY = window.innerHeight * 0.5;
   let ringX = targetX;
   let ringY = targetY;
-  let coreX = targetX;
-  let coreY = targetY;
   let cursorFrame = null;
 
   function setActiveState(event) {
@@ -63,7 +57,6 @@
     isVisible = true;
     document.documentElement.classList.add("is-custom-cursor-visible");
     ring.style.setProperty("--cursor-alpha", "1");
-    core.style.setProperty("--cursor-alpha", "1");
   }
 
   function hideCursor() {
@@ -71,18 +64,13 @@
     document.documentElement.classList.remove("is-custom-cursor-visible");
     ring.classList.remove("is-interactive", "is-card", "is-text", "is-pressed");
     ring.style.setProperty("--cursor-alpha", "0");
-    core.style.setProperty("--cursor-alpha", "0");
   }
 
   function renderCursor() {
-    ringX += (targetX - ringX) * 0.16;
-    ringY += (targetY - ringY) * 0.16;
-    coreX += (targetX - coreX) * 0.58;
-    coreY += (targetY - coreY) * 0.58;
+    ringX += (targetX - ringX) * 0.34;
+    ringY += (targetY - ringY) * 0.34;
     ring.style.left = `${ringX}px`;
     ring.style.top = `${ringY}px`;
-    core.style.left = `${coreX}px`;
-    core.style.top = `${coreY}px`;
     cursorFrame = requestAnimationFrame(renderCursor);
   }
 
@@ -95,8 +83,6 @@
 
   ring.style.left = `${ringX}px`;
   ring.style.top = `${ringY}px`;
-  core.style.left = `${coreX}px`;
-  core.style.top = `${coreY}px`;
   cursorFrame = requestAnimationFrame(renderCursor);
 
   document.addEventListener("pointermove", updatePointer, { passive: true });

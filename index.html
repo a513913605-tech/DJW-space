@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>戴金旺个人作品集</title>
     <style>
       :root {
@@ -32,6 +32,10 @@
 
       html {
         scroll-behavior: smooth;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
       }
 
       @keyframes fadeRise {
@@ -90,10 +94,14 @@
         position: relative;
         isolation: isolate;
         margin: 0;
+        width: 100%;
+        max-width: 100%;
         font-family: var(--font-body);
         color: var(--text);
         letter-spacing: 0.01em;
         overflow-x: hidden;
+        overscroll-behavior-x: none;
+        -webkit-font-smoothing: antialiased;
         background:
           radial-gradient(circle at 50% -8%, rgba(255, 255, 255, 0.96), transparent 30%),
           radial-gradient(circle at 50% 14%, rgba(210, 214, 214, 0.2), transparent 36%),
@@ -310,6 +318,15 @@
       main {
         position: relative;
         z-index: 1;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      @supports (overflow-x: clip) {
+        main {
+          overflow-x: clip;
+        }
       }
 
       .section {
@@ -728,12 +745,16 @@
         padding: 8px 12px;
         border: 1px solid rgba(23, 23, 23, 0.06);
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.54);
+        background: rgba(255, 255, 255, 0.56);
         backdrop-filter: blur(12px);
         font-size: 12px;
+        font-weight: 580;
         letter-spacing: 0.2em;
         text-transform: uppercase;
-        color: rgba(23, 23, 23, 0.4);
+        color: rgba(23, 23, 23, 0.5);
+        box-shadow:
+          0 0 6px rgba(255, 255, 255, 0.42),
+          0 8px 18px rgba(23, 23, 23, 0.028);
       }
 
       .section-heading {
@@ -782,8 +803,13 @@
         text-transform: none;
         white-space: nowrap;
         user-select: none;
-        color: rgba(35, 35, 35, 0.9);
-        font-variation-settings: "wght" 560, "wdth" 118, "ital" 0;
+        color: rgba(18, 18, 18, 0.94);
+        text-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.7),
+          0 0 5px rgba(255, 255, 255, 0.68),
+          0 0 10px rgba(255, 255, 255, 0.38),
+          0 12px 28px rgba(23, 23, 23, 0.11);
+        font-variation-settings: "wght" 620, "wdth" 118, "ital" 0;
       }
 
       #hero .pressure-title span {
@@ -792,7 +818,7 @@
         min-width: 0.32em;
         color: inherit;
         font: inherit;
-        font-variation-settings: "wght" 560, "wdth" 118, "ital" 0;
+        font-variation-settings: "wght" 620, "wdth" 118, "ital" 0;
         transform-origin: center 62%;
         will-change: font-variation-settings, opacity, transform;
       }
@@ -803,10 +829,17 @@
 
       h2 {
         font-family: var(--font-display);
-        font-size: clamp(34px, 4vw, 64px);
+        font-size: clamp(38px, 4.45vw, 72px);
         line-height: 1.05;
-        letter-spacing: -0.025em;
-        font-weight: 720;
+        letter-spacing: -0.02em;
+        font-weight: 800;
+        color: rgba(15, 15, 15, 0.92);
+        -webkit-text-stroke: 0.12px rgba(255, 255, 255, 0.38);
+        text-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.72),
+          0 0 4px rgba(255, 255, 255, 0.74),
+          0 0 8px rgba(255, 255, 255, 0.46),
+          0 10px 24px rgba(23, 23, 23, 0.11);
       }
 
       .material-title {
@@ -818,9 +851,13 @@
         width: fit-content;
         max-width: 100%;
         margin-inline: auto;
-        color: rgba(23, 23, 23, 0.86);
+        color: rgba(15, 15, 15, 0.92);
         text-align: center;
-        text-shadow: 0 12px 34px rgba(23, 23, 23, 0.035);
+        text-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.72),
+          0 0 4px rgba(255, 255, 255, 0.74),
+          0 0 8px rgba(255, 255, 255, 0.46),
+          0 10px 24px rgba(23, 23, 23, 0.11);
         transition: filter 420ms ease, text-shadow 420ms ease;
       }
 
@@ -846,7 +883,10 @@
       .material-title.is-lit {
         filter: brightness(1.06) contrast(1.04);
         text-shadow:
-          0 16px 36px rgba(23, 23, 23, 0.05),
+          0 1px 0 rgba(255, 255, 255, 0.78),
+          0 0 6px rgba(255, 255, 255, 0.78),
+          0 0 12px rgba(255, 255, 255, 0.48),
+          0 12px 28px rgba(23, 23, 23, 0.12),
           0 0 18px rgba(242, 164, 58, 0.06);
       }
 
@@ -861,7 +901,11 @@
         font-size: clamp(18px, 2.2vw, 34px);
         letter-spacing: 0.02em;
         font-weight: 720;
-        color: rgba(23, 23, 23, 0.82);
+        color: rgba(18, 18, 18, 0.86);
+        text-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.7),
+          0 0 4px rgba(255, 255, 255, 0.58),
+          0 8px 18px rgba(23, 23, 23, 0.07);
       }
 
       .intro {
@@ -877,6 +921,20 @@
         font-size: clamp(15px, 1.22vw, 18px);
         line-height: 1.92;
         letter-spacing: 0.02em;
+      }
+
+      .section-copy > .muted,
+      .section-heading > .muted,
+      .works__header .muted,
+      .contact .muted,
+      .intro p {
+        color: rgba(18, 18, 18, 0.74);
+        font-weight: 500;
+        text-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.66),
+          0 0 3px rgba(255, 255, 255, 0.62),
+          0 0 6px rgba(255, 255, 255, 0.36),
+          0 8px 18px rgba(23, 23, 23, 0.065);
       }
 
       .intro-visual {
@@ -2033,13 +2091,27 @@
         }
 
         #hero {
+          min-height: 100vh;
           min-height: 100svh;
-          padding-top: calc(var(--section-y) + 42px);
+          padding: calc(env(safe-area-inset-top, 0px) + 150px) 20px calc(env(safe-area-inset-bottom, 0px) + 76px);
+          align-content: center;
+          justify-items: center;
+        }
+
+        @supports (min-height: 100dvh) {
+          #hero {
+            min-height: 100dvh;
+          }
         }
 
         #ability,
         #selected {
           padding-top: 82px;
+        }
+
+        #selected {
+          padding-inline: 0;
+          overflow: hidden;
         }
 
         #about {
@@ -2055,7 +2127,49 @@
         }
 
         .content--hero {
-          margin-top: 28vh;
+          z-index: 3;
+          width: min(100%, calc(100vw - 40px));
+          max-width: calc(100vw - 40px);
+          margin-top: clamp(112px, 15vh, 172px);
+          margin-top: clamp(112px, 15svh, 172px);
+          justify-items: center;
+          overflow: visible;
+        }
+
+        #hero .pressure-title {
+          width: 100%;
+          max-width: calc(100vw - 40px);
+          min-height: clamp(74px, 22vw, 108px);
+          justify-content: center;
+          gap: 0.012em;
+          font-size: clamp(60px, 20.5vw, 90px);
+          line-height: 0.9;
+          font-variation-settings: "wght" 580, "wdth" 78, "ital" 0;
+          transform: translateX(0);
+          contain: paint;
+        }
+
+        #hero .pressure-title span {
+          flex: 0 0 auto;
+          min-width: 0;
+          font-variation-settings: "wght" 580, "wdth" 78, "ital" 0;
+        }
+
+        .content--hero .identity {
+          max-width: min(100%, 340px);
+          margin-inline: auto;
+          text-align: center;
+        }
+
+        #about .section-copy,
+        #ability .section-heading,
+        #selected .works__header,
+        .intro-visual,
+        .ability,
+        .works,
+        .contact {
+          position: relative;
+          z-index: 3;
         }
 
         .hero-hud {
@@ -2116,27 +2230,80 @@
 
         .works__grid {
           gap: 18px;
+          padding: 8px max(20px, calc((100vw - min(86vw, 360px)) / 2)) 10px;
+          overflow-x: auto;
+          overflow-y: visible;
+          scroll-snap-type: x mandatory;
+          scroll-padding-inline: max(20px, calc((100vw - min(86vw, 360px)) / 2));
+          -webkit-overflow-scrolling: touch;
+          touch-action: pan-x pan-y;
+          transform: none !important;
+          transition: none;
+          will-change: auto;
+        }
+
+        #selected .works__header {
+          width: min(100%, calc(100vw - 40px));
+          max-width: 560px;
+          margin-inline: auto;
+          margin-bottom: clamp(22px, 4vh, 36px);
         }
 
         .works-slider {
-          width: 100%;
+          width: 100vw;
+          max-width: 100vw;
           margin-inline: auto;
+          overflow: visible;
         }
 
         .card {
           grid-template-columns: 1fr;
-          flex-basis: min(82vw, 680px);
-          aspect-ratio: auto;
-          min-height: 520px;
-          border-radius: 30px;
+          flex: 0 0 min(86vw, 360px);
+          width: min(86vw, 360px);
+          max-width: min(86vw, 360px);
+          aspect-ratio: 4 / 5.45;
+          min-height: 0;
+          border-radius: 24px;
+          scroll-snap-align: center;
+          scroll-snap-stop: always;
         }
 
         .card__body {
-          left: 28px;
-          right: 28px;
-          bottom: 34px;
+          left: 20px;
+          right: 20px;
+          bottom: 24px;
           max-width: none;
           padding: 0;
+          gap: 10px;
+        }
+
+        .card__body > span {
+          display: -webkit-box;
+          max-width: 100%;
+          overflow: hidden;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          font-size: clamp(24px, 8vw, 34px);
+          line-height: 1.12;
+          letter-spacing: -0.01em;
+        }
+
+        .card small {
+          display: -webkit-box;
+          max-width: 100%;
+          overflow: hidden;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+          font-size: 13px;
+          line-height: 1.58;
+        }
+
+        .card__meta {
+          max-width: 100%;
+          padding: 7px 10px;
+          font-size: 11px;
+          line-height: 1.32;
+          white-space: normal;
         }
 
         .card__visual {
@@ -2174,17 +2341,32 @@
         }
 
         .slider-btn {
+          top: auto;
+          bottom: -58px;
           width: 42px;
           height: 42px;
           font-size: 22px;
+          transform: none;
+        }
+
+        .slider-btn:hover {
+          transform: scale(1.04);
         }
 
         .slider-btn--prev {
-          left: 8px;
+          left: calc(50% - 58px);
         }
 
         .slider-btn--next {
-          right: 8px;
+          right: calc(50% - 58px);
+        }
+
+        .slider-dots {
+          bottom: -78px;
+        }
+
+        .works__footer {
+          margin-top: 92px;
         }
 
         .contact-list {
@@ -2254,14 +2436,57 @@
           display: none;
         }
 
+        #hero {
+          padding-top: calc(env(safe-area-inset-top, 0px) + 140px);
+        }
+
+        .content--hero {
+          margin-top: clamp(124px, 17vh, 184px);
+          margin-top: clamp(124px, 17svh, 184px);
+        }
+
+        #hero .pressure-title {
+          font-size: clamp(56px, 19.2vw, 82px);
+          max-width: calc(100vw - 42px);
+        }
+
         .card {
           grid-template-columns: 1fr;
-          min-height: 220px;
+          flex-basis: min(86vw, 360px);
+          width: min(86vw, 360px);
+          max-width: min(86vw, 360px);
+          min-height: 0;
           gap: 14px;
         }
 
         .card__arrow {
-          justify-self: end;
+          right: 18px;
+          bottom: 18px;
+          width: 44px;
+          height: 44px;
+          opacity: 1;
+        }
+
+        .card__index {
+          top: 18px;
+          left: 18px;
+          font-size: 11px;
+        }
+
+        .works {
+          gap: 28px;
+        }
+
+        #selected .works__header {
+          width: min(100%, calc(100vw - 40px));
+          max-width: 360px;
+          margin-inline: auto;
+          margin-bottom: 24px;
+        }
+
+        #selected .works__header .muted {
+          font-size: 13px;
+          line-height: 1.72;
         }
 
         .contact {
@@ -2526,7 +2751,7 @@
                   <small>把产品故事转译成可传播的时光机视觉，突出概念、包装与系列化识别。</small>
                   <em class="card__meta">tinytoys · 创意合成 / 插画 / 3D</em>
                 </span>
-                <span class="card__visual"><img src="作品集/精选作品封面/DaDa梦工厂宣发海报.jpg" alt="DADA梦工厂宣发海报" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/DaDa梦工厂宣发海报.jpg" alt="DADA梦工厂宣发海报" loading="lazy" decoding="async" /></span>
                 <span class="card__arrow">→</span>
               </button>
               <button class="card" type="button" data-title="欢乐斗地主王炸节" data-desc="围绕节日活动建立强冲击的主视觉与多端传播物料，让玩法记忆点和活动利益点更直接。" data-tags="腾讯游戏 / 活动主视觉 / 宣发海报" data-image="作品集/精选作品封面/欢乐斗地主.jpg">
@@ -2536,7 +2761,7 @@
                   <small>用高饱和角色和扑克牌语义建立节日冲击力，让活动利益点一眼可读。</small>
                   <em class="card__meta">腾讯游戏 · 创意合成 / 插画</em>
                 </span>
-                <span class="card__visual"><img src="作品集/精选作品封面/欢乐斗地主.jpg" alt="欢乐斗地主王炸节" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/欢乐斗地主.jpg" alt="欢乐斗地主王炸节" loading="lazy" decoding="async" /></span>
                 <span class="card__arrow">→</span>
               </button>
               <button class="card" type="button" data-title="快手游戏春节传播活动" data-desc="以春节游园会为主题，构建热闹、轻松、有游戏感的活动视觉系统和多渠道延展。" data-tags="快手游戏 / 春节活动 / 宣发海报" data-image="作品集/精选作品封面/快手游戏春节传播活动.jpg">
@@ -2546,7 +2771,7 @@
                   <small>把春节游园会与游戏福利结合，形成明快、热闹、易延展的活动视觉。</small>
                   <em class="card__meta">快手 · 创意合成 / 插画</em>
                 </span>
-                <span class="card__visual"><img src="作品集/精选作品封面/快手游戏春节传播活动.jpg" alt="快手游戏春节传播活动" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/快手游戏春节传播活动.jpg" alt="快手游戏春节传播活动" loading="lazy" decoding="async" /></span>
                 <span class="card__arrow">→</span>
               </button>
               <button class="card" type="button" data-title="招商银行官方微博运营" data-desc="以固定栏目和轻量插画建立更亲和的金融内容表达，提升信息可读性和品牌温度。" data-tags="招商银行 / 官方微博 / 运营设计" data-image="作品集/精选作品封面/招商银行微博运营.jpg">
@@ -2556,7 +2781,7 @@
                   <small>用轻插画和栏目化系统降低金融内容门槛，让官方运营更亲和、更稳定。</small>
                   <em class="card__meta">招商银行 · 官方微博运营</em>
                 </span>
-                <span class="card__visual"><img src="作品集/精选作品封面/招商银行微博运营.jpg" alt="招商银行官方微博运营" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/招商银行微博运营.jpg" alt="招商银行官方微博运营" loading="lazy" decoding="async" /></span>
                 <span class="card__arrow">→</span>
               </button>
               <button class="card" type="button" data-title="《金铲铲之战》灵魂莲华场景原画" data-desc="围绕新品上线宣传片需求，完成具有能量流动和幻想氛围的场景原画与关键视觉。" data-tags="腾讯游戏 / 场景原画 / 宣传片视觉" data-image="作品集/精选作品封面/灵魂莲华场景概念设定.jpg">
@@ -2566,7 +2791,7 @@
                   <small>用流动能量、紫蓝光感和空间冲击力，服务新品宣传片的情绪记忆点。</small>
                   <em class="card__meta">腾讯游戏 · 场景原画</em>
                 </span>
-                <span class="card__visual"><img src="作品集/精选作品封面/灵魂莲华场景概念设定.jpg" alt="金铲铲之战灵魂莲华场景原画" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/灵魂莲华场景概念设定.jpg" alt="金铲铲之战灵魂莲华场景原画" loading="lazy" decoding="async" /></span>
                 <span class="card__arrow">→</span>
               </button>
               <button class="card" type="button" data-title="QQ公仔联名IP设计" data-desc="将QQ公仔与游戏、潮流和展陈语境结合，完成具有联名识别度的IP造型与视觉包装。" data-tags="腾讯游戏 / IP设计 / 联名包装" data-image="作品集/精选作品封面/QQ公仔联名IP设计.jpg">
@@ -2576,7 +2801,7 @@
                   <small>把QQ公仔和游戏文化做联名转译，强化角色辨识度与展陈传播趣味。</small>
                   <em class="card__meta">腾讯游戏 · IP设计</em>
                 </span>
-                <span class="card__visual"><img src="作品集/精选作品封面/QQ公仔联名IP设计.jpg" alt="QQ公仔联名IP设计" /></span>
+                <span class="card__visual"><img src="作品集/精选作品封面/QQ公仔联名IP设计.jpg" alt="QQ公仔联名IP设计" loading="lazy" decoding="async" /></span>
                 <span class="card__arrow">→</span>
               </button>
             </div>
@@ -4225,6 +4450,7 @@
 
       function initGSAPMotion() {
         if (!hasGSAP || reduceMotion) return;
+        const isMobileMotion = window.matchMedia("(max-width: 900px), (hover: none), (pointer: coarse)").matches;
 
         gsap.set([".content--hero h1", ".content--hero .identity", ".hero-kicker", ".scroll-hint"], {
           autoAlpha: 0,
@@ -4238,16 +4464,43 @@
           .to(".content--hero .identity", { autoAlpha: 1, y: 0, duration: 0.86 }, "-=0.5")
           .to(".scroll-hint", { autoAlpha: 1, y: 0, duration: 0.7 }, "-=0.26");
 
-        gsap.to(".shape--planet", {
-          scale: 1.035,
-          y: -8,
-          duration: 4.8,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut"
-        });
+        if (!isMobileMotion) {
+          gsap.to(".shape--planet", {
+            scale: 1.035,
+            y: -8,
+            duration: 4.8,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+          });
+        }
 
         if (window.ScrollTrigger) {
+          if (isMobileMotion) {
+            gsap.set([
+              "#about .intro-visual",
+              "#about .eyebrow",
+              "#about h2",
+              "#about .muted",
+              "#ability .eyebrow",
+              "#ability h2",
+              "#ability .muted",
+              "#ability .ability__item",
+              "#selected .eyebrow",
+              "#selected h2",
+              "#selected .muted",
+              "#selected .card",
+              "#selected .archive-link",
+              "#contact .eyebrow",
+              "#contact h2",
+              "#contact .muted",
+              "#contact .contact-link",
+              "#contact .contact-note",
+              "#contact .mini-mark"
+            ], { autoAlpha: 1, y: 0, scale: 1 });
+            return;
+          }
+
           const revealGroups = [
             {
               trigger: "#about",
@@ -5201,6 +5454,7 @@
       const sliderCards = Array.from(slider.querySelectorAll(".card"));
       let currentSlide = 0;
       let sliderTimer = null;
+      const mobileSliderQuery = window.matchMedia("(max-width: 900px)");
 
       function getSlideStep() {
         const firstCard = sliderCards[0];
@@ -5225,9 +5479,45 @@
         });
       }
 
+      function isMobileSlider() {
+        return mobileSliderQuery.matches;
+      }
+
+      function syncMobileSlideFromScroll() {
+        if (!isMobileSlider() || !sliderCards.length) return;
+        const center = slider.scrollLeft + slider.clientWidth / 2;
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+        sliderCards.forEach((card, index) => {
+          const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+          const distance = Math.abs(cardCenter - center);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+        if (closestIndex !== currentSlide) {
+          currentSlide = closestIndex;
+          updateSliderState();
+        }
+      }
+
       function goToSlide(index, shouldRestart = true) {
         if (!sliderCards.length) return;
         currentSlide = (index + sliderCards.length) % sliderCards.length;
+        if (isMobileSlider()) {
+          if (hasGSAP) gsap.killTweensOf(slider);
+          slider.style.transform = "none";
+          const card = sliderCards[currentSlide];
+          const targetLeft = card.offsetLeft - (slider.clientWidth - card.offsetWidth) / 2;
+          slider.scrollTo({
+            left: Math.max(0, targetLeft),
+            behavior: reduceMotion ? "auto" : "smooth"
+          });
+          updateSliderState();
+          window.clearInterval(sliderTimer);
+          return;
+        }
         const x = getSliderOffset() - getSlideStep() * currentSlide;
         if (hasGSAP && !reduceMotion) {
           gsap.to(slider, {
@@ -5252,6 +5542,7 @@
 
       function restartSlider() {
         window.clearInterval(sliderTimer);
+        if (isMobileSlider()) return;
         sliderTimer = window.setInterval(() => nextSlide(false), 4200);
       }
 
@@ -5270,7 +5561,23 @@
       slider.addEventListener("mouseleave", restartSlider);
       slider.addEventListener("focusin", () => window.clearInterval(sliderTimer));
       slider.addEventListener("focusout", restartSlider);
-      window.addEventListener("resize", () => goToSlide(currentSlide, false));
+      let sliderScrollFrame = null;
+      slider.addEventListener("scroll", () => {
+        if (!isMobileSlider() || sliderScrollFrame) return;
+        sliderScrollFrame = requestAnimationFrame(() => {
+          sliderScrollFrame = null;
+          syncMobileSlideFromScroll();
+        });
+      }, { passive: true });
+      window.addEventListener("resize", () => {
+        window.clearInterval(sliderTimer);
+        slider.style.transform = isMobileSlider() ? "none" : slider.style.transform;
+        goToSlide(currentSlide, false);
+        restartSlider();
+      });
+      if (mobileSliderQuery.addEventListener) {
+        mobileSliderQuery.addEventListener("change", () => goToSlide(currentSlide, false));
+      }
       goToSlide(0, false);
       restartSlider();
 

@@ -126,7 +126,7 @@
   .music-control {
     top: auto;
     right: auto;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
     left: 16px;
     z-index: 63;
     max-width: calc(100vw - 32px);
@@ -182,8 +182,9 @@
   }
 
   .music-control.is-compact .music-control__toggle {
-    min-width: 38px;
-    width: 38px;
+    min-width: 40px;
+    width: 40px;
+    min-height: 40px;
     padding: 6px;
   }
 

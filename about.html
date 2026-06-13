@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>关于金旺｜个人作品集</title>
     <style>
       :root {
@@ -24,7 +24,11 @@
       }
 
       html {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
         scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
       }
 
       body {
@@ -549,9 +553,9 @@
           right: 16px;
           left: 16px;
           padding: 0;
-          flex-direction: column;
+          display: grid;
           align-items: stretch;
-          justify-content: center;
+          justify-content: stretch;
           gap: 10px;
         }
 
@@ -561,6 +565,7 @@
           left: auto;
           z-index: auto;
           width: fit-content;
+          justify-self: center;
           max-width: 100%;
           padding: 9px 11px;
           font-size: 12px;
@@ -576,6 +581,12 @@
           gap: 2px;
           padding: 6px;
           font-size: 12px;
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+
+        .nav__links::-webkit-scrollbar {
+          display: none;
         }
 
         .nav__links a {

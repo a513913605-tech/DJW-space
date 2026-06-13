@@ -7,8 +7,8 @@
   left: 0;
   top: 0;
   z-index: 120;
-  width: 42px;
-  height: 42px;
+  width: 58px;
+  height: 40px;
   pointer-events: none;
   opacity: var(--cursor-alpha);
   mix-blend-mode: normal;
@@ -18,17 +18,22 @@
 
 .custom-cursor__ring {
   position: absolute;
-  inset: 0;
-  border: 1px solid rgba(48, 52, 48, 0.58);
-  border-radius: 999px;
+  left: 50%;
+  top: 50%;
+  width: 48px;
+  height: 21px;
+  border: 1px solid rgba(54, 58, 54, 0.34);
+  border-radius: 50%;
   background:
-    radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.72), transparent 28%),
-    radial-gradient(circle at 50% 50%, rgba(82, 86, 82, 0.16), transparent 62%);
+    linear-gradient(180deg, rgba(244, 244, 239, 0.92) 0%, rgba(154, 159, 153, 0.72) 42%, rgba(59, 63, 59, 0.7) 100%),
+    radial-gradient(ellipse at 28% 24%, rgba(255, 255, 255, 0.95), transparent 34%),
+    radial-gradient(ellipse at 74% 68%, rgba(43, 47, 43, 0.24), transparent 46%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    0 8px 18px rgba(23, 23, 23, 0.12),
-    0 0 22px rgba(70, 74, 70, 0.1);
-  transform: scale(var(--cursor-scale));
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    inset 0 -5px 8px rgba(23, 23, 23, 0.28),
+    0 8px 16px rgba(23, 23, 23, 0.13),
+    0 0 22px rgba(118, 124, 116, 0.1);
+  transform: translate3d(-50%, -45%, 0) scale(var(--cursor-scale)) rotate(-5deg);
   will-change: transform;
 }
 
@@ -37,36 +42,33 @@
   content: "";
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: 64%;
-  height: 1px;
-  background: rgba(48, 52, 48, 0.34);
-  transform: translate3d(-50%, -50%, 0);
+  pointer-events: none;
+}
+
+.custom-cursor__ring::before {
+  top: -13px;
+  width: 23px;
+  height: 16px;
+  border: 1px solid rgba(65, 69, 65, 0.22);
+  border-bottom-color: rgba(255, 255, 255, 0.42);
+  border-radius: 999px 999px 11px 11px;
+  background:
+    radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.8), transparent 30%),
+    linear-gradient(135deg, rgba(236, 238, 232, 0.72), rgba(128, 134, 128, 0.28));
+  backdrop-filter: blur(4px);
+  transform: translate3d(-50%, 0, 0);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.76),
+    0 3px 8px rgba(23, 23, 23, 0.08);
 }
 
 .custom-cursor__ring::after {
-  width: 1px;
-  height: 64%;
-}
-
-.custom-cursor__core {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 121;
-  width: 7px;
-  height: 7px;
+  top: 6px;
+  width: 72%;
+  height: 1px;
   border-radius: 999px;
-  pointer-events: none;
-  opacity: var(--cursor-alpha);
-  background:
-    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.9), transparent 35%),
-    rgba(46, 50, 46, 0.88);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.62),
-    0 0 14px rgba(46, 50, 46, 0.24);
-  transform: translate3d(-50%, -50%, 0);
-  will-change: transform, opacity;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.78), rgba(56, 60, 56, 0.18), transparent);
+  transform: translate3d(-50%, 0, 0);
 }
 
 .custom-cursor__label {
@@ -90,28 +92,28 @@
 }
 
 .custom-cursor.is-interactive {
-  --cursor-scale: 1.42;
+  --cursor-scale: 1.22;
 }
 
 .custom-cursor.is-card {
-  --cursor-scale: 1.68;
+  --cursor-scale: 1.34;
   --cursor-label-alpha: 1;
   --cursor-label-x: 8px;
 }
 
 .custom-cursor.is-text {
-  --cursor-scale: 1.24;
+  --cursor-scale: 1.14;
 }
 
 .custom-cursor.is-pressed {
-  --cursor-scale: 0.82;
+  --cursor-scale: 0.92;
 }
 
 .custom-cursor.is-interactive .custom-cursor__ring {
   border-color: rgba(54, 58, 54, 0.46);
   background:
-    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.6), transparent 29%),
-    radial-gradient(circle at 50% 50%, rgba(72, 76, 72, 0.12), transparent 62%);
+    linear-gradient(180deg, rgba(255, 255, 250, 0.96) 0%, rgba(166, 172, 165, 0.78) 42%, rgba(52, 56, 52, 0.74) 100%),
+    radial-gradient(ellipse at 28% 24%, rgba(255, 255, 255, 0.95), transparent 34%);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -122,8 +124,7 @@
 }
 
 @media (max-width: 760px), (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .custom-cursor,
-  .custom-cursor__core {
+  .custom-cursor {
     display: none;
   }
 }
