@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
     <title>戴金旺个人作品集</title>
     <style>
       :root {
@@ -276,7 +277,7 @@
         text-decoration: none;
         padding: 10px 15px;
         border-radius: 999px;
-        transition: color 220ms ease, background-color 220ms ease, text-shadow 220ms ease, transform 220ms ease;
+        transition: color 220ms ease, background-color 220ms ease, transform 220ms ease;
       }
 
       .nav__links .is-active {
@@ -296,7 +297,6 @@
       .nav__links a:hover {
         color: var(--text);
         background: rgba(255, 255, 255, 0.62);
-        text-shadow: 0 0 18px rgba(242, 164, 58, 0.2);
         transform: translateY(-1px);
       }
 
@@ -803,13 +803,9 @@
         text-transform: none;
         white-space: nowrap;
         user-select: none;
-        color: rgba(18, 18, 18, 0.94);
-        text-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.7),
-          0 0 5px rgba(255, 255, 255, 0.68),
-          0 0 10px rgba(255, 255, 255, 0.38),
-          0 12px 28px rgba(23, 23, 23, 0.11);
-        font-variation-settings: "wght" 620, "wdth" 118, "ital" 0;
+        color: rgba(12, 12, 12, 0.96);
+        text-shadow: none;
+        font-variation-settings: "wght" 660, "wdth" 118, "ital" 0;
       }
 
       #hero .pressure-title span {
@@ -818,7 +814,7 @@
         min-width: 0.32em;
         color: inherit;
         font: inherit;
-        font-variation-settings: "wght" 620, "wdth" 118, "ital" 0;
+        font-variation-settings: "wght" 660, "wdth" 118, "ital" 0;
         transform-origin: center 62%;
         will-change: font-variation-settings, opacity, transform;
       }
@@ -829,17 +825,13 @@
 
       h2 {
         font-family: var(--font-display);
-        font-size: clamp(38px, 4.45vw, 72px);
-        line-height: 1.05;
-        letter-spacing: -0.02em;
-        font-weight: 800;
-        color: rgba(15, 15, 15, 0.92);
-        -webkit-text-stroke: 0.12px rgba(255, 255, 255, 0.38);
-        text-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.72),
-          0 0 4px rgba(255, 255, 255, 0.74),
-          0 0 8px rgba(255, 255, 255, 0.46),
-          0 10px 24px rgba(23, 23, 23, 0.11);
+        font-size: clamp(38px, 4.18vw, 68px);
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+        font-weight: 760;
+        color: rgba(29, 29, 31, 0.96);
+        -webkit-text-stroke: 0;
+        text-shadow: none;
       }
 
       .material-title {
@@ -851,14 +843,10 @@
         width: fit-content;
         max-width: 100%;
         margin-inline: auto;
-        color: rgba(15, 15, 15, 0.92);
+        color: rgba(29, 29, 31, 0.96);
         text-align: center;
-        text-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.72),
-          0 0 4px rgba(255, 255, 255, 0.74),
-          0 0 8px rgba(255, 255, 255, 0.46),
-          0 10px 24px rgba(23, 23, 23, 0.11);
-        transition: filter 420ms ease, text-shadow 420ms ease;
+        text-shadow: none;
+        transition: filter 420ms ease;
       }
 
       .material-title::after {
@@ -881,13 +869,8 @@
       }
 
       .material-title.is-lit {
-        filter: brightness(1.06) contrast(1.04);
-        text-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.78),
-          0 0 6px rgba(255, 255, 255, 0.78),
-          0 0 12px rgba(255, 255, 255, 0.48),
-          0 12px 28px rgba(23, 23, 23, 0.12),
-          0 0 18px rgba(242, 164, 58, 0.06);
+        filter: brightness(0.94) contrast(1.08);
+        text-shadow: none;
       }
 
       @media (hover: none), (pointer: coarse) {
@@ -898,14 +881,11 @@
 
       .identity {
         margin-top: 10px;
-        font-size: clamp(18px, 2.2vw, 34px);
-        letter-spacing: 0.02em;
-        font-weight: 720;
-        color: rgba(18, 18, 18, 0.86);
-        text-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.7),
-          0 0 4px rgba(255, 255, 255, 0.58),
-          0 8px 18px rgba(23, 23, 23, 0.07);
+        font-size: clamp(20px, 2.05vw, 30px);
+        letter-spacing: 0;
+        font-weight: 520;
+        color: rgba(29, 29, 31, 0.86);
+        text-shadow: none;
       }
 
       .intro {
@@ -918,9 +898,9 @@
       .intro p {
         max-width: 680px;
         margin-inline: auto;
-        font-size: clamp(15px, 1.22vw, 18px);
-        line-height: 1.92;
-        letter-spacing: 0.02em;
+        font-size: clamp(17px, 1.2vw, 21px);
+        line-height: 1.62;
+        letter-spacing: 0;
       }
 
       .section-copy > .muted,
@@ -928,13 +908,9 @@
       .works__header .muted,
       .contact .muted,
       .intro p {
-        color: rgba(18, 18, 18, 0.74);
+        color: rgba(29, 29, 31, 0.78);
         font-weight: 500;
-        text-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.66),
-          0 0 3px rgba(255, 255, 255, 0.62),
-          0 0 6px rgba(255, 255, 255, 0.36),
-          0 8px 18px rgba(23, 23, 23, 0.065);
+        text-shadow: none;
       }
 
       .intro-visual {
@@ -1300,8 +1276,8 @@
 
       .works__header .muted,
       .contact .muted {
-        line-height: 1.86;
-        letter-spacing: 0.02em;
+        line-height: 1.62;
+        letter-spacing: 0;
         max-width: 820px;
       }
 
@@ -1746,22 +1722,33 @@
 
       .modal-close {
         position: absolute;
-        top: 24px;
-        right: 24px;
-        width: 42px;
-        height: 42px;
-        border: 0;
-        border-radius: 50%;
-        background: rgba(23, 23, 23, 0.06);
-        color: rgba(23, 23, 23, 0.62);
+        top: 20px;
+        right: 20px;
+        z-index: 12;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 118px;
+        height: auto;
+        padding: 15px 24px;
+        border: 1px solid rgba(23, 23, 23, 0.08);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--text);
+        backdrop-filter: blur(14px);
+        font-family: inherit;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0;
         cursor: pointer;
-        transition: transform 220ms ease, background-color 220ms ease, color 220ms ease;
+        box-shadow: 0 12px 28px rgba(23, 23, 23, 0.12);
+        transition: border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease;
       }
 
       .modal-close:hover {
-        transform: scale(1.08) rotate(8deg);
-        background: rgba(242, 164, 58, 0.18);
-        color: var(--text);
+        border-color: rgba(242, 164, 58, 0.26);
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 24px rgba(242, 164, 58, 0.1);
       }
 
       .modal__visual {
@@ -2144,7 +2131,8 @@
           gap: 0.012em;
           font-size: clamp(60px, 20.5vw, 90px);
           line-height: 0.9;
-          font-variation-settings: "wght" 580, "wdth" 78, "ital" 0;
+          color: rgba(8, 8, 8, 0.97);
+          font-variation-settings: "wght" 680, "wdth" 78, "ital" 0;
           transform: translateX(0);
           contain: paint;
         }
@@ -2152,12 +2140,16 @@
         #hero .pressure-title span {
           flex: 0 0 auto;
           min-width: 0;
-          font-variation-settings: "wght" 580, "wdth" 78, "ital" 0;
+          font-variation-settings: "wght" 680, "wdth" 78, "ital" 0;
         }
 
         .content--hero .identity {
           max-width: min(100%, 340px);
           margin-inline: auto;
+          font-size: clamp(18px, 5vw, 23px);
+          line-height: 1.32;
+          font-weight: 500;
+          color: rgba(29, 29, 31, 0.86);
           text-align: center;
         }
 
@@ -2173,6 +2165,173 @@
         }
 
         .hero-hud {
+          --hud-mobile-fade: 1;
+          display: block;
+          z-index: 2;
+          opacity: calc(0.24 + (0.22 * var(--hud-mobile-fade)));
+        }
+
+        .hero-hud__panel {
+          width: 42px;
+          min-height: min(54svh, 440px);
+          opacity: 1;
+          overflow: hidden;
+        }
+
+        .hero-hud__left {
+          left: max(8px, env(safe-area-inset-left, 0px));
+          top: calc(env(safe-area-inset-top, 0px) + 170px);
+          transform: translate3d(0, var(--hud-left-y), 0);
+        }
+
+        .hero-hud__right {
+          right: max(10px, env(safe-area-inset-right, 0px));
+          top: calc(env(safe-area-inset-top, 0px) + 170px);
+          width: 32px;
+          transform: translate3d(0, var(--hud-right-y), 0);
+        }
+
+        .hero-hud__bracket {
+          inset: 0;
+          border-left-color: rgba(70, 70, 70, 0.24);
+          border-top-color: rgba(70, 70, 70, 0.12);
+          border-bottom-color: rgba(70, 70, 70, 0.12);
+        }
+
+        .hero-hud__bracket::before,
+        .hero-hud__bracket::after {
+          width: 10px;
+          background: rgba(70, 70, 70, 0.26);
+        }
+
+        .hero-hud__right::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 1px;
+          background: linear-gradient(
+            180deg,
+            rgba(70, 70, 70, 0.04),
+            rgba(70, 70, 70, 0.22) 22%,
+            rgba(70, 70, 70, 0.18) 76%,
+            rgba(70, 70, 70, 0.04)
+          );
+        }
+
+        .hero-hud__title {
+          position: absolute;
+          left: 5px;
+          top: 6px;
+          margin: 0;
+          writing-mode: vertical-rl;
+          transform: none;
+          color: rgba(58, 58, 58, 0.4);
+          font-size: 8px;
+          letter-spacing: 0.18em;
+          white-space: nowrap;
+        }
+
+        .hero-hud__right .hero-hud__title {
+          left: auto;
+          right: 2px;
+        }
+
+        .hero-hud__rows {
+          position: absolute;
+          left: 7px;
+          right: 5px;
+          top: 78px;
+          display: grid;
+          gap: 14px;
+        }
+
+        .hero-hud__row {
+          display: grid;
+          grid-template-columns: 6px 1fr;
+          align-items: center;
+          gap: 4px;
+          height: 8px;
+          overflow: hidden;
+          font-size: 6px;
+        }
+
+        .hero-hud__row span:first-child {
+          display: block;
+          max-width: 6px;
+          overflow: hidden;
+          color: rgba(58, 58, 58, 0.34);
+          line-height: 1;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .hero-hud__value {
+          display: none;
+        }
+
+        .hero-hud__track {
+          display: block;
+          width: 100%;
+          height: 2px;
+          background: rgba(70, 70, 70, 0.12);
+        }
+
+        .hero-hud__track::before {
+          width: var(--value, 64%);
+          background: rgba(70, 70, 70, 0.3);
+        }
+
+        .hero-hud__track::after {
+          display: none;
+        }
+
+        .hero-hud__matrix {
+          position: absolute;
+          left: 50%;
+          right: auto;
+          top: 76px;
+          display: grid;
+          width: 8px;
+          grid-template-columns: 1fr;
+          gap: 7px;
+          margin: 0;
+          transform: translateX(-50%);
+        }
+
+        .hero-hud__cell {
+          width: 8px;
+          height: 8px;
+          border-color: rgba(70, 70, 70, 0.16);
+          background: rgba(70, 70, 70, 0.065);
+        }
+
+        .hero-hud__cell:nth-child(3n + 1) {
+          background: rgba(70, 70, 70, 0.12);
+        }
+
+        .hero-hud__cell:nth-child(n + 16) {
+          display: none;
+        }
+
+        .hero-hud__status {
+          position: absolute;
+          left: 7px;
+          right: 7px;
+          bottom: 20px;
+          display: block;
+          padding-top: 0;
+          border-top-color: rgba(70, 70, 70, 0.18);
+        }
+
+        .hero-hud__percent,
+        .hero-hud__caption {
+          display: none;
+        }
+
+        .hero-hud__ticks,
+        .hero-hud__cross {
           display: none;
         }
 
@@ -2450,6 +2609,26 @@
           max-width: calc(100vw - 42px);
         }
 
+        h2 {
+          font-size: clamp(38px, 11.8vw, 54px);
+          line-height: 1.06;
+          letter-spacing: -0.012em;
+          font-weight: 760;
+          color: rgba(29, 29, 31, 0.96);
+        }
+
+        .intro p,
+        .section-copy > .muted,
+        .section-heading > .muted,
+        .works__header .muted,
+        .contact .muted {
+          font-size: clamp(17px, 4.65vw, 20px);
+          line-height: 1.62;
+          letter-spacing: 0;
+          color: rgba(29, 29, 31, 0.82);
+          font-weight: 500;
+        }
+
         .card {
           grid-template-columns: 1fr;
           flex-basis: min(86vw, 360px);
@@ -2485,8 +2664,8 @@
         }
 
         #selected .works__header .muted {
-          font-size: 13px;
-          line-height: 1.72;
+          font-size: 16px;
+          line-height: 1.58;
         }
 
         .contact {
@@ -2515,6 +2694,7 @@
       })();
     </script>
     <link rel="stylesheet" href="assets/page-loader.css" />
+    <link rel="stylesheet" href="assets/deep-space-theme.css" />
   </head>
   <body>
     <div class="frame"></div>
@@ -2843,7 +3023,7 @@
 
     <div class="work-modal" id="workModal" aria-hidden="true">
       <div class="work-modal__panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="modal-close" type="button" aria-label="关闭弹窗">×</button>
+        <button class="modal-close" type="button" aria-label="关闭弹窗">Close</button>
         <div class="modal__visual">
           <img id="modalImage" src="" alt="" />
         </div>
@@ -2973,9 +3153,17 @@
         let velocityLeft = 0;
         let velocityRight = 0;
         let lastDataRefresh = 0;
+        const mobileHudQuery = window.matchMedia("(max-width: 900px), (hover: none), (pointer: coarse)");
 
         function renderHudMotion() {
           hudFrame = null;
+          if (mobileHudQuery.matches) {
+            hud.style.setProperty("--hud-left-x", "0px");
+            hud.style.setProperty("--hud-right-x", "0px");
+            hud.style.setProperty("--hud-left-y", `${inertiaLeft * 0.42}px`);
+            hud.style.setProperty("--hud-right-y", `${inertiaRight * 0.36}px`);
+            return;
+          }
           hud.style.setProperty("--hud-left-x", `${nextX * -0.46}px`);
           hud.style.setProperty("--hud-left-y", `${nextY * -0.34 + inertiaLeft}px`);
           hud.style.setProperty("--hud-right-x", `${nextX * 0.4}px`);
@@ -3001,6 +3189,22 @@
           inertiaRight += velocityRight;
           const activity = Math.min(1, scrollEnergy);
           hud.style.setProperty("--hud-activity", activity.toFixed(3));
+          if (mobileHudQuery.matches) {
+            const scrollY = window.scrollY || window.pageYOffset || 0;
+            const heroFade = Math.max(0.3, 1 - scrollY / Math.max(window.innerHeight * 0.7, 1));
+            hud.style.setProperty("--hud-mobile-fade", heroFade.toFixed(3));
+            renderHudMotion();
+            if (scrollEnergy > 0.015 || Math.abs(inertiaLeft) > 0.18 || Math.abs(inertiaRight) > 0.18) {
+              scrollFrame = requestAnimationFrame(updateHudData);
+            } else {
+              inertiaLeft = 0;
+              inertiaRight = 0;
+              velocityLeft = 0;
+              velocityRight = 0;
+              renderHudMotion();
+            }
+            return;
+          }
           renderHudMotion();
 
           const now = performance.now();
@@ -3065,11 +3269,18 @@
         }
 
         window.addEventListener("scroll", () => {
-          if (window.innerWidth <= 900) return;
           const currentScrollY = window.scrollY || window.pageYOffset || 0;
           const signedDelta = currentScrollY - lastScrollY;
           const delta = Math.abs(signedDelta);
           lastScrollY = currentScrollY;
+          if (mobileHudQuery.matches) {
+            scrollVelocity = Math.max(-12, Math.min(12, signedDelta * 0.08));
+            velocityLeft += scrollVelocity * 0.08;
+            velocityRight += scrollVelocity * 0.1;
+            scrollEnergy = Math.min(1, scrollEnergy + delta / 420);
+            if (!scrollFrame) scrollFrame = requestAnimationFrame(updateHudData);
+            return;
+          }
           scrollVelocity = Math.max(-24, Math.min(24, signedDelta * 0.18));
           velocityLeft += scrollVelocity * 0.18;
           velocityRight += scrollVelocity * 0.24;
@@ -3151,6 +3362,23 @@
 
         function lerp(from, to, progress) {
           return from + (to - from) * progress;
+        }
+
+        function getTextClearanceFactor(x, y, progress) {
+          if (progress < 0.55) return 1;
+          const horizontal = Math.abs(x) / Math.max(viewW * (isCompactViewport ? 0.52 : 0.44), 1);
+          const vertical = Math.abs(y) / Math.max(viewH * (isCompactViewport ? 0.36 : 0.3), 1);
+          const centerWeight = 1 - smoothstep(Math.max(horizontal, vertical));
+          const sectionWeight = smoothstep((progress - 0.55) / 0.8) * (1 - smoothstep((progress - 4.25) / 0.5));
+          const reduction = isCompactViewport ? 0.56 : 0.42;
+          return 1 - centerWeight * sectionWeight * reduction;
+        }
+
+        function normalizeParticleSize(rawSize, x, y, z, progress) {
+          const baseCap = isCompactViewport ? 2.55 : isMidViewport || lowMemoryDevice ? 3.45 : 4.35;
+          const depthCap = z > 360 ? baseCap * 0.92 : z < -420 ? baseCap * 1.08 : baseCap;
+          const capped = rawSize <= depthCap ? rawSize : depthCap + (rawSize - depthCap) * 0.08;
+          return capped * getTextClearanceFactor(x, y, progress);
         }
 
         function updateViewSize() {
@@ -3770,7 +3998,8 @@
             positions[i * 3 + 2] = particle.z;
             const baseSize = lerp(from.size, to.size, p);
             const depthScale = particle.z > 360 ? 4.5 : particle.z < -420 ? 2.1 : 3.18;
-            sizes[i] = baseSize * (depthScale + scrollEnergy * (particle.z > 360 ? 1.35 : 0.95));
+            const rawSize = baseSize * (depthScale + scrollEnergy * (particle.z > 360 ? 1.35 : 0.95));
+            sizes[i] = normalizeParticleSize(rawSize, particle.x, particle.y, particle.z, currentProgress);
             const twinkle = 0.82 + Math.sin(breathe * 1.8 + particle.drift) * 0.18;
             alphas[i] = lerp(from.alpha, to.alpha, p) * (particle.z > 360 ? 1.34 : particle.z < -420 ? 0.78 : 1.2) * twinkle;
             const warm = lerp(from.warm, to.warm, p);
@@ -4084,6 +4313,21 @@
           return from + (to - from) * progress;
         }
 
+        function getCanvasTextClearanceFactor(x, y) {
+          if (activeState === "planet") return 1;
+          const horizontal = Math.abs(x - width * 0.5) / Math.max(width * (window.innerWidth < 760 ? 0.48 : 0.42), 1);
+          const vertical = Math.abs(y - height * 0.48) / Math.max(height * (window.innerWidth < 760 ? 0.28 : 0.24), 1);
+          const centerWeight = 1 - smoothstep(Math.max(horizontal, vertical));
+          return 1 - centerWeight * (window.innerWidth < 760 ? 0.58 : 0.44);
+        }
+
+        function normalizeCanvasParticleSize(rawSize, particle) {
+          const cap = window.innerWidth < 760 ? 2.35 : lowMemoryDevice ? 3.2 : 4.1;
+          const layerCap = particle.layer === "bokeh" ? cap * 1.08 : particle.layer === "facet" ? cap * 0.96 : cap;
+          const capped = rawSize <= layerCap ? rawSize : layerCap + (rawSize - layerCap) * 0.08;
+          return capped * getCanvasTextClearanceFactor(particle.x, particle.y);
+        }
+
         function getScrollSegment() {
           const anchors = stateOrder
             .map(([id, state]) => {
@@ -4388,7 +4632,8 @@
 
             const twinkle = 0.78 + Math.sin(breathe * 2.2 + particle.drift) * 0.22;
             const perspective = clamp(1 + particle.z / 1100, 0.55, 1.85);
-            const drawSize = particle.size * perspective * (1 + scrollEnergy * 1.6);
+            const rawDrawSize = particle.size * perspective * (1 + scrollEnergy * 1.6);
+            const drawSize = normalizeCanvasParticleSize(rawDrawSize, particle);
             const glowSize = particle.layer === "bokeh" ? drawSize * 2.2 : particle.layer === "facet" ? drawSize * 1.4 : drawSize * 1.9;
             const alpha = Math.min(0.86, particle.alpha * twinkle + pointerForce * 0.24);
             if (particle.layer === "bokeh") {
