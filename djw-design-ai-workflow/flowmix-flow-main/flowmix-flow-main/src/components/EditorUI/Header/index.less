@@ -1,0 +1,39 @@
+.leftControl {
+    padding-left: 10px;
+}
+
+.btn {
+    margin-right: 10px;
+}
+
+.rightControl {
+    margin-left: auto;
+    :global(.ant-btn-link) {
+        color: rgba(238, 241, 247, 0.68);
+        &:hover {
+            color: #f2a43a;
+        }
+    }
+}
+
+.title {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: rgba(238, 241, 247, 0.68);
+    > span {
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+    > div {
+        margin-bottom: 0;
+        inset-inline-start: 0 !important;
+        margin-top: 0 !important;
+        flex: 1;
+        color: rgba(246, 247, 250, 0.96);
+        :global(.ant-typography) {
+            color: rgba(246, 247, 250, 0.96);
+        }
+    }
+}

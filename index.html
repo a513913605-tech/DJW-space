@@ -823,6 +823,15 @@
         transition: opacity 180ms ease;
       }
 
+      #hero .split-reveal {
+        display: inline-block;
+        will-change: opacity, transform;
+      }
+
+      #hero .identity .split-reveal {
+        white-space: pre-wrap;
+      }
+
       h2 {
         font-family: var(--font-display);
         font-size: clamp(38px, 4.18vw, 68px);
@@ -1232,14 +1241,14 @@
         display: block;
         width: 100%;
         max-width: none;
-        padding: 8px 10px;
-        border: 1px solid rgba(23, 23, 23, 0.07);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.48);
+        padding: 2px 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
         backdrop-filter: none;
         color: rgba(23, 23, 23, 0.68);
         font-size: clamp(12px, 0.92vw, 14px);
-        line-height: 1.38;
+        line-height: 1.56;
         letter-spacing: 0.02em;
         text-align: left;
         white-space: normal;
@@ -1686,6 +1695,29 @@
       .card:nth-child(4) { animation-delay: 300ms; }
       .card:nth-child(5) { animation-delay: 380ms; }
       .card:nth-child(6) { animation-delay: 460ms; }
+      .card:nth-child(7) { animation-delay: 540ms; }
+      .card:nth-child(8) { animation-delay: 620ms; }
+
+      .card--video .card__visual::after {
+        content: "PLAY";
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 58px;
+        height: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 999px;
+        background: rgba(5, 7, 11, 0.58);
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 10px;
+        font-weight: 750;
+        letter-spacing: 0.14em;
+        backdrop-filter: blur(12px);
+      }
 
       .work-modal {
         position: fixed;
@@ -1757,12 +1789,17 @@
         background: #171717;
       }
 
-      .modal__visual img {
+      .modal__visual img,
+      .modal__visual video {
         width: 100%;
         height: 100%;
         display: block;
         object-fit: cover;
         object-position: center;
+      }
+
+      .modal__visual video {
+        background: #05070b;
       }
 
       .modal__info {
@@ -1966,10 +2003,15 @@
         grid-column: 1 / -1;
       }
 
-      .project-gallery img {
+      .project-gallery img,
+      .project-gallery video {
         display: block;
         width: 100%;
         height: auto;
+      }
+
+      .project-gallery video {
+        background: #05070b;
       }
 
       .back-to-top {
@@ -2567,6 +2609,7 @@
 
         .ability {
           grid-template-columns: 1fr;
+          width: 100%;
         }
 
         .ability__item.a1,
@@ -2728,6 +2771,7 @@
         <a href="works.html">Works</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
+        <a href="infinite-canvas.html">无限画布</a>
       </div>
     </header>
 
@@ -2984,6 +3028,26 @@
                 <span class="card__visual"><img src="作品集/精选作品封面/QQ公仔联名IP设计.jpg" alt="QQ公仔联名IP设计" loading="lazy" decoding="async" /></span>
                 <span class="card__arrow">→</span>
               </button>
+              <button class="card card--video" type="button" data-title="AI漫剧《杨戬》第一季" data-desc="以 AI 漫剧短片为载体，完成角色视觉、镜头叙事、美术气质和剪辑节奏的综合表达。" data-tags="AIGC / 漫剧项目 / 分镜剪辑" data-image="作品集/精选作品封面/AI漫剧《杨戬》 第一季封面.jpg">
+                <span class="card__index">07</span>
+                <span class="card__body">
+                  <span>AI漫剧《杨戬》第一季</span>
+                  <small>用 AI 影像流程完成漫剧短片表达，强化角色气质、镜头叙事和视觉氛围。</small>
+                  <em class="card__meta">AI漫剧 · 美术设定 / 分镜 / 剪辑</em>
+                </span>
+                <span class="card__visual"><img src="作品集/精选作品封面/AI漫剧《杨戬》 第一季封面.jpg" alt="AI漫剧《杨戬》第一季" loading="lazy" decoding="async" /></span>
+                <span class="card__arrow">▶</span>
+              </button>
+              <button class="card card--video" type="button" data-title="AI漫剧《杨戬》第二季" data-desc="延续杨戬漫剧项目的世界观与视觉风格，进一步强化场景氛围、动作节奏和连续叙事能力。" data-tags="AIGC / 漫剧项目 / 动态叙事" data-image="作品集/精选作品封面/AI漫剧《杨戬》 第二季封面.png">
+                <span class="card__index">08</span>
+                <span class="card__body">
+                  <span>AI漫剧《杨戬》第二季</span>
+                  <small>在第一季基础上延展世界观和镜头语言，突出连续叙事与动态视觉控制。</small>
+                  <em class="card__meta">AI漫剧 · 项目负责 / 美术设定 / 剪辑</em>
+                </span>
+                <span class="card__visual"><img src="作品集/精选作品封面/AI漫剧《杨戬》 第二季封面.png" alt="AI漫剧《杨戬》第二季" loading="lazy" decoding="async" /></span>
+                <span class="card__arrow">▶</span>
+              </button>
             </div>
             <button class="slider-btn slider-btn--next" type="button" aria-label="查看下一项作品">›</button>
             <div class="slider-dots" aria-label="精选作品轮播页码"></div>
@@ -3026,6 +3090,7 @@
         <button class="modal-close" type="button" aria-label="关闭弹窗">Close</button>
         <div class="modal__visual">
           <img id="modalImage" src="" alt="" />
+          <video id="modalVideo" controls playsinline preload="metadata" hidden></video>
         </div>
         <div class="modal__info">
           <div class="modal__copy">
@@ -3333,6 +3398,7 @@
         const sizes = new Float32Array(count);
         const alphas = new Float32Array(count);
         const seeds = new Float32Array(count);
+        const sheens = new Float32Array(count);
         const particles = [];
         const pointer = { x: -9999, y: -9999, tx: -9999, ty: -9999, vx: 0, vy: 0, power: 0, active: false };
         let width = window.innerWidth;
@@ -3381,15 +3447,37 @@
           return capped * getTextClearanceFactor(x, y, progress);
         }
 
+        function getSpecularClearanceFactor(x, y, progress) {
+          const heroWeight = 1 - smoothstep(progress / 0.72);
+          if (heroWeight <= 0.001) return 1;
+          const horizontal = Math.abs(x) / Math.max(viewW * (isCompactViewport ? 0.46 : 0.36), 1);
+          const vertical = Math.abs(y - viewH * 0.02) / Math.max(viewH * (isCompactViewport ? 0.34 : 0.26), 1);
+          const centerWeight = 1 - smoothstep(Math.max(horizontal, vertical));
+          return 1 - centerWeight * heroWeight * (isCompactViewport ? 0.72 : 0.58);
+        }
+
+        function getParticleSheen(index, particle, progress) {
+          const xLight = clamp(0.5 - particle.x / Math.max(viewW, 1), 0, 1);
+          const yLight = clamp(0.46 + particle.y / Math.max(viewH, 1), 0, 1);
+          const zLight = clamp((particle.z + 760) / 1520, 0, 1);
+          const topLight = clamp(0.32 + xLight * 0.28 + yLight * 0.64 + zLight * 0.3, 0, 1.18);
+          const reflectiveGrain = Math.pow(seededNoise(index, 58), 1.25);
+          const mineralFace = seededNoise(index, 59) > 0.5 ? 1.18 : 0.68;
+          const slowSweep = 0.72 + Math.sin(breathe * 0.46 + particle.drift * 0.78 + particle.z * 0.002) * 0.28;
+          const textClearance = getSpecularClearanceFactor(particle.x, particle.y, progress);
+          const compactScale = isCompactViewport ? 0.82 : 1.06;
+          return clamp((0.16 + reflectiveGrain * 1.05) * mineralFace * topLight * slowSweep * textClearance * compactScale, 0, 1.08);
+        }
+
         function updateViewSize() {
           width = window.innerWidth;
           height = window.innerHeight;
           camera.aspect = width / height;
           camera.updateProjectionMatrix();
-          renderer.setSize(width, height, false);
-          const distance = camera.position.z;
-          viewH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) * distance;
-          viewW = viewH * camera.aspect;
+        renderer.setSize(width, height, false);
+        const distance = camera.position.z;
+        viewH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) * distance;
+        viewW = viewH * camera.aspect;
         }
 
         function targetFor(index, state) {
@@ -3577,10 +3665,12 @@
             attribute float aSize;
             attribute float aAlpha;
             attribute float aSeed;
+            attribute float aSheen;
             attribute vec3 aColor;
             varying float vAlpha;
             varying float vDepth;
             varying float vSeed;
+            varying float vSheen;
             varying vec3 vColor;
             void main() {
               vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
@@ -3590,6 +3680,7 @@
               vAlpha = aAlpha;
               vDepth = clamp((position.z + 980.0) / 1960.0, 0.0, 1.0);
               vSeed = aSeed;
+              vSheen = aSheen;
               vColor = aColor;
             }
           `,
@@ -3597,6 +3688,7 @@
             varying float vAlpha;
             varying float vDepth;
             varying float vSeed;
+            varying float vSheen;
             varying vec3 vColor;
             uniform float uTime;
             void main() {
@@ -3613,18 +3705,32 @@
               float edge = smoothstep(0.5, 0.7, chip);
               float sparkle = 0.82 + 0.18 * sin(uTime * 1.4 + vSeed * 31.0);
               float iris = 0.5 + 0.5 * sin(uTime * 0.42 + vSeed * 17.0 + p.x * 2.2);
-              vec3 limestoneDark = vec3(0.34, 0.39, 0.35);
-              vec3 limestoneBase = vec3(0.45, 0.45, 0.45);
-              vec3 limestoneMid = vec3(0.56, 0.58, 0.54);
-              vec3 metallicLight = vec3(0.82, 0.84, 0.78);
-              vec3 coolHighlight = vec3(0.66, 0.72, 0.68);
-              vec3 glow = mix(limestoneDark, limestoneBase, 0.5 + vDepth * 0.18);
-              glow = mix(glow, limestoneMid, 0.2 + edge * 0.22);
-              glow = mix(glow, metallicLight, core * 0.48 + edge * 0.22);
-              glow = mix(glow, coolHighlight, iris * 0.13);
-              glow = mix(glow, vColor, 0.2);
+              vec3 normal = normalize(vec3(p.x * 0.56, p.y * 0.42, 1.0));
+              vec3 lightDir = normalize(vec3(-0.34, 0.74, 0.58));
+              vec3 viewDir = vec3(0.0, 0.0, 1.0);
+              float diffuse = clamp(dot(normal, lightDir), 0.0, 1.0);
+              float spec = pow(max(dot(reflect(-lightDir, normal), viewDir), 0.0), 26.0);
+              float facetGlint = pow(1.0 - smoothstep(0.02, 0.42, abs(p.x * 0.72 - p.y * 0.46)), 2.0);
+              float slowFlash = 0.74 + 0.26 * sin(uTime * 0.72 + vSeed * 48.0);
+              float metalLine = pow(1.0 - smoothstep(0.0, 0.28, abs(p.x * 0.2 + p.y * 0.96)), 2.4);
+              float highlight = vSheen * slowFlash * (spec * 1.72 + diffuse * 0.18 + edge * facetGlint * 0.46 + metalLine * 0.16);
+              float rimSpec = edge * vSheen * (0.18 + facetGlint * 0.36);
+              vec3 titaniumDark = vec3(0.23, 0.26, 0.27);
+              vec3 graphiteGrey = vec3(0.36, 0.39, 0.40);
+              vec3 limestoneSilver = vec3(0.57, 0.60, 0.58);
+              vec3 brushedTitanium = vec3(0.74, 0.78, 0.76);
+              vec3 coldSpecular = vec3(0.9, 0.94, 0.92);
+              vec3 specularWhite = vec3(0.98, 0.99, 0.95);
+              vec3 coolReflection = vec3(0.54, 0.62, 0.64);
+              vec3 glow = mix(titaniumDark, graphiteGrey, 0.48 + vDepth * 0.18);
+              glow = mix(glow, limestoneSilver, core * 0.42 + edge * 0.18);
+              glow = mix(glow, brushedTitanium, diffuse * vSheen * 0.22 + rimSpec * 0.2);
+              glow = mix(glow, coolReflection, iris * 0.08 + vDepth * 0.04);
+              glow = mix(glow, vColor, 0.1);
+              glow = mix(glow, coldSpecular, clamp(rimSpec, 0.0, 0.36));
+              glow = mix(glow, specularWhite, clamp(highlight, 0.0, 0.76));
 
-              float alpha = (0.72 + core * 0.48 + edge * 0.24) * vAlpha * sparkle * 1.7 * mask;
+              float alpha = (0.72 + core * 0.46 + edge * 0.2 + highlight * 0.22) * vAlpha * sparkle * 1.68 * mask;
               if (alpha < 0.006) discard;
               gl_FragColor = vec4(glow, alpha);
             }
@@ -3662,8 +3768,18 @@
         geometry.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
         geometry.setAttribute("aAlpha", new THREE.BufferAttribute(alphas, 1));
         geometry.setAttribute("aSeed", new THREE.BufferAttribute(seeds, 1));
+        geometry.setAttribute("aSheen", new THREE.BufferAttribute(sheens, 1));
+        const spaceRig = new THREE.Group();
+        scene.add(spaceRig);
+        const tiltState = {
+          targetX: 0,
+          targetY: 0,
+          currentX: 0,
+          currentY: 0,
+          active: false
+        };
         const points = new THREE.Points(geometry, material);
-        scene.add(points);
+        spaceRig.add(points);
 
         const linkPairs = [];
         const linkPairCount = isCompactViewport ? 140 : isMidViewport || lowMemoryDevice ? 460 : 620;
@@ -3717,7 +3833,7 @@
           `
         });
         const linkLines = new THREE.LineSegments(linkGeometry, linkMaterial);
-        scene.add(linkLines);
+        spaceRig.add(linkLines);
 
         const ringCount = isCompactViewport ? 960 : isMidViewport || lowMemoryDevice ? 3000 : 4200;
         const ringPositions = new Float32Array(ringCount * 3);
@@ -3774,7 +3890,7 @@
         ringGeometry.setAttribute("aAlpha", new THREE.BufferAttribute(ringAlphas, 1));
         ringGeometry.setAttribute("aSeed", new THREE.BufferAttribute(ringSeeds, 1));
         const ringPoints = new THREE.Points(ringGeometry, ringMaterial);
-        scene.add(ringPoints);
+        spaceRig.add(ringPoints);
 
         function updateRingLayer(progress = 0) {
           const scale = Math.min(viewW, viewH) / 860;
@@ -3893,6 +4009,11 @@
 
         function updatePointer(event) {
           if (window.innerWidth < 760) return;
+          const normalizedX = (event.clientX / Math.max(width, 1) - 0.5) * 2;
+          const normalizedY = (0.5 - event.clientY / Math.max(height, 1)) * 2;
+          tiltState.targetX = clamp(normalizedY, -1, 1);
+          tiltState.targetY = clamp(normalizedX, -1, 1);
+          tiltState.active = true;
           const nextX = (event.clientX / Math.max(width, 1) - 0.5) * viewW;
           const nextY = (0.5 - event.clientY / Math.max(height, 1)) * viewH;
           if (pointer.tx > -9000) {
@@ -3910,6 +4031,27 @@
           pointer.active = false;
           pointer.tx = -9999;
           pointer.ty = -9999;
+          tiltState.active = false;
+        }
+
+        function updateSpaceTilt() {
+          if (!tiltState.active) {
+            tiltState.targetX *= 0.94;
+            tiltState.targetY *= 0.94;
+          }
+          tiltState.currentX += (tiltState.targetX - tiltState.currentX) * 0.075;
+          tiltState.currentY += (tiltState.targetY - tiltState.currentY) * 0.075;
+
+          const progressDamping = 1 - clamp(scrollProgress / 4.2, 0, 0.22);
+          const rotationX = tiltState.currentX * (isCompactViewport ? 0.022 : 0.038) * progressDamping;
+          const rotationY = -tiltState.currentY * (isCompactViewport ? 0.032 : 0.055) * progressDamping;
+          const shiftX = -tiltState.currentY * (isCompactViewport ? 7 : 16) * progressDamping;
+          const shiftY = -tiltState.currentX * (isCompactViewport ? 5 : 12) * progressDamping;
+
+          spaceRig.rotation.x = rotationX;
+          spaceRig.rotation.y = rotationY;
+          spaceRig.position.x = shiftX;
+          spaceRig.position.y = shiftY;
         }
 
         function resize() {
@@ -3936,6 +4078,7 @@
           pointer.power *= pointer.active ? 0.965 : 0.86;
           pointer.vx *= 0.82;
           pointer.vy *= 0.82;
+          updateSpaceTilt();
 
           const maxIndex = stateOrder.length - 1;
           const currentProgress = clamp(scrollProgress, 0, maxIndex);
@@ -4007,6 +4150,7 @@
             colors[i * 3] = clamp(lerp(0.38, 0.62, warm) + iris * 0.035, 0, 1);
             colors[i * 3 + 1] = clamp(lerp(0.38, 0.64, warm) + iris * 0.035, 0, 1);
             colors[i * 3 + 2] = clamp(lerp(0.38, 0.58, warm) + (1 - iris) * 0.03, 0, 1);
+            sheens[i] = getParticleSheen(i, particle, currentProgress);
           }
 
           const linkScale = Math.min(viewW, viewH) / 860;
@@ -4043,6 +4187,7 @@
           geometry.attributes.aColor.needsUpdate = true;
           geometry.attributes.aSize.needsUpdate = true;
           geometry.attributes.aAlpha.needsUpdate = true;
+          geometry.attributes.aSheen.needsUpdate = true;
 
           renderer.render(scene, camera);
         }
@@ -4093,6 +4238,7 @@
         const particleCount = window.innerWidth < 760 ? 420 : lowMemoryDevice ? 980 : 1280;
         const particles = [];
         const pointer = { x: -9999, y: -9999, tx: -9999, ty: -9999, vx: 0, vy: 0, power: 0 };
+        const tiltState = { targetX: 0, targetY: 0, currentX: 0, currentY: 0, active: false };
         const stateOrder = [
           ["hero", "planet"],
           ["about", "shell"],
@@ -4293,6 +4439,7 @@
               drift: seededNoise(i, 12) * Math.PI * 2,
               rotation: seededNoise(i, 15) * Math.PI * 2,
               rotationSpeed: (seededNoise(i, 16) - 0.5) * 0.022,
+              sheenSeed: seededNoise(i, 58),
               spin: seededNoise(i, 14) > 0.5 ? 1 : -1,
               speed: 0.034 + seededNoise(i, 13) * 0.058,
               targets: buildTargetSet(i)
@@ -4321,11 +4468,62 @@
           return 1 - centerWeight * (window.innerWidth < 760 ? 0.58 : 0.44);
         }
 
+        function getCanvasSpecularClearanceFactor(x, y) {
+          if (activeState !== "planet") return 1;
+          const horizontal = Math.abs(x - width * 0.5) / Math.max(width * (window.innerWidth < 760 ? 0.44 : 0.34), 1);
+          const vertical = Math.abs(y - height * 0.46) / Math.max(height * (window.innerWidth < 760 ? 0.32 : 0.24), 1);
+          const centerWeight = 1 - smoothstep(Math.max(horizontal, vertical));
+          return 1 - centerWeight * (window.innerWidth < 760 ? 0.72 : 0.58);
+        }
+
+        function getCanvasParticleSheen(particle) {
+          const xLight = clamp(1 - particle.x / Math.max(width, 1), 0, 1);
+          const yLight = clamp(0.36 + (height - particle.y) / Math.max(height, 1), 0, 1);
+          const zLight = clamp((particle.z + 760) / 1520, 0, 1);
+          const reflectiveGrain = Math.pow(particle.sheenSeed || 0.5, 1.8);
+          const mineralFace = (particle.sheenSeed || 0) > 0.62 ? 1 : 0.46;
+          const slowSweep = 0.72 + Math.sin(breathe * 0.46 + particle.drift * 0.78 + particle.z * 0.002) * 0.28;
+          const compactScale = window.innerWidth < 760 ? 0.72 : 1;
+          return clamp((0.08 + reflectiveGrain * 0.72) * mineralFace * (0.18 + xLight * 0.22 + yLight * 0.54 + zLight * 0.24) * slowSweep * getCanvasSpecularClearanceFactor(particle.x, particle.y) * compactScale, 0, 0.74);
+        }
+
         function normalizeCanvasParticleSize(rawSize, particle) {
           const cap = window.innerWidth < 760 ? 2.35 : lowMemoryDevice ? 3.2 : 4.1;
           const layerCap = particle.layer === "bokeh" ? cap * 1.08 : particle.layer === "facet" ? cap * 0.96 : cap;
           const capped = rawSize <= layerCap ? rawSize : layerCap + (rawSize - layerCap) * 0.08;
           return capped * getCanvasTextClearanceFactor(particle.x, particle.y);
+        }
+
+        function updateCanvasPointer(event) {
+          if (window.innerWidth < 760) return;
+          tiltState.targetX = clamp((0.5 - event.clientY / Math.max(height, 1)) * 2, -1, 1);
+          tiltState.targetY = clamp((event.clientX / Math.max(width, 1) - 0.5) * 2, -1, 1);
+          tiltState.active = true;
+          pointer.x = event.clientX;
+          pointer.y = event.clientY;
+          pointer.tx = event.clientX;
+          pointer.ty = event.clientY;
+          pointer.power = Math.min(1, pointer.power + 0.08);
+        }
+
+        function releaseCanvasPointer() {
+          tiltState.active = false;
+          pointer.tx = -9999;
+          pointer.ty = -9999;
+        }
+
+        function updateCanvasTilt() {
+          if (!tiltState.active) {
+            tiltState.targetX *= 0.94;
+            tiltState.targetY *= 0.94;
+          }
+          tiltState.currentX += (tiltState.targetX - tiltState.currentX) * 0.075;
+          tiltState.currentY += (tiltState.targetY - tiltState.currentY) * 0.075;
+          return {
+            x: -tiltState.currentY * (window.innerWidth < 760 ? 6 : 14),
+            y: -tiltState.currentX * (window.innerWidth < 760 ? 4 : 10),
+            rotate: tiltState.currentY * 0.012
+          };
         }
 
         function getScrollSegment() {
@@ -4541,18 +4739,18 @@
           ctx.restore();
         }
 
-        function drawFacet(x, y, size, rotation, alpha, highlight) {
+        function drawFacet(x, y, size, rotation, alpha, highlight, sheen = 0) {
           const sides = 3;
           ctx.save();
           ctx.translate(x, y);
           ctx.rotate(rotation);
           ctx.globalCompositeOperation = "source-over";
           const gradient = ctx.createLinearGradient(-size, -size, size, size);
-          gradient.addColorStop(0, `rgba(255,255,255,${0.8 * alpha + highlight * 0.22})`);
-          gradient.addColorStop(0.48, `rgba(218,214,204,${0.44 * alpha})`);
-          gradient.addColorStop(1, `rgba(124,132,132,${0.16 * alpha})`);
+          gradient.addColorStop(0, `rgba(245,250,247,${0.72 * alpha + highlight * 0.18 + sheen * 0.28})`);
+          gradient.addColorStop(0.42, `rgba(178,188,187,${0.42 * alpha + sheen * 0.08})`);
+          gradient.addColorStop(1, `rgba(78,88,91,${0.2 * alpha})`);
           ctx.fillStyle = gradient;
-          ctx.strokeStyle = `rgba(255,255,255,${0.58 * alpha})`;
+          ctx.strokeStyle = `rgba(224,232,231,${0.5 * alpha + sheen * 0.24})`;
           ctx.lineWidth = 0.55;
           ctx.beginPath();
           for (let i = 0; i < sides; i += 1) {
@@ -4566,9 +4764,9 @@
           ctx.fill();
           ctx.stroke();
 
-          if (highlight > 0.12) {
+          if (highlight > 0.12 || sheen > 0.12) {
             ctx.globalCompositeOperation = "lighter";
-            ctx.strokeStyle = `rgba(255,255,255,${Math.min(0.42, highlight * 0.32)})`;
+            ctx.strokeStyle = `rgba(238,246,243,${Math.min(0.54, highlight * 0.24 + sheen * 0.5)})`;
             ctx.lineWidth = 1.2;
             ctx.beginPath();
             ctx.moveTo(-size * 0.32, -size * 0.22);
@@ -4591,7 +4789,12 @@
           scrollEnergy *= 0.9;
           applyScrollMorph();
 
+          const tilt = updateCanvasTilt();
           ctx.clearRect(0, 0, width, height);
+          ctx.save();
+          ctx.translate(width * 0.5 + tilt.x, height * 0.5 + tilt.y);
+          ctx.rotate(tilt.rotate);
+          ctx.translate(-width * 0.5, -height * 0.5);
           drawEnergyBloom();
           drawCrystalCore();
           drawOrbitalGuides();
@@ -4636,26 +4839,35 @@
             const drawSize = normalizeCanvasParticleSize(rawDrawSize, particle);
             const glowSize = particle.layer === "bokeh" ? drawSize * 2.2 : particle.layer === "facet" ? drawSize * 1.4 : drawSize * 1.9;
             const alpha = Math.min(0.86, particle.alpha * twinkle + pointerForce * 0.24);
+            const sheen = getCanvasParticleSheen(particle);
             if (particle.layer === "bokeh") {
               const glow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, glowSize);
-              glow.addColorStop(0, `rgba(255,255,255,${0.34 * alpha})`);
-              glow.addColorStop(0.48, `rgba(215,220,220,${0.12 * alpha})`);
-              glow.addColorStop(1, "rgba(215,220,220,0)");
+              glow.addColorStop(0, `rgba(238,246,243,${0.28 * alpha + sheen * 0.14})`);
+              glow.addColorStop(0.48, `rgba(150,160,162,${0.12 * alpha})`);
+              glow.addColorStop(1, "rgba(150,160,162,0)");
               ctx.fillStyle = glow;
               ctx.beginPath();
               ctx.arc(particle.x, particle.y, glowSize, 0, Math.PI * 2);
               ctx.fill();
             } else if (particle.layer === "facet") {
-              drawFacet(particle.x, particle.y, drawSize, particle.rotation, alpha, pointerForce);
+              drawFacet(particle.x, particle.y, drawSize, particle.rotation, alpha, pointerForce, sheen);
               return;
             }
 
             ctx.beginPath();
             ctx.fillStyle = particle.layer === "dust" || particle.layer === "bokeh"
-              ? `rgba(255, 255, 255, ${alpha})`
-              : `rgba(182, 188, 188, ${alpha})`;
+              ? `rgba(224, 232, 230, ${alpha})`
+              : `rgba(158, 168, 168, ${alpha})`;
             ctx.arc(particle.x, particle.y, drawSize, 0, Math.PI * 2);
             ctx.fill();
+            if (sheen > 0.11 && drawSize > 0.42) {
+              ctx.globalCompositeOperation = "lighter";
+              ctx.fillStyle = `rgba(244,250,246,${Math.min(0.46, sheen * alpha * 1.18)})`;
+              ctx.beginPath();
+              ctx.arc(particle.x - drawSize * 0.28, particle.y - drawSize * 0.32, Math.max(0.32, drawSize * 0.22), 0, Math.PI * 2);
+              ctx.fill();
+              ctx.globalCompositeOperation = "source-over";
+            }
           });
 
           if (pointer.x > -1000 && pointer.power > 0.8) {
@@ -4667,11 +4879,15 @@
           }
 
           ctx.restore();
+          ctx.restore();
 
           if (!reduceMotion && !hasGSAP) requestAnimationFrame(render);
         }
 
         window.addEventListener("scroll", requestScrollMorph, { passive: true });
+        window.addEventListener("pointermove", updateCanvasPointer, { passive: true });
+        window.addEventListener("pointerleave", releaseCanvasPointer);
+        window.addEventListener("blur", releaseCanvasPointer);
 
         let resizeFrame = null;
         function requestResize() {
@@ -4696,17 +4912,36 @@
       function initGSAPMotion() {
         if (!hasGSAP || reduceMotion) return;
         const isMobileMotion = window.matchMedia("(max-width: 900px), (hover: none), (pointer: coarse)").matches;
+        const heroTitleLetters = gsap.utils.toArray(".content--hero h1 .split-reveal");
+        const heroIdentityParts = gsap.utils.toArray(".content--hero .identity .split-reveal");
 
-        gsap.set([".content--hero h1", ".content--hero .identity", ".hero-kicker", ".scroll-hint"], {
+        gsap.set([".hero-kicker", ".scroll-hint"], {
           autoAlpha: 0,
           y: 22
         });
+        gsap.set(".content--hero h1", { autoAlpha: 1, y: 0 });
+        gsap.set(".content--hero .identity", { autoAlpha: 1, y: 0 });
+        gsap.set(heroTitleLetters, { autoAlpha: 0, yPercent: 62, rotateX: -54, filter: "blur(8px)" });
+        gsap.set(heroIdentityParts, { autoAlpha: 0, y: 18, filter: "blur(6px)" });
 
         const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
         heroTimeline
           .to(".hero-kicker", { autoAlpha: 1, y: 0, duration: 0.8 })
-          .to(".content--hero h1", { autoAlpha: 1, y: 0, duration: 1.05 }, "-=0.42")
-          .to(".content--hero .identity", { autoAlpha: 1, y: 0, duration: 0.86 }, "-=0.5")
+          .to(heroTitleLetters, {
+            autoAlpha: 1,
+            yPercent: 0,
+            rotateX: 0,
+            filter: "blur(0px)",
+            duration: 0.86,
+            stagger: 0.055
+          }, "-=0.42")
+          .to(heroIdentityParts, {
+            autoAlpha: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 0.68,
+            stagger: 0.045
+          }, "-=0.36")
           .to(".scroll-hint", { autoAlpha: 1, y: 0, duration: 0.7 }, "-=0.26");
 
         if (!isMobileMotion) {
@@ -4953,7 +5188,7 @@
         title.setAttribute("aria-label", text);
         title.innerHTML = text
           .split("")
-          .map((char) => `<span aria-hidden="true" data-char="${char}">${char}</span>`)
+          .map((char) => `<span class="split-reveal" aria-hidden="true" data-char="${char}">${char}</span>`)
           .join("");
 
         const letters = Array.from(title.querySelectorAll("span"));
@@ -5048,10 +5283,27 @@
         frame = requestAnimationFrame(render);
       }
 
+      function initHeroSplitText() {
+        const subtitle = document.querySelector(".content--hero .identity");
+        if (!subtitle || subtitle.dataset.splitReady === "true") return;
+
+        const text = subtitle.textContent.trim();
+        subtitle.setAttribute("aria-label", text);
+        subtitle.dataset.splitReady = "true";
+        subtitle.innerHTML = text
+          .split(/(\s+)/)
+          .map((part) => {
+            if (!part.trim()) return part;
+            return `<span class="split-reveal" aria-hidden="true">${part}</span>`;
+          })
+          .join("");
+      }
+
       initParticleField();
       initHeroHudMotion();
-      initGSAPMotion();
       initHeroTextPressure();
+      initHeroSplitText();
+      initGSAPMotion();
       initMaterialTitleInteraction();
 
       const modal = document.querySelector("#workModal");
@@ -5062,6 +5314,7 @@
       const modalDesc = document.querySelector("#modalDesc");
       const modalTags = document.querySelector("#modalTags");
       const modalImage = document.querySelector("#modalImage");
+      const modalVideo = document.querySelector("#modalVideo");
       const modalBackground = document.querySelector("#modalBackground");
       const modalRole = document.querySelector("#modalRole");
       const modalPosition = document.querySelector("#modalPosition");
@@ -5080,6 +5333,16 @@
       const avatarClose = document.querySelector(".avatar-close");
       let activeCard = null;
       let modalMotionTriggers = [];
+
+      function resetModalMedia() {
+        if (!modal) return;
+        modal.querySelectorAll("video").forEach((video) => {
+          video.pause();
+          video.removeAttribute("src");
+          video.removeAttribute("poster");
+          video.load();
+        });
+      }
 
       const spring = {
         duration: 620,
@@ -5189,6 +5452,36 @@
           capability: "体现 IP 造型开发、联名角色系统、游戏符号转译和产品展示视觉能力。",
           approach: "以 QQ 公仔的基础轮廓和表情特征为统一识别，再通过服装、道具、材质和游戏符号建立角色差异。",
           outputs: ["联名角色设定", "IP 海报", "TGC 展示视觉", "角色阵列图"]
+        },
+        "AI漫剧《杨戬》第一季": {
+          hero: "作品集/精选作品封面/AI漫剧《杨戬》 第一季封面.jpg",
+          video: "作品集/精选作品/杨戬 第一季.mp4",
+          gallery: [
+            { type: "video", src: "作品集/精选作品/杨戬 第一季.mp4", poster: "作品集/精选作品封面/AI漫剧《杨戬》 第一季封面.jpg", wide: true }
+          ],
+          position: "AI 漫剧短片项目，偏动态叙事、角色美术设定、分镜与剪辑整合。",
+          background: "项目以《杨戬》为主题进行 AI 漫剧影像实验，需要将角色气质、东方神话氛围和短片叙事节奏整合为可观看的视频内容。",
+          role: "负责项目推进、视觉方向把控、美术设定、分镜组织、AI 影像生成筛选与后期剪辑整合。",
+          businessGoal: "验证 AI 影像流程在漫剧内容生产中的可用性，沉淀从概念、镜头到成片的短视频制作方法。",
+          designGoal: "让角色、场景、光影和镜头节奏保持统一，形成具有神话感、冲突感和连续观看体验的漫剧视觉。",
+          capability: "体现 AIGC 影像工作流、视觉导演、分镜叙事、美术设定和剪辑节奏控制能力。",
+          approach: "先确定角色气质和世界观氛围，再围绕关键情绪镜头组织画面生成与镜头衔接。通过筛选、重组和剪辑，让 AI 生成画面从单张视觉转化为连续叙事。",
+          outputs: ["AI 漫剧成片", "角色与场景美术方向", "分镜与镜头节奏", "后期剪辑整合"]
+        },
+        "AI漫剧《杨戬》第二季": {
+          hero: "作品集/精选作品封面/AI漫剧《杨戬》 第二季封面.png",
+          video: "作品集/精选作品/杨戬第二季.mp4",
+          gallery: [
+            { type: "video", src: "作品集/精选作品/杨戬第二季.mp4", poster: "作品集/精选作品封面/AI漫剧《杨戬》 第二季封面.png", wide: true }
+          ],
+          position: "AI 漫剧系列化项目，偏连续叙事、动作节奏、场景氛围与视觉风格延展。",
+          background: "第二季在第一季的基础上继续延展《杨戬》的视觉世界，需要保持角色辨识度，同时提升场景张力、镜头连续性和观看节奏。",
+          role: "负责项目负责、美术设定、分镜梳理、AI 画面生成控制、视频剪辑与整体视觉统一。",
+          businessGoal: "让 AI 漫剧项目具备系列化展示能力，体现从单支短片到连续内容开发的完整度。",
+          designGoal: "强化场景空间、动作推进和情绪转折，让视频既有视觉冲击力，也能保持清晰的叙事线索。",
+          capability: "体现 AI 漫剧项目负责、动态视觉叙事、系列化风格控制和视频后期整合能力。",
+          approach: "围绕第二季故事节奏重新组织镜头层级，通过封面、关键镜头、转场和音乐节奏建立更完整的观看体验，并控制不同 AI 画面之间的风格一致性。",
+          outputs: ["AI 漫剧第二季成片", "系列化视觉风格", "关键镜头生成", "剪辑与节奏控制"]
         }
       };
 
@@ -5403,11 +5696,22 @@
       function populateProjectModal(card) {
         const detail = selectedProjectDetails[card.dataset.title] || {};
         const heroImage = detail.hero || card.dataset.image || "";
+        const heroVideo = detail.video || "";
         const typeText = (card.dataset.type || card.dataset.tags || "精选项目").split("/")[0].trim();
         modalType.textContent = typeText;
         modalTitle.textContent = card.dataset.title || "精选作品";
         modalDesc.textContent = card.dataset.desc || "";
-        modalImage.src = heroImage;
+        resetModalMedia();
+        if (modalVideo) {
+          modalVideo.poster = heroImage;
+          modalVideo.hidden = !heroVideo;
+          if (heroVideo) {
+            modalVideo.src = heroVideo;
+            modalVideo.load();
+          }
+        }
+        modalImage.hidden = Boolean(heroVideo);
+        modalImage.src = heroVideo ? "" : heroImage;
         modalImage.alt = card.dataset.title || "项目预览";
         modalTags.innerHTML = (card.dataset.tags || "")
           .split("/")
@@ -5428,7 +5732,9 @@
           .filter((item) => item.src)
           .map((item) => `
             <figure class="${item.wide ? "is-wide" : ""}">
-              <img src="${item.src}" alt="${card.dataset.title || "项目图片"}" loading="lazy" />
+              ${item.type === "video"
+                ? `<video src="${item.src}" poster="${item.poster || heroImage}" controls playsinline preload="metadata"></video>`
+                : `<img src="${item.src}" alt="${card.dataset.title || "项目图片"}" loading="lazy" />`}
             </figure>
           `)
           .join("");
@@ -5453,6 +5759,7 @@
 
       const closeModal = async () => {
         await animateClose();
+        resetModalMedia();
         modal.classList.remove("is-open");
         document.body.classList.remove("modal-lock");
         modal.setAttribute("aria-hidden", "true");
@@ -5612,6 +5919,7 @@
         if (event.key === "Escape" && avatarModal.classList.contains("is-open")) closeAvatarModal();
       });
 
+      const abilityRoot = document.querySelector(".ability");
       const abilityItems = Array.from(document.querySelectorAll(".ability__item"));
       const canHoverAbility = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 

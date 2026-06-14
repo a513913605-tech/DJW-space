@@ -1,0 +1,114 @@
+body, html {
+    padding: 0;
+    margin: 0;
+    background: #07090d;
+    color: rgba(246, 247, 250, 0.96);
+    font-family: "SF Pro Text", "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+
+.react-flow__panel.react-flow__attribution {
+    display: none !important;
+}
+
+.react-flow__panel.react-flow__controls {
+    border: 1px solid rgba(232, 238, 248, 0.11);
+    border-radius: 8px;
+    padding: 6px;
+    overflow: hidden;
+    background: rgba(18, 23, 32, 0.68);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    .react-flow__controls-button {
+        border-radius: 6px;
+        border-bottom: none;
+        color: rgba(238, 241, 247, 0.78);
+        background: transparent;
+        &:hover {
+            background: rgba(242, 164, 58, 0.18);
+        }
+    }
+}
+
+.react-flow__panel.react-flow__minimap {
+    border: 1px solid rgba(232, 238, 248, 0.11);
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(18, 23, 32, 0.68);
+}
+
+.react-flow__handle.connectionindicator {
+    background: #f2a43a !important;
+    width: 7px !important;
+    height: 7px !important;
+    min-width: 7px !important;
+    min-height: 7px !important;
+}
+
+.react-flow__handle.connectingfrom, .react-flow__handle.connectablestart {
+    background: #f2a43a!important;
+}
+
+
+
+.react-flow {
+    --xy-background-color: transparent !important;
+    --xy-background-color-props: transparent !important;
+    --xy-background-pattern-color: rgba(238, 241, 247, 0.16) !important;
+    --xy-minimap-background-color: rgba(18, 23, 32, 0.88) !important;
+}
+
+.react-flow__container {
+    background:
+        radial-gradient(circle at 50% -18%, rgba(242, 164, 58, 0.055), transparent 28%),
+        linear-gradient(180deg, #333638 0%, #2d3033 48%, #282b2e 100%);
+    .react-flow__connection-path {
+        stroke: #f2a43a;
+    }
+    .react-flow__edge {
+        .react-flow__edge-path {
+            stroke: #f2a43a;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 8px rgba(242, 164, 58, 0.18));
+        }
+        &.selected {
+            .react-flow__edge-path {
+                stroke: rgba(246, 247, 250, 0.96);
+            } 
+        }
+    }
+}
+
+.react-flow,
+.react-flow__renderer,
+.react-flow__pane,
+.react-flow__viewport {
+    background-color: transparent !important;
+}
+
+.react-flow__background {
+    background-color: transparent !important;
+    opacity: 0.38;
+}
+
+.react-flow__background,
+.react-flow__background svg,
+.react-flow__background-pattern {
+    background-color: transparent !important;
+}
+
+/* 滚动条整体样式 */
+::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+  
+  /* 滚动条轨道样式 */
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  /* 滚动条滑块样式 */
+  ::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 2px;
+  }

@@ -483,6 +483,17 @@
         font-size: 14px;
       }
 
+      .work-card--video .work-card__hint,
+      .archive-card.work-card--video .work-card__hint {
+        width: auto;
+        min-width: 62px;
+        padding: 0 12px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 760;
+        letter-spacing: 0.12em;
+      }
+
       .work-card:nth-child(1) { animation-delay: 70ms; }
       .work-card:nth-child(2) { animation-delay: 120ms; }
       .work-card:nth-child(3) { animation-delay: 170ms; }
@@ -587,12 +598,17 @@
         background: #171717;
       }
 
-      .modal__visual img {
+      .modal__visual img,
+      .modal__visual video {
         width: 100%;
         height: 100%;
         display: block;
         object-fit: cover;
         object-position: center;
+      }
+
+      .modal__visual video {
+        background: #05070b;
       }
 
       .modal__info {
@@ -796,10 +812,15 @@
         grid-column: 1 / -1;
       }
 
-      .project-gallery img {
+      .project-gallery img,
+      .project-gallery video {
         display: block;
         width: 100%;
         height: auto;
+      }
+
+      .project-gallery video {
+        background: #05070b;
       }
 
       .back-to-top {
@@ -829,10 +850,12 @@
       }
 
       .close-btn {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        z-index: 2;
+        position: sticky;
+        top: 18px;
+        z-index: 8;
+        display: flex;
+        width: max-content;
+        margin: 18px 18px -70px auto;
         min-width: 118px;
         padding: 15px 24px;
         font-size: 18px;
@@ -1020,6 +1043,7 @@
         <a class="is-active" href="works.html">Works</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
+        <a href="infinite-canvas.html">无限画布</a>
       </div>
     </header>
     <main class="page">
@@ -1056,6 +1080,7 @@
         <button class="ghost-btn close-btn" id="closeModal" type="button">Close</button>
         <div class="modal__visual">
           <img id="modalImage" src="assets/selected/banners/banner-01-dada.jpg" alt="" decoding="async" />
+          <video id="modalVideo" controls playsinline preload="metadata" hidden></video>
         </div>
         <div class="modal__info">
           <div class="modal__copy">
@@ -1137,6 +1162,88 @@
         { folder: "个人创作", category: "personal ai", label: "个人创作", meta: "Personal Work", start: 55, end: 60 }
       ];
 
+      const roughWorkTitleMap = {
+        "营销设计-07": "整合营销",
+        "营销设计-08": "DADA梦工厂",
+        "营销设计-09": "Edgar Plans x NBA",
+        "营销设计-10": "芝麻街55周年艺术展",
+        "营销设计-11": "QQ飞车黄金神殿",
+        "营销设计-12": "金铲铲之战双城公开赛",
+        "营销设计-13": "欢乐斗地主王炸节",
+        "营销设计-14": "欢乐斗地主灵感加倍",
+        "营销设计-15": "王者荣耀亚连奇妙奇旅",
+        "营销设计-16": "游戏人在过春节",
+        "营销设计-17": "天龙八部手游周年庆KV",
+        "营销设计-18": "腾讯游戏宣发海报合集",
+        "营销设计-19": "使命召唤OL版本海报",
+        "营销设计-20": "红警OL宣发视觉",
+        "营销设计-21": "王者荣耀中秋场景插画",
+        "营销设计-22": "开心问道宣发视觉",
+        "营销设计-23": "《成为科学家》书籍物料",
+        "营销设计-24": "企鹅有礼新春盲盒",
+        "营销设计-25": "星宝乐传IP视觉",
+        "运营设计-26": "社交媒体运营类",
+        "运营设计-27": "招商银行官方微博运营",
+        "运营设计-28": "tinytoys小红书运营",
+        "运营设计-29": "数码宝贝新世纪微博运营",
+        "运营设计-30": "跑跑卡丁车官方微博运营",
+        "概念设计-31": "原画和CG概念",
+        "概念设计-32": "金铲铲之战灵魂莲华PV",
+        "概念设计-33": "英雄联盟幻灵战队PV",
+        "概念设计-34": "英雄联盟北极星场景原画",
+        "概念设计-35": "英雄联盟瑞兹xFaker场景原画",
+        "概念设计-36": "金铲铲之战魔法乱斗",
+        "概念设计-37": "英雄联盟灵魂莲华PV",
+        "概念设计-38": "场景概念设计合集",
+        "概念设计-39": "PUBG x 杜卡迪场景概念",
+        "概念设计-40": "王者荣耀男团CG场景概念",
+        "概念设计-41": "和平精英奢华场景概念",
+        "概念设计-42": "王者荣耀CG场景合集",
+        "概念设计-43": "HOK EWC电竞赛事CG",
+        "概念设计-44": "舞狮主题CG Color Key",
+        "概念设计-45": "场景Color Key合集",
+        "产品开发设计-46": "IP形象设计",
+        "产品开发设计-47": "星球大战联名概念设计",
+        "产品开发设计-48": "腾讯游戏IP衍生品设计",
+        "产品开发设计-49": "DADA BOY潮玩公仔设计",
+        "产品开发设计-50": "QQfamily IP形象设计",
+        "产品开发设计-51": "WeTV品牌IP设计",
+        "产品开发设计-52": "tinytoys年度视觉设计",
+        "产品开发设计-53": "SORAYAMA SHARK艺术品设计",
+        "产品开发设计-54": "GuluGulu角色设定",
+        "个人创作-55": "个人练习",
+        "个人创作-56": "个人练习作品集",
+        "个人创作-57": "个人账号视觉运营",
+        "个人创作-58": "Sketch Practice室内场景练习",
+        "个人创作-59": "Take It Easy",
+        "个人创作-60": "眉猫大IP账号运营"
+      };
+
+      const roughWorkDetailKeyMap = {
+        "营销设计-08": "DADA梦工厂宣发海报",
+        "营销设计-09": "Edgar Plans x NBA",
+        "营销设计-13": "欢乐斗地主王炸节",
+        "运营设计-27": "招商银行官方微博运营",
+        "概念设计-32": "灵魂莲华PV场景原画",
+        "概念设计-40": "王者男团CG概念场景",
+        "产品开发设计-49": "DADA BOY潮玩公仔设计"
+      };
+
+      const aigcVideoWorks = [
+        {
+          title: "AI漫剧《杨戬》第一季",
+          desc: "以 AI 漫剧短片为载体，完成角色视觉、镜头叙事、美术气质和剪辑节奏的综合表达。",
+          image: "作品集/精选作品封面/AI漫剧《杨戬》 第一季封面.jpg",
+          video: "作品集/精选作品/杨戬 第一季.mp4"
+        },
+        {
+          title: "AI漫剧《杨戬》第二季",
+          desc: "延续杨戬漫剧项目的世界观与视觉风格，进一步强化场景氛围、动作节奏和连续叙事能力。",
+          image: "作品集/精选作品封面/AI漫剧《杨戬》 第二季封面.png",
+          video: "作品集/精选作品/杨戬第二季.mp4"
+        }
+      ];
+
       function renderRoughWorkCards() {
         const archive = document.querySelector(".work-archive");
         if (!archive) return;
@@ -1145,7 +1252,8 @@
         roughWorkGroups.forEach((group) => {
           for (let index = group.start; index <= group.end; index += 1) {
             const page = String(index).padStart(2, "0");
-            const title = `${group.label} ${page}`;
+            const workKey = `${group.folder}-${page}`;
+            const title = roughWorkTitleMap[workKey] || `${group.label} ${page}`;
             const image = `作品集/works/${group.folder}/金旺作品集2025 2.0-${page}.jpg`;
             const thumb = `assets/work-thumbs/${group.folder}/金旺作品集2025 2.0-${page}.jpg`;
             const shouldPrime = renderedCount < 4;
@@ -1159,6 +1267,9 @@
             card.dataset.tags = `${group.label} / 作品归档 / 单图详情`;
             card.dataset.image = image;
             card.dataset.thumb = thumb;
+            if (roughWorkDetailKeyMap[workKey]) {
+              card.dataset.detailKey = roughWorkDetailKeyMap[workKey];
+            }
             card.dataset.quickWork = "true";
             card.innerHTML = `
               <img ${shouldPrime ? `src="${thumb}"` : `data-src="${thumb}"`} alt="${title}" loading="${shouldPrime ? "eager" : "lazy"}" decoding="async" ${renderedCount === 0 ? `fetchpriority="high"` : ""} />
@@ -1176,6 +1287,38 @@
       }
 
       renderRoughWorkCards();
+
+      function renderAigcVideoCards() {
+        const archive = document.querySelector(".work-archive");
+        if (!archive) return;
+        const baseIndex = archive.querySelectorAll(".work-card").length;
+
+        aigcVideoWorks.forEach((work, index) => {
+          const card = document.createElement("article");
+          card.className = "work-card archive-card work-card--video";
+          card.dataset.masonryIndex = String(baseIndex + index);
+          card.dataset.category = "ai";
+          card.dataset.title = work.title;
+          card.dataset.type = "AIGC 视觉实践 / AI 漫剧";
+          card.dataset.desc = work.desc;
+          card.dataset.tags = "AIGC / AI漫剧 / 美术设定 / 分镜剪辑";
+          card.dataset.image = work.image;
+          card.dataset.video = work.video;
+          card.dataset.detailKey = work.title;
+          card.innerHTML = `
+            <img src="${work.image}" alt="${work.title}" loading="lazy" decoding="async" />
+            <div class="work-card__hint">PLAY</div>
+            <div class="work-card__content">
+              <div class="work-card__meta">AIGC Video</div>
+              <div class="work-card__title">${work.title}</div>
+              <div class="work-card__desc">${work.desc}</div>
+            </div>
+          `;
+          archive.appendChild(card);
+        });
+      }
+
+      renderAigcVideoCards();
 
       function hydrateArchiveImage(image) {
         if (!image || image.hasAttribute("src") || !image.dataset.src) return;
@@ -1213,6 +1356,7 @@
       const modalPanel = document.querySelector(".modal__panel");
       const closeModal = document.getElementById("closeModal");
       const modalImage = document.getElementById("modalImage");
+      const modalVideo = document.getElementById("modalVideo");
       const modalTitle = document.getElementById("modalTitle");
       const modalType = document.getElementById("modalType");
       const modalDesc = document.getElementById("modalDesc");
@@ -1230,6 +1374,16 @@
       let activeCard = null;
       let isModalAnimating = false;
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function resetModalMedia() {
+        if (!modal) return;
+        modal.querySelectorAll("video").forEach((video) => {
+          video.pause();
+          video.removeAttribute("src");
+          video.removeAttribute("poster");
+          video.load();
+        });
+      }
       const hasGSAP = Boolean(window.gsap);
 
       if (hasGSAP) {
@@ -1527,6 +1681,36 @@
           capability: "体现原创 IP 产品化、潮玩造型设计、包装视觉和衍生品开发能力。",
           approach: "以“成长、体验、美好”为核心概念，塑造一个带有好奇心和探索感的角色。通过简洁造型、明亮色彩和场景化展示，让角色既有亲和力，也具备潮玩产品的识别度与系列开发空间。",
           outputs: ["DADA BOY 角色设定", "潮玩造型", "包装设计", "品牌展示图", "产品宣发视觉"]
+        },
+        "AI漫剧《杨戬》第一季": {
+          hero: "作品集/精选作品封面/AI漫剧《杨戬》 第一季封面.jpg",
+          video: "作品集/精选作品/杨戬 第一季.mp4",
+          gallery: [
+            { type: "video", src: "作品集/精选作品/杨戬 第一季.mp4", poster: "作品集/精选作品封面/AI漫剧《杨戬》 第一季封面.jpg", wide: true }
+          ],
+          position: "AI 漫剧短片项目，偏动态叙事、角色美术设定、分镜与剪辑整合。",
+          background: "项目以《杨戬》为主题进行 AI 漫剧影像实验，需要将角色气质、东方神话氛围和短片叙事节奏整合为可观看的视频内容。",
+          role: "负责项目推进、视觉方向把控、美术设定、分镜组织、AI 影像生成筛选与后期剪辑整合。",
+          businessGoal: "验证 AI 影像流程在漫剧内容生产中的可用性，沉淀从概念、镜头到成片的短视频制作方法。",
+          designGoal: "让角色、场景、光影和镜头节奏保持统一，形成具有神话感、冲突感和连续观看体验的漫剧视觉。",
+          capability: "体现 AIGC 影像工作流、视觉导演、分镜叙事、美术设定和剪辑节奏控制能力。",
+          approach: "先确定角色气质和世界观氛围，再围绕关键情绪镜头组织画面生成与镜头衔接。通过筛选、重组和剪辑，让 AI 生成画面从单张视觉转化为连续叙事。",
+          outputs: ["AI 漫剧成片", "角色与场景美术方向", "分镜与镜头节奏", "后期剪辑整合"]
+        },
+        "AI漫剧《杨戬》第二季": {
+          hero: "作品集/精选作品封面/AI漫剧《杨戬》 第二季封面.png",
+          video: "作品集/精选作品/杨戬第二季.mp4",
+          gallery: [
+            { type: "video", src: "作品集/精选作品/杨戬第二季.mp4", poster: "作品集/精选作品封面/AI漫剧《杨戬》 第二季封面.png", wide: true }
+          ],
+          position: "AI 漫剧系列化项目，偏连续叙事、动作节奏、场景氛围与视觉风格延展。",
+          background: "第二季在第一季的基础上继续延展《杨戬》的视觉世界，需要保持角色辨识度，同时提升场景张力、镜头连续性和观看节奏。",
+          role: "负责项目负责、美术设定、分镜梳理、AI 画面生成控制、视频剪辑与整体视觉统一。",
+          businessGoal: "让 AI 漫剧项目具备系列化展示能力，体现从单支短片到连续内容开发的完整度。",
+          designGoal: "强化场景空间、动作推进和情绪转折，让视频既有视觉冲击力，也能保持清晰的叙事线索。",
+          capability: "体现 AI 漫剧项目负责、动态视觉叙事、系列化风格控制和视频后期整合能力。",
+          approach: "围绕第二季故事节奏重新组织镜头层级，通过封面、关键镜头、转场和音乐节奏建立更完整的观看体验，并控制不同 AI 画面之间的风格一致性。",
+          outputs: ["AI 漫剧第二季成片", "系列化视觉风格", "关键镜头生成", "剪辑与节奏控制"]
         }
       };
 
@@ -1595,6 +1779,7 @@
       }
 
       function hideModalInstant() {
+        resetModalMedia();
         modal.classList.remove("is-open");
         modal.setAttribute("aria-hidden", "true");
         setModalLock(false);
@@ -1697,6 +1882,7 @@
               modal.setAttribute("aria-hidden", "true");
               setModalLock(false);
               gsap.set([modal, modalPanel], { clearProps: "opacity,visibility,transform" });
+              resetModalMedia();
               card.classList.remove("is-transition-source");
               activeCard = null;
               isModalAnimating = false;
@@ -1749,8 +1935,20 @@
         isModalAnimating = true;
         activeCard = card;
         hydrateArchiveImage(card.querySelector("img[data-src]"));
-        const detail = projectDetails[card.dataset.title] || getQuickWorkDetail(card);
-        modalImage.src = detail.hero || card.dataset.image || "";
+        const detail = projectDetails[card.dataset.detailKey] || projectDetails[card.dataset.title] || getQuickWorkDetail(card);
+        const heroImage = detail.hero || card.dataset.image || "";
+        const heroVideo = detail.video || card.dataset.video || "";
+        resetModalMedia();
+        if (modalVideo) {
+          modalVideo.poster = heroImage;
+          modalVideo.hidden = !heroVideo;
+          if (heroVideo) {
+            modalVideo.src = heroVideo;
+            modalVideo.load();
+          }
+        }
+        modalImage.hidden = Boolean(heroVideo);
+        modalImage.src = heroVideo ? "" : heroImage;
         modalImage.alt = card.dataset.title || "";
         modalTitle.textContent = card.dataset.title || "";
         modalType.textContent = card.dataset.type || "";
@@ -1774,7 +1972,9 @@
           .filter((item) => item.src)
           .map((item) => `
             <figure class="${item.wide ? "is-wide" : ""}">
-              <img src="${item.src}" alt="${card.dataset.title || "项目图片"}" loading="lazy" decoding="async" />
+              ${item.type === "video"
+                ? `<video src="${item.src}" poster="${item.poster || heroImage}" controls playsinline preload="metadata"></video>`
+                : `<img src="${item.src}" alt="${card.dataset.title || "项目图片"}" loading="lazy" decoding="async" />`}
             </figure>
           `)
           .join("");

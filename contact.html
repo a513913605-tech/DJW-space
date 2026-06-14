@@ -223,6 +223,31 @@
         font-weight: 760;
       }
 
+      .pressure-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.012em;
+        width: min(100%, 920px);
+        min-height: clamp(74px, 12vw, 128px);
+        color: inherit;
+      }
+
+      .pressure-title span {
+        display: inline-block;
+        flex: 0 0 auto;
+        min-width: 0;
+        color: inherit;
+        font: inherit;
+        font-variation-settings: "wght" 760, "wdth" 110, "ital" 0;
+        transform-origin: center 62%;
+        will-change: font-variation-settings, transform;
+      }
+
+      .pressure-title.is-ready span {
+        transition: opacity 180ms ease;
+      }
+
       .subtitle {
         max-width: 680px;
         color: var(--muted);
@@ -272,8 +297,14 @@
       }
 
       .qr-card span {
-        color: rgba(23, 23, 23, 0.64);
+        position: relative;
+        z-index: 2;
+        display: block;
+        color: rgba(246, 247, 250, 0.9);
         font-size: 13px;
+        font-weight: 650;
+        letter-spacing: 0.08em;
+        text-shadow: 0 1px 10px rgba(0, 0, 0, 0.48);
       }
 
       .mini-logo {
@@ -390,6 +421,7 @@
         <a href="works.html">Works</a>
         <a href="about.html">About</a>
         <a class="is-active" href="contact.html">Contact</a>
+        <a href="infinite-canvas.html">无限画布</a>
       </div>
     </header>
     <main class="page">
@@ -413,7 +445,7 @@
 
         <div class="hero-copy">
           <div class="eyebrow">Contact / Work Together</div>
-          <h1>CONTACT</h1>
+          <h1 class="pressure-title" data-pressure-title>CONTACT</h1>
           <p class="subtitle">
             <span>如果你正在寻找一位能理解需求的视觉设计师，</span>
             <span>能把控风格，并推动项目执行，</span>
@@ -425,5 +457,92 @@
     <script src="assets/geo-grid.js"></script>
     <script src="assets/custom-cursor.js"></script>
     <script src="assets/tilted-cards.js"></script>
+    <script>
+      function initTextPressureTitle() {
+        const title = document.querySelector("[data-pressure-title]");
+        if (!title) return;
+
+        const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const text = title.textContent.trim();
+        title.setAttribute("aria-label", text);
+        title.innerHTML = text
+          .split("")
+          .map((char) => `<span aria-hidden="true">${char}</span>`)
+          .join("");
+
+        const letters = Array.from(title.querySelectorAll("span"));
+        if (!letters.length) return;
+
+        if (!canHover || reduceMotion) {
+          title.classList.add("is-ready");
+          return;
+        }
+
+        const pointer = { x: 0, y: 0 };
+        const cursor = { x: 0, y: 0 };
+        let titleRect = title.getBoundingClientRect();
+        let maxDistance = Math.max(titleRect.width * 0.52, 1);
+        let isInside = false;
+
+        function clamp(value, min, max) {
+          return Math.min(max, Math.max(min, value));
+        }
+
+        function mapDistance(distance, minValue, maxValue) {
+          const influence = 1 - clamp(distance / maxDistance, 0, 1);
+          const eased = influence * influence * (3 - 2 * influence);
+          return minValue + (maxValue - minValue) * eased;
+        }
+
+        function refreshBounds() {
+          titleRect = title.getBoundingClientRect();
+          maxDistance = Math.max(titleRect.width * 0.52, 1);
+          if (!isInside) {
+            pointer.x = titleRect.left + titleRect.width * 0.5;
+            pointer.y = titleRect.top + titleRect.height * 0.5;
+            cursor.x = pointer.x;
+            cursor.y = pointer.y;
+          }
+        }
+
+        function render() {
+          cursor.x += (pointer.x - cursor.x) * 0.12;
+          cursor.y += (pointer.y - cursor.y) * 0.12;
+
+          letters.forEach((letter) => {
+            const rect = letter.getBoundingClientRect();
+            const centerX = rect.left + rect.width * 0.5;
+            const centerY = rect.top + rect.height * 0.5;
+            const distance = Math.hypot(cursor.x - centerX, cursor.y - centerY);
+            const width = Math.round(mapDistance(distance, 118, 220));
+            const weight = Math.round(mapDistance(distance, 560, 940));
+            const italic = mapDistance(distance, 0, 0.78).toFixed(2);
+            const lift = mapDistance(distance, 0, -8).toFixed(2);
+            const scaleX = mapDistance(distance, 0.98, 1.08).toFixed(3);
+            const scaleY = mapDistance(distance, 1, 1.06).toFixed(3);
+            letter.style.fontVariationSettings = `"wght" ${weight}, "wdth" ${width}, "ital" ${italic}`;
+            letter.style.transform = `translate3d(0, ${lift}px, 0) scale(${scaleX}, ${scaleY})`;
+          });
+
+          requestAnimationFrame(render);
+        }
+
+        refreshBounds();
+        title.classList.add("is-ready");
+        window.addEventListener("resize", refreshBounds, { passive: true });
+        window.addEventListener("pointermove", (event) => {
+          pointer.x = event.clientX;
+          pointer.y = event.clientY;
+          isInside = Boolean(event.target.closest?.(".pressure-title"));
+        }, { passive: true });
+        title.addEventListener("pointerleave", () => {
+          isInside = false;
+        });
+        render();
+      }
+
+      initTextPressureTitle();
+    </script>
   </body>
 </html>

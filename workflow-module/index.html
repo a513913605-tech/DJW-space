@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <title>AI 画板工作流｜个人作品集</title>
+    <link rel="stylesheet" href="workflow.css" />
+  </head>
+  <body>
+    <div class="frame" aria-hidden="true"></div>
+
+    <header class="topbar" aria-label="AI 画板顶部栏">
+      <a class="site-signature" href="../index.html">Designer DJW</a>
+      <div class="board-title">
+        <span class="eyebrow">AI Workflow Canvas</span>
+        <h1>AI 画板工作流</h1>
+      </div>
+      <nav class="nav-links" aria-label="站点导航">
+        <a href="../works.html">Works</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../infinite-canvas.html">无限画布</a>
+      </nav>
+      <div class="top-actions">
+        <button class="pill-button" type="button" data-action="preview">预览流程</button>
+        <button class="primary-button" type="button" data-action="run">生成</button>
+      </div>
+    </header>
+
+    <main class="canvas-app" aria-label="AI 工作流画板">
+      <aside class="tool-rail" aria-label="画板工具">
+        <button class="tool-button is-active" type="button" title="选择" aria-label="选择">⌖</button>
+        <button class="tool-button" type="button" title="添加图片节点" aria-label="添加图片节点">▧</button>
+        <button class="tool-button" type="button" title="添加提示词节点" aria-label="添加提示词节点">T</button>
+        <button class="tool-button" type="button" title="添加模型节点" aria-label="添加模型节点">✦</button>
+        <button class="tool-button" type="button" title="连接节点" aria-label="连接节点">⌁</button>
+      </aside>
+
+      <section class="canvas-stage" aria-label="工作流画布">
+        <div class="canvas-grid"></div>
+        <svg class="connector-layer" viewBox="0 0 1600 900" aria-hidden="true">
+          <path d="M 310 262 C 430 262, 430 220, 555 220" />
+          <path d="M 310 262 C 430 262, 430 362, 555 362" />
+          <path d="M 770 220 C 900 220, 920 328, 1060 328" />
+          <path d="M 770 362 C 880 362, 920 328, 1060 328" />
+          <path d="M 1262 328 C 1380 328, 1380 438, 1490 438" />
+          <path d="M 770 566 C 930 566, 930 466, 1060 466" />
+          <path d="M 1262 466 C 1380 466, 1380 438, 1490 438" />
+        </svg>
+
+        <article class="workflow-node node-source is-selected" style="--x: 92px; --y: 178px;" data-node="source">
+          <header>
+            <span>输入素材</span>
+            <b>01</b>
+          </header>
+          <img src="../assets/selected/banners/banner-03-kuaishou.jpg" alt="输入素材占位图" />
+          <p>上传参考图、分镜图或作品素材，作为整条生成链路的起点。</p>
+          <span class="socket socket-out"></span>
+        </article>
+
+        <article class="workflow-node node-prompt" style="--x: 555px; --y: 104px;" data-node="prompt">
+          <header>
+            <span>提示词</span>
+            <b>02</b>
+          </header>
+          <div class="prompt-block">
+            <strong>风格设定</strong>
+            <p>游戏宣发质感、暖色主视觉、IP 角色强化、商业海报构图。</p>
+          </div>
+          <span class="socket socket-in"></span>
+          <span class="socket socket-out"></span>
+        </article>
+
+        <article class="workflow-node node-model" style="--x: 555px; --y: 304px;" data-node="model">
+          <header>
+            <span>图像模型</span>
+            <b>03</b>
+          </header>
+          <div class="model-list">
+            <span>Text to Image</span>
+            <span>Image Reference</span>
+            <span>Style Lock</span>
+          </div>
+          <span class="socket socket-in"></span>
+          <span class="socket socket-out"></span>
+        </article>
+
+        <article class="workflow-node node-edit" style="--x: 555px; --y: 506px;" data-node="edit">
+          <header>
+            <span>局部重绘</span>
+            <b>04</b>
+          </header>
+          <div class="mask-preview">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <p>预留蒙版、扩图、改色、背景替换等二次处理节点。</p>
+          <span class="socket socket-out"></span>
+        </article>
+
+        <article class="workflow-node node-merge" style="--x: 1060px; --y: 268px;" data-node="merge">
+          <header>
+            <span>图片融合</span>
+            <b>05</b>
+          </header>
+          <img src="../assets/selected/banners/banner-02-doudizhu.jpg" alt="融合结果占位图" />
+          <p>把参考图、提示词和模型结果合成候选视觉。</p>
+          <span class="socket socket-in"></span>
+          <span class="socket socket-out"></span>
+        </article>
+
+        <article class="workflow-node node-review" style="--x: 1060px; --y: 548px;" data-node="review">
+          <header>
+            <span>人工筛选</span>
+            <b>06</b>
+          </header>
+          <div class="score-row">
+            <span>构图 82</span>
+            <span>风格 91</span>
+            <span>可用 76</span>
+          </div>
+          <p>低保真阶段先放筛选逻辑入口，后续可接多图对比。</p>
+          <span class="socket socket-in"></span>
+          <span class="socket socket-out"></span>
+        </article>
+
+        <article class="workflow-node node-output" style="--x: 1490px; --y: 374px;" data-node="output">
+          <header>
+            <span>输出画面</span>
+            <b>07</b>
+          </header>
+          <img src="../assets/selected/banners/banner-01-dada.jpg" alt="输出结果占位图" />
+          <div class="output-actions">
+            <button type="button">导出</button>
+            <button type="button">入库</button>
+          </div>
+          <span class="socket socket-in"></span>
+        </article>
+      </section>
+
+      <aside class="inspector" aria-label="节点参数面板">
+        <div class="panel-head">
+          <span class="eyebrow">Node Inspector</span>
+          <h2>输入素材</h2>
+        </div>
+        <label>
+          <span>节点名称</span>
+          <input value="输入素材" />
+        </label>
+        <label>
+          <span>AI 操作</span>
+          <select>
+            <option>图像参考</option>
+            <option>文生图</option>
+            <option>图生图</option>
+            <option>局部重绘</option>
+          </select>
+        </label>
+        <label>
+          <span>提示词草稿</span>
+          <textarea>围绕个人作品集视觉风格，生成一组可用于项目展示的主视觉候选。</textarea>
+        </label>
+        <div class="parameter-grid">
+          <span>比例 16:9</span>
+          <span>步数 28</span>
+          <span>强度 0.72</span>
+          <span>种子固定</span>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="canvas-controls" aria-label="画布控制">
+      <button type="button" data-zoom="out" aria-label="缩小">−</button>
+      <input type="range" min="60" max="120" value="86" aria-label="缩放比例" />
+      <button type="button" data-zoom="in" aria-label="放大">＋</button>
+      <span data-zoom-value>86%</span>
+    </footer>
+
+    <script src="workflow.js"></script>
+  </body>
+</html>

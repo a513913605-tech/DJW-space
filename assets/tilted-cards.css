@@ -40,12 +40,22 @@
   display: none;
 }
 
-.tilt-card.project-brief__item,
-.tilt-card.project-brief__wide,
-.tilt-card.project-brief__lead,
 .tilt-card.timeline-item,
 .tilt-card.incubation-card {
   --tilt-perspective: 1100px;
+}
+
+.project-brief__item.tilt-card,
+.project-brief__wide.tilt-card,
+.project-brief__lead.tilt-card {
+  transform: none !important;
+  will-change: auto !important;
+}
+
+.project-brief__item > .tilt-card__glare,
+.project-brief__wide > .tilt-card__glare,
+.project-brief__lead > .tilt-card__glare {
+  display: none !important;
 }
 
 .tilt-card.contact-link,

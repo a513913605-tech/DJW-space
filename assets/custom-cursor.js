@@ -23,7 +23,6 @@
     "[role='button']",
     ".card",
     ".work-card",
-    ".ability__item",
     ".intro-visual",
     ".music-control",
     ".chip",

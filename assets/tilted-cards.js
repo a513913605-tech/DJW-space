@@ -10,10 +10,7 @@
     ".contact-link",
     ".timeline-item",
     ".incubation-card",
-    ".qr-card",
-    ".project-brief__item",
-    ".project-brief__wide",
-    ".project-brief__lead"
+    ".qr-card"
   ].join(",");
 
   const initialized = new WeakSet();
@@ -27,9 +24,6 @@
     }
     if (card.matches(".timeline-item, .incubation-card")) {
       return { rotate: 4.5, scale: 1.012, lift: -5, glare: 0.28 };
-    }
-    if (card.matches(".project-brief__item, .project-brief__wide, .project-brief__lead")) {
-      return { rotate: 3.5, scale: 1.006, lift: -2, glare: 0.18 };
     }
     if (card.matches(".qr-card")) {
       return { rotate: 5, scale: 1.018, lift: -3, glare: 0 };

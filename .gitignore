@@ -3,3 +3,8 @@ node_modules/
 .vercel/
 .DS_Store
 Thumbs.db
+
+node_modules/
+.npm-cache/
+dist/
+build/
