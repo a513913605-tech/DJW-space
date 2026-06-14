@@ -179,6 +179,10 @@
         background: #2d3033;
       }
 
+      body.canvas-unavailable .canvas-shell {
+        visibility: hidden;
+      }
+
       .canvas-frame {
         display: block;
         width: 100%;
@@ -197,6 +201,14 @@
         color: rgba(232, 238, 248, 0.72);
         text-align: center;
         background: #2d3033;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 240ms ease;
+      }
+
+      body.canvas-unavailable .fallback {
+        opacity: 1;
+        pointer-events: auto;
       }
 
       .fallback__box {
@@ -215,6 +227,13 @@
 
       .fallback p {
         margin: 0;
+        line-height: 1.7;
+      }
+
+      .fallback small {
+        display: block;
+        color: rgba(214, 220, 230, 0.52);
+        font-size: 12px;
         line-height: 1.7;
       }
 
@@ -295,11 +314,12 @@
       <iframe class="canvas-frame" title="DJW Design AI Workflow" allow="clipboard-read; clipboard-write"></iframe>
     </main>
 
-    <section class="fallback" aria-hidden="true">
+    <section class="fallback" role="status" aria-live="polite">
       <div class="fallback__box">
         <h1>无限画布</h1>
-        <p>DJW Design AI Workflow</p>
-        <a href="http://localhost:8000/flow-v0/?id=iwqYhPLtiXWpZCe1ncf0Z" target="_blank" rel="noreferrer">打开画布</a>
+        <p id="fallbackMessage">正在连接 DJW Design AI Workflow...</p>
+        <small>如果长时间停留在这里，通常是本地 8000 端口的画布服务没有启动。</small>
+        <a id="fallbackLink" href="http://localhost:8000/flow-v0/?id=iwqYhPLtiXWpZCe1ncf0Z" target="_blank" rel="noreferrer">打开画布</a>
       </div>
     </section>
 
@@ -307,13 +327,37 @@
       (function () {
         const iframe = document.querySelector(".canvas-frame");
         const statusLink = document.querySelector(".canvas-status");
+        const fallbackLink = document.querySelector("#fallbackLink");
+        const fallbackMessage = document.querySelector("#fallbackMessage");
         const querySource = new URLSearchParams(window.location.search).get("flow");
         const localSource = "http://localhost:8000/flow-v0/?id=iwqYhPLtiXWpZCe1ncf0Z";
-        const bundledSource = "flow-v0/?id=iwqYhPLtiXWpZCe1ncf0Z";
-        const isLocalPreview = ["", "localhost", "127.0.0.1"].includes(window.location.hostname) || window.location.protocol === "file:";
-        const source = querySource || (isLocalPreview ? localSource : bundledSource);
+        const source = querySource || localSource;
+        let hasLoaded = false;
+
+        function showUnavailable() {
+          if (hasLoaded) return;
+          document.body.classList.add("canvas-unavailable");
+          fallbackMessage.textContent = "无限画布服务暂时没有连接成功。";
+        }
+
+        iframe.addEventListener("load", () => {
+          hasLoaded = true;
+          document.body.classList.remove("canvas-unavailable");
+        }, { once: true });
+
+        iframe.addEventListener("error", showUnavailable, { once: true });
+
         iframe.src = source;
         statusLink.href = source;
+        fallbackLink.href = source;
+
+        window.setTimeout(showUnavailable, 3600);
+
+        fetch(localSource, { mode: "no-cors", cache: "no-store" })
+          .catch(() => {
+            if (querySource) return;
+            showUnavailable();
+          });
       })();
     </script>
   </body>
